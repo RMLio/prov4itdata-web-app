@@ -3,6 +3,21 @@ var session = require('express-session')
 var grant = require('grant').express()
 const axios = require('axios')
 
+const getData = async (url, bearerToken) => {
+  try {
+    const data = await axios.get(url, {
+      headers : {
+        'Authorization' : `Bearer ${bearerToken}`
+      }
+    }).then(res => res.data)
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
 express()
   .use(session({secret: 'grant', saveUninitialized: true, resave: false}))
   .use(grant(require('./config.json')))
@@ -43,22 +58,28 @@ express()
 
   .get('/get/imgur', (req, res) => {
     res.write('<h1>Getting Imgur data</h1>')
+
+    // url for GET request (should return a collection images for the logged in profile)
     const url = 'https://api.imgur.com/3/account/me/images'
+  
     
-    const getData = async (url) => {
-      try {
-        const response = await axios.get(url)
-        const data = response.data
-        console.log(data)
-      } catch (error) {
-        console.log(error)
-      }
+    if(req.session.hasOwnProperty('grant') && req.session.grant.hasOwnProperty('response')) {
+
+      // get the bearer token from session
+      const bearerToken = req.session.grant.response['access_token']
+      console.log('bearer token: ' + bearerToken)
+
+      // execute the GET request 
+      const data = getData(url, bearerToken)
+      // when promise is fulfilled, log data to console
+      data.then(d => console.log(d))
+    }else {
+      res.write("<p>No access token available...</p>")
+      console.error("NO ACCESS TOKEN...")
     }
+      
     
-    getData(url)
-
-
-    res.end()
+      res.end('<a href="/"> go to root </a>')
 
   })
   
