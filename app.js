@@ -2,16 +2,18 @@ var express = require('express')
 var session = require('express-session')
 var grant = require('grant').express()
 const axios = require('axios')
+const { response } = require('express')
 
-const getData = async (url, bearerToken) => {
+const getData = async (url, bearerToken, cb) => {
   try {
-    const data = await axios.get(url, {
+    const getResonse = await axios.get(url, {
       headers : {
         'Authorization' : `Bearer ${bearerToken}`
       }
-    }).then(res => res.data)
+    })
 
-    return data
+    const data = await getResonse
+    cb(data)
   } catch (error) {
     console.log(error)
   }
@@ -57,7 +59,6 @@ express()
 
 
   .get('/get/imgur', (req, res) => {
-    res.write('<h1>Getting Imgur data</h1>')
 
     // url for GET request (should return a collection images for the logged in profile)
     const url = 'https://api.imgur.com/3/account/me/images'
@@ -70,16 +71,22 @@ express()
       console.log('bearer token: ' + bearerToken)
 
       // execute the GET request 
-      const data = getData(url, bearerToken)
-      // when promise is fulfilled, log data to console
-      data.then(d => console.log(d))
-    }else {
-      res.write("<p>No access token available...</p>")
-      console.error("NO ACCESS TOKEN...")
+     getData(url, bearerToken, (response) => {
+      const imageElements = response.data.data
+
+      // create some html to render the images 
+      const html = imageElements.map(el => 
+        `
+          <div id="${el.id}">     
+            <img src="${el.link}">
+            <p>${el.description}</p>
+            <p>views: ${el.views}</p>
+          </div>
+        `).join()
+
+      res.send(html)
+     })    
     }
-      
-    
-      res.end('<a href="/"> go to root </a>')
 
   })
   
