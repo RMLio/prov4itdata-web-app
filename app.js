@@ -3,6 +3,7 @@ var session = require('express-session')
 var grant = require('grant').express()
 const axios = require('axios')
 const { response } = require('express')
+var path = require('path');
 
 const getData = async (url, bearerToken, cb) => {
   try {
@@ -23,6 +24,10 @@ const getData = async (url, bearerToken, cb) => {
 express()
   .use(session({secret: 'grant', saveUninitialized: true, resave: false}))
   .use(grant(require('./config.json')))
+
+  // client-side Solid auth
+  .use('/solid-auth', express.static(path.join(__dirname, 'solid-auth')))
+
   .get('/', (req,res)=> {
       console.log("ROOT")
 
@@ -32,6 +37,8 @@ express()
       res.write('<ul>')
       res.write('<li><a href="/connect/imgur">connect Imgur</a></li>')
       res.write('<li> <a href="/get/imgur">simple GET request to Imgur</a></li>')
+      res.write('<li> <a href="/solid-auth">Solid Authentication</a></li>')
+
       res.write('</ul>')
 
       if(req.session.hasOwnProperty('grant')) {
