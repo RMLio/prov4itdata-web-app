@@ -25,7 +25,6 @@ async function login(idp) {
     }
 }
 
-
 /**
  * Helper: update the inner HTML of document elements given a map
  * @param {idOnInnerHTML}: key-values object (id DOM element -> inner HTML data)
@@ -35,7 +34,6 @@ function setInnerHTMLByElementIdMap(idOnInnerHTML) {
         document.getElementById(key).innerHTML = value
     }
 }
-
 
 /**
  * Fetch sample data from the Solid pod
@@ -58,7 +56,6 @@ async function fetchFromSolidPod(url) {
     // Return decoded data
     return decodedData
 }
-
 
 // Solid: Log in
 document.getElementById("btn_login").onclick = () => {

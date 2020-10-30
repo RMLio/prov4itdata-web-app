@@ -1,0 +1,16 @@
+prefixes:
+  ex: "http://example.com/"
+  spod: "https://dapsi-client.solidcommunity.net/"
+
+mappings:
+  person:
+    sources:
+      - ['data.json~jsonpath', '$.[*]']
+    s: spod:imgur/me/images/$(id)
+    po:
+      - [a, ex:Image]
+      - [ex:type, $(type)]
+      - [ex:width, $(width)]
+      - [ex:height, $(height)]
+      - [ex:desc, $(description)]
+      - [ex:link, $(link)]
