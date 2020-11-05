@@ -48,6 +48,7 @@ const executeRMLMapping = async (mapping, cb) => {
 }
 
 express()
+    .set('view engine', 'pug')
     .use(session({secret: 'grant', saveUninitialized: true, resave: false}))
     .use(grant(require('./config.json')))
 
@@ -63,6 +64,9 @@ express()
         res.write('<li> <a href="/get/imgur">simple GET request to Imgur</a></li>')
         res.write('<li> <a href="/solid-auth">Solid Authentication</a></li>')
         res.write('<li> <a href="/rmlmapper">RML Mapper example: generate RDF from Imgur API</a></li>')
+        res.write('<li> <a href="/transfer">Transfer</a></li>')
+
+
         res.write('</ul>')
 
         if (req.session.hasOwnProperty('grant')) {
@@ -158,4 +162,25 @@ express()
         }
     })
 
+    .get('/tokens/imgur', (req, res) => {
+        const bearerToken = getBearerToken(req)
+
+        res.send(bearerToken)
+    })
+    .get('/transfer', (req,res)=> {
+        console.log("transfer/imgur")
+
+        var paramsRender = {
+            'ACCESS_TOKEN' : getBearerToken(req)
+        }
+        res.render('transfer', paramsRender)
+
+        //res.render()
+
+        // client:
+        // RDF data = GET --> transfer/imgur/execute
+        // PATCH (RDF data) --> Solid Pod
+
+
+    })
     .listen(3000)

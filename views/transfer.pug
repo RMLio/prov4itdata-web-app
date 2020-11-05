@@ -1,0 +1,43 @@
+html
+    head
+        title= "DAPSI TRANSFER"
+        style
+            include css/transfer.css
+
+        script(async defer src="https://solid.github.io/solid-auth-client/dist/solid-auth-client.bundle.js")
+
+        script
+            include js/transfer.js
+
+
+    body
+        h1="TRANSFER"
+
+        div(id="div_access_token" class="box")
+            div(class="boxheader") Imgur Bearer token
+            br
+            <code class="barcode">#{ACCESS_TOKEN}</code>
+        div(id="div_solid_webid" class="box")
+            div(class="boxheader") Solid webid
+            br
+            <code id="solid_username" class="barcode"></code>
+
+        div(id="div_buttons" class="box")
+            div(class="boxheader") Controlz
+            br
+            button(id="btn_auth_solid") Auth. Solid
+            button(id="btn_execute_mapping") Execute RML Mapping
+            br
+            button(id="btn_fetch_from_solid") Fetch Imgur data from Solid Pod
+            button(id="btn_post_to_solid") Store on Solid Pod
+
+        div(id="div_output" class="box")
+            div(class="boxheader") GENERATED RDF
+            pre(id="pre_output")
+
+        div(id="div_solidpod_data" class="box")
+            div(class="boxheader") Solid Pod Data
+            pre(id="pre_solidpod_data")
+
+
+
