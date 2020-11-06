@@ -1,0 +1,35 @@
+mixin unorderedListOfLinks(links)
+    ul
+        each val in links
+            li
+                a(href=val.href) #{val.text}
+
+mixin boxWithLinks(description, links)
+    div
+        p #{description}
+        +unorderedListOfLinks(links)
+
+mixin boxWithTokens(tokenPairs)
+    div
+        p Tokens
+        if tokenPairs
+            ul
+                each val in tokenPairs
+                    li
+                        p
+                            span #{val.service}:
+                            code #{val.token}
+
+html
+    head
+        title= "PROV4ITDaTa DAPSI"
+
+    body
+        h1="PROV4ITDaTa-DAPSI"
+        +boxWithTokens(tokenPairs)
+        +boxWithLinks("Authentication & Authorization", authRoutes)
+        +boxWithLinks("GET Requests to services", serviceGetRoutes)
+        +boxWithLinks("Execute RML Mapping", executeMappingRoutes)
+        +boxWithLinks("Download RML Mapping", downloadRoutes)
+        +boxWithLinks("Transfers", transferRoutes)
+

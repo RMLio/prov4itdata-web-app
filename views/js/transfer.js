@@ -90,10 +90,14 @@ window.onload = function(loadEvent) {
     // Execute RML Mapping
     document.getElementById("btn_execute_mapping").onclick = async function () {
         console.log("clicked btn_execute_mapping")
-        // Get generated RDF
-        const url = "/rmlmapper"
-        const response = await fetch(url)
+        // Retrieving the filename of the selected mapping from the code_filename_rml_mapping-element
+        const filenameMapping = document.getElementById('code_filename_rml_mapping').innerText
 
+        // Create url for calling the rmlmapper using this mapping file
+        const url = `/rmlmapper/${filenameMapping}`
+
+        // Execute & process response
+        const response = await fetch(url)
         if (response.status == 200) {
             // Set up a StreamReader and UTF8 decoder
             const reader = response.body.getReader()

@@ -31,6 +31,11 @@ html
             button(id="btn_fetch_from_solid") Fetch Imgur data from Solid Pod
             button(id="btn_post_to_solid") Store on Solid Pod
 
+
+
+        div(id="div_rules" class="box")
+            div(class="boxheader") RML RULES (<code id="code_filename_rml_mapping">#{RML_RULES_FILENAME}</code>)
+            pre(id="pre_rules") #{RML_RULES}
         div(id="div_output" class="box")
             div(class="boxheader") GENERATED RDF
             pre(id="pre_output")
