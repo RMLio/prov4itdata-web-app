@@ -9,27 +9,35 @@ html
         script
             include js/transfer.js
 
-
     body
         h1="TRANSFER"
 
         div(id="div_access_token" class="box")
-            div(class="boxheader") Imgur Bearer token
-            br
-            <code class="barcode">#{ACCESS_TOKEN}</code>
+            div(class="boxheader")
+                p Imgur Bearer token
+                <code class="barcode">#{ACCESS_TOKEN}</code>
+
         div(id="div_solid_webid" class="box")
-            div(class="boxheader") Solid webid
-            br
-            <code id="solid_username" class="barcode"></code>
+            div(class="boxheader")
+                p Solid webid
+                <code id="solid_username" class="barcode"></code>
 
         div(id="div_buttons" class="box")
-            div(class="boxheader") Controlz
-            br
-            button(id="btn_auth_solid") Auth. Solid
-            button(id="btn_execute_mapping") Execute RML Mapping
-            br
-            button(id="btn_fetch_from_solid") Fetch Imgur data from Solid Pod
-            button(id="btn_post_to_solid") Store on Solid Pod
+            div(class="boxheader")
+                p Controlz
+                button(id="btn_auth_solid" class="button") Auth. Solid
+                button(id="btn_execute_mapping" class="button") Execute RML Mapping
+                button(id="btn_fetch_from_solid" class="button") Fetch Imgur data from Solid Pod
+                button(id="btn_post_to_solid" class="button") Store on Solid Pod
+                button(id="btn_create_imgurfile_on_solid") Create Imgur data file from Solid Pod
+                button(id="btn_delete_from_solid") Delete Imgur data file from Solid Pod
+
+        div(id="div_rules" class="box")
+            div(class="boxheader")
+                p RML RULES (<code id="code_filename_rml_mapping">#{RML_RULES_FILENAME}</code>)
+                button(id="btn_download_RML_rules" class="button") Download
+
+            pre(id="pre_rules") #{RML_RULES}
 
 
 
@@ -37,12 +45,20 @@ html
             div(class="boxheader") RML RULES (<code id="code_filename_rml_mapping">#{RML_RULES_FILENAME}</code>)
             pre(id="pre_rules") #{RML_RULES}
         div(id="div_output" class="box")
-            div(class="boxheader") GENERATED RDF
+            div(class="boxheader")
+                p GENERATED RDF
+                button(id="btn_download_RDF" class="button") Download
+
             pre(id="pre_output")
 
+        div(id="div_provenance" class="box")
+            div(class="boxheader")
+                p PROVENANCE
+                button(id="btn_download_provenance" class="button") Download
+
+            pre(id="pre_provenance")
+
         div(id="div_solidpod_data" class="box")
-            div(class="boxheader") Solid Pod Data
-            pre(id="pre_solidpod_data")
-
-
-
+            div(class="boxheader")
+                p Solid Pod Data
+                pre(id="pre_solidpod_data")

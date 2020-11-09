@@ -34,7 +34,8 @@ const executeRMLMapping = async (mapping, cb) => {
 
         // Construct the parameters used to execute the RML Mapping
         const paramsRMLMapperRequest = {
-            'rml': mapping
+            'rml': mapping,
+            'generateMetadata': true
         }
 
         const data = await axios.post(urlRMLMapper, paramsRMLMapperRequest)
@@ -212,8 +213,34 @@ express()
                     // If succesful, output the generated RDF as plain text
                     if (response.status == 200) {
                         var output = response.data.output
-                        res.setHeader('Content-Type', 'text/plain')
-                        res.send(output)
+                        var metadata = response.data.metadata
+
+                        const contentType = req.headers['content-type']
+
+                        // Create response based on content-type
+                        switch (contentType) {
+                            
+                            case 'text/plain':
+                                res.setHeader('Content-Type', 'text/plain')
+                                res.send(output)
+                                break
+
+                            case 'application/json':
+                                res.setHeader('Content-Type', 'application/json')
+                                res.send({
+                                    'rdf' : output,
+                                    'provenance' : metadata
+                                })
+                                break
+
+                            default:
+                                res.setHeader('Content-Type', 'text/html')
+                                var paramsRender = {
+                                    'generatedRDF' : output
+                                }
+                                res.render('rmlmapper-output', paramsRender)
+                        }
+
                     } else {
                         // Complain
                         console.error("Unsuccessful...")
@@ -239,7 +266,7 @@ express()
         res.send(bearerToken)
     })
     .get('/transfer/:filename?', (req,res)=> {
-        console.log("transfer/imgur")
+        console.log("transfer/:filename?")
         var paramsRender = {
             'ACCESS_TOKEN' : tokenController.getBearerToken(req)
         }
