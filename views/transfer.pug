@@ -1,3 +1,5 @@
+
+
 html
     head
         title= "DAPSI TRANSFER"
@@ -14,23 +16,29 @@ html
 
         div(id="div_access_token" class="box")
             div(class="boxheader")
-                p Imgur Bearer token
-                <code class="barcode">#{ACCESS_TOKEN}</code>
 
-        div(id="div_solid_webid" class="box")
-            div(class="boxheader")
-                p Solid webid
-                <code id="solid_username" class="barcode"></code>
+                p Provider:
+                div(class="boxheader")
+                    <code id="code_provider" class="barcode">#{PROVIDER}</code>
 
-        div(id="div_buttons" class="box")
+        div(id="div_solid" class="box")
             div(class="boxheader")
-                p Controlz
-                button(id="btn_auth_solid" class="button") Auth. Solid
+                p Solid
+            div(class="boxheader")
+                <pre id="solid_username" class="barcode"></pre>
+
+            div
+                button(id="btn_auth_solid" class="button solid") Auth. Solid
+                button(id="btn_fetch_from_solid" class="button solid") Fetch <b><code>#{PROVIDER}.ttl</code></b>
+                button(id="btn_post_to_solid" class="button solid") Store in <b><code>#{PROVIDER}.ttl</code></b>
+                button(id="btn_create_datafile_on_solid" class="button solid") Create <b><code>#{PROVIDER}.ttl</code></b>
+                button(id="btn_delete_from_solid" class="button solid") Delete <b><code>#{PROVIDER}.ttl</code></b>
+
+            div(class="boxheader")
+                p Transfer pipeline
                 button(id="btn_execute_mapping" class="button") Execute RML Mapping
-                button(id="btn_fetch_from_solid" class="button") Fetch Imgur data from Solid Pod
-                button(id="btn_post_to_solid" class="button") Store on Solid Pod
-                button(id="btn_create_imgurfile_on_solid") Create Imgur data file from Solid Pod
-                button(id="btn_delete_from_solid") Delete Imgur data file from Solid Pod
+
+
 
         div(id="div_rules" class="box")
             div(class="boxheader")
@@ -39,11 +47,6 @@ html
 
             pre(id="pre_rules") #{RML_RULES}
 
-
-
-        div(id="div_rules" class="box")
-            div(class="boxheader") RML RULES (<code id="code_filename_rml_mapping">#{RML_RULES_FILENAME}</code>)
-            pre(id="pre_rules") #{RML_RULES}
         div(id="div_output" class="box")
             div(class="boxheader")
                 p GENERATED RDF

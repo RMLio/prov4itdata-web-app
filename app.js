@@ -1,13 +1,45 @@
+
 var express = require('express')
 var session = require('express-session')
-var grant = require('grant').express()
+var Grant = require('grant').express()
+var grant = Grant(require('./config.json'))
 const axios = require('axios')
 const {response} = require('express')
 var fs = require('fs')
 var path = require('path');
+var https = require('https')
+var pem = require('pem')
+
+
 // controllers
 var rmlRulesController = require('./controllers/rmlRulesController')
 var tokenController = require('./controllers/tokenController')
+
+// utils
+var mappingUtils = require('./lib/utils/mappingUtils')
+
+// Configuration constants
+const PORT = 3000
+
+// TODO: refactor helper functions
+
+function updateTokens(req) {
+    console.log('@updateTokens')
+    var g = req.session.grant
+
+    if(g===null)
+        return
+    // if tokens object doesn't exist yet, initialize!
+    if(!req.session.tokens)
+        req.session.tokens = {}
+
+    // Fill in request & response keys (if there's a key missing, initialize an empty kev-value object)
+    req.session.tokens[g.provider] = {
+        'request' : g.request ? g.request : {},
+        'response' : g.response ? g.response : {}
+    }
+
+}
 
 const getData = async (url) => {
     const data = await axios.get(url)
@@ -47,37 +79,46 @@ const executeRMLMapping = async (mapping, cb) => {
     }
 }
 
-express()
-    .set('view engine', 'pug')
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var app = express()
+app.set('view engine', 'pug')
     .use(session(
         {secret: 'grant',
             saveUninitialized: true,
-            resave: false
+            resave: false,
+
         }))
-    .use(grant(require('./config.json')))
+    .use(grant)
     // client-side Solid auth
     .use('/solid-auth', express.static(path.join(__dirname, 'solid-auth')))
 
     .get('/', (req,res)=>{
 
-        if(req.session.pageViews)
-            console.log("pageviews: ", req.session.pageViews)
-
-        // Create key-value pairs for the access tokens
-        const tokenPairs = []
-        const bearerToken = tokenController.getBearerToken(req)
-        if(bearerToken !== null)
-            tokenPairs.push({'service' : 'imgur', 'token' : bearerToken})
-
+        // DEBUG
+        console.log("provider list: " ,       rmlRulesController.getProviderList()
+        )
 
         // Create key-value pairs for each RML Mapping file
-        const downloadRoutes = rmlRulesController.mappingList()
+        const mappingList = rmlRulesController.getMappingList();
+        console.log("mappinglsit: ", mappingList)
+        var downloadRoutes = rmlRulesController.getMappingList()
             .flatMap((f)=>[{
             'text':f, 'href':path.join('/download/rml', f)
         }])
+
+
+
+
+
         // Create key-value pairs for the routes to pages
         const authRoutes = [
             {'text': 'Connect Imgur', 'href':'/connect/imgur'},
+            {'text': 'Connect Flickr', 'href':'/connect/flickr'},
             {'text': 'Solid Authentication', 'href':'/solid-auth'},
         ]
         // Create key-value pairs for the routes to test GET requests to the services (e.g. Imgur)
@@ -86,26 +127,35 @@ express()
         ]
 
         // Create key-value pairs for routes for executing RML Rules
-        const executeMappingRoutes = rmlRulesController.mappingList()
+        const executeMappingRoutes = rmlRulesController.getMappingList()
             .flatMap((f)=>[{'text':f, 'href':path.join('/rmlmapper', f)}])
 
         // Create key-value pairs for routes for executing the transfer pipeline
-        const transferRoutes = rmlRulesController.mappingList()
+        const transferRoutes = rmlRulesController.getMappingList()
             .flatMap((f)=>[{'text':f, 'href':path.join('/transfer', f)}])
 
+        // Dev routes
+        const devRoutes = [
+            {'text' : 'flickr provider, no file', 'href' : '/rmlmapper/flickr'},
+            {'text' : 'flickr provider, flickr-001-TEMPLATED.ttl', 'href' : '/rmlmapper/flickr/flickr-001-TEMPLATED.ttl'}
+        ]
 
         // Construct render parameters
         var paramsRender = {
-            'tokenPairs' : tokenPairs,
+            'tokens' : req.session.tokens? Object.keys(req.session.tokens) : null,
             'downloadRoutes' : downloadRoutes,
             'authRoutes': authRoutes,
             'serviceGetRoutes' : serviceGetRoutes,
             'executeMappingRoutes' : executeMappingRoutes,
-            'transferRoutes' : transferRoutes
+            'transferRoutes' : transferRoutes,
+            'devRoutes' : devRoutes
         }
         // Render
         res.render('index', paramsRender)
     })
+    /**
+     * TODO: delete this /v1
+     */
     .get('/v1', (req, res) => {
         console.log("ROOT")
 
@@ -118,7 +168,7 @@ express()
         // Create links for executing the available mappings
         res.write('<li>Execute RML Mappings:</li>')
         res.write('<ul>')
-        rmlRulesController.mappingList().forEach(
+        rmlRulesController.getMappingList().forEach(
             (filename, index, array)=>
                 res.write(`<li> <a href="/rmlmapper/${filename}">Execute mapping: ${filename}</a></li>`)
         )
@@ -142,40 +192,55 @@ express()
     })
 
     .get('/imgur/callback', (req, res) => {
+        console.log(req.route.path)
+        updateTokens(req)
+        res.redirect('/')
+    })
+    .get('/flickr/callback', (req, res) => {
+
+        console.log(req.route.path)
+        updateTokens(req)
         res.redirect('/')
     })
 
     .get('/get/imgur', (req, res) => {
         // url for GET request (should return a collection images for the logged in profile)
         const url = 'https://api.imgur.com/3/account/me/images'
+        const provider = 'imgur'
+        const providerTokens = tokenController.getProviderCredentials(req, provider)
+        if(providerTokens){
+            let bearerToken = providerTokens['response']['access_token']
+            if(bearerToken)
+                // execute the GET request
+                getAuthorizedData(url, bearerToken, (response) => {
+                    const imageElements = response.data.data
 
-        const bearerToken = tokenController.getBearerToken(req)
-        if (bearerToken !== null) {
-            console.log('bearer token: ' + bearerToken)
-
-            // execute the GET request
-            getAuthorizedData(url, bearerToken, (response) => {
-                const imageElements = response.data.data
-
-                // create some html to render the images
-                const html = imageElements.map(el =>
-                    `<div id="${el.id}">     
-                        <img src="${el.link}">
-                        <p>${el.description}</p>
-                        <p>views: ${el.views}</p>
-                      </div>
-                    `).join()
-                res.send(html)
-            })
+                    // create some html to render the images
+                    const html = imageElements.map(el =>
+                        `<div id="${el.id}">     
+                            <img src="${el.link}">
+                            <p>${el.description}</p>
+                            <p>views: ${el.views}</p>
+                          </div>
+                        `).join()
+                    res.send(html)
+                })
+            else
+            {
+                console.error(`Obtained providerTokens for ${provider}, but the access_token is null!`)
+                res.sendStatus(500) // Internal server error?
+            }
         }else
             res.sendStatus(401) // 401: Unauthorized
+
+
     })
     .get('/rml/rules/:filename?', (req, res)=> {
         console.log("/rml/rules/:filename")
         const filename = req.params.filename
         // When the filename parameter is not provided, return the available mapping files
         if(filename === undefined){
-            res.send(rmlRulesController.mappingList())
+            res.send(rmlRulesController.getMappingList())
         }
         // If the filename parameter is defined, return the file it points to, if it exists.
         else {
@@ -187,77 +252,83 @@ express()
         }
     })
 
-    .get('/rmlmapper/:filename?', (req, res) => {
-        console.log("/rmlmapper")
-        // Obtain Imgur bearer token
-        const bearerToken = tokenController.getBearerToken(req)
+    .get('/rmlmapper/:provider/:filename?', (req, res) => {
+        const provider = req.params.provider
+        const filename = req.params.filename
+        if(provider && filename){
+            console.log("We got both a provider & filename, we're good to go")
+            console.log("provider: " + provider, ", filename: " , filename)
+            // Check whether provider tokens are available
+            const providerCredentials = tokenController.getProviderCredentials(req, provider)
+            // Grant config
+            const providerConfig = grant.config[provider]
 
-        // If we were able to get the bearer token then
-        if (bearerToken != null) {
+            if(providerCredentials){
+                const templateKeyValues = mappingUtils.createTemplateKeyValues(providerCredentials, providerConfig)
+                let mapping = rmlRulesController.readMapping(provider, filename)
+                const replacementMapping = mappingUtils.initializeReplacementMapping(mapping, templateKeyValues)
+                mapping = mappingUtils.doReplacement(mapping, replacementMapping)
 
-            // Read the RML Mapping (if filename is set in the URL, that one will be used.
-            // Otherwise, the default filename will be used)
-            const pathRMLMapping = path.join('rml',req.params.filename !== undefined ? req.params.filename : "imgur-002-TEMPLATED.ttl")
-            console.log("pathRMLMapping: ", pathRMLMapping)
-            var mappingTurtle = fs.readFileSync(pathRMLMapping, {'encoding': 'utf8'})
+                // TODO: refactor this to some controller
+                executeRMLMapping(mapping,
+                    // Process the reponse
+                    (response) => {
+                        // If succesful, output the generated RDF as plain text
+                        if (response.status == 200) {
+                            var output = response.data.output
+                            var metadata = response.data.metadata
 
-            // Replace template-variabe: authorizationHeader with the current bearer token
-            const pattern = /\{{2}authorizationHeader\}{2}/
-            const replacement = `Bearer ${bearerToken}`
-            mappingTurtle = mappingTurtle.replace(pattern, replacement)
+                            const contentType = req.headers['content-type']
 
-            // Execute it
-            executeRMLMapping(mappingTurtle,
-                // Process the reponse
-                (response) => {
-                    // If succesful, output the generated RDF as plain text
-                    if (response.status == 200) {
-                        var output = response.data.output
-                        var metadata = response.data.metadata
+                            // Create response based on content-type
+                            switch (contentType) {
 
-                        const contentType = req.headers['content-type']
+                                case 'text/plain':
+                                    res.setHeader('Content-Type', 'text/plain')
+                                    res.send(output)
+                                    break
 
-                        // Create response based on content-type
-                        switch (contentType) {
-                            
-                            case 'text/plain':
-                                res.setHeader('Content-Type', 'text/plain')
-                                res.send(output)
-                                break
+                                case 'application/json':
+                                    res.setHeader('Content-Type', 'application/json')
+                                    res.send({
+                                        'rdf' : output,
+                                        'provenance' : metadata
+                                    })
+                                    break
 
-                            case 'application/json':
-                                res.setHeader('Content-Type', 'application/json')
-                                res.send({
-                                    'rdf' : output,
-                                    'provenance' : metadata
-                                })
-                                break
+                                default:
+                                    res.setHeader('Content-Type', 'text/html')
+                                    var paramsRender = {
+                                        'generatedRDF' : output
+                                    }
+                                    res.render('rmlmapper-output', paramsRender)
+                            }
 
-                            default:
-                                res.setHeader('Content-Type', 'text/html')
-                                var paramsRender = {
-                                    'generatedRDF' : output
-                                }
-                                res.render('rmlmapper-output', paramsRender)
+                        } else {
+                            // Complain
+                            console.error("Unsuccessful...")
+                            console.error(response)
+                            res.send(`<p style="color:red">FAILURE</p>`)
                         }
-
-                    } else {
-                        // Complain
-                        console.error("Unsuccessful...")
-                        console.error(response)
-                        res.send(`<p style="color:red">FAILURE</p>`)
                     }
-                }
-            )
+                )
 
-        } else {
-            // The bearerToken was null, complain
-            let errMessage = "No Imgur BearerToken available. Make sure to obtain one first!"
-            console.error(errMessage)
-            const html = `
-              <p style="color:red">${errMessage}</p>
-            `
-            res.send(html)
+            }else {
+                // No tokens for the current provider available. Complain!
+                let errMessage = `No tokens available for ${provider} available. Make sure to connect & authorize first!`
+                console.error(errMessage)
+                const html = `
+                  <p style="color:red">${errMessage}</p><br>
+                  <a href="/">Go back</a>
+                `
+                res.send(html)
+            }
+
+        }else {
+            console.error("Missing provider and/or filename")
+            // 422: unprocessable entity.
+            // ref: https://stackoverflow.com/questions/3050518/what-http-status-response-code-should-i-use-if-the-request-is-missing-a-required
+            res.sendStatus(422)
         }
     })
 
@@ -265,17 +336,37 @@ express()
         const bearerToken = tokenController.getBearerToken(req)
         res.send(bearerToken)
     })
-    .get('/transfer/:filename?', (req,res)=> {
-        console.log("transfer/:filename?")
-        var paramsRender = {
-            'ACCESS_TOKEN' : tokenController.getBearerToken(req)
-        }
-        if(req.params.filename !== undefined) {
-            paramsRender['RML_RULES_FILENAME'] = req.params.filename
-            paramsRender['RML_RULES'] = rmlRulesController.readMapping(req.params.filename)
-        }
-        res.render('transfer', paramsRender)
-    })
-    .get('/download/rml/:filename?', rmlRulesController.downloadMappingToClient)
+    .get('/transfer/:provider/:filename', (req,res)=> {
 
-    .listen(3000)
+        const provider = req.params.provider
+        const filename = req.params.filename
+        if(provider && filename){
+            console.log("We got both a provider & filename, we're good to go")
+            console.log("provider: " + provider, ", filename: " , filename)
+
+
+            var paramsRender = {
+                'PROVIDER' : provider,
+                'ACCESS_TOKEN' : tokenController.getBearerToken(req)
+            }
+            if(req.params.filename !== undefined) {
+                paramsRender['RML_RULES_FILENAME'] = req.params.filename
+                paramsRender['RML_RULES'] = rmlRulesController.readMapping(provider, req.params.filename)
+            }
+            res.render('transfer', paramsRender)
+        }else {
+
+        }
+
+    })
+    .get('/download/rml/:provider/:filename', rmlRulesController.downloadMappingToClient)
+
+pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+    console.log("create cert")
+    if (err) {
+        throw err
+    }
+
+
+    https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(PORT)
+})

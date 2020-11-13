@@ -1,8 +1,0 @@
-#! /bin/bash
-YARRRML_FILES=$(ls *.yml)
-
-for yml_file in $YARRRML_FILES; do  
-    filename="${yml_file%.*}"
-    out="$filename.ttl"
-    yarrrml-parser -i $yml_file -o $out
-done;
