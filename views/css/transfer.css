@@ -29,13 +29,16 @@ div.boxheader {
 .button {
     background-color: dimgrey; /* Green */
     border: none;
-    color: white;
+    color: black;
     padding: 10px 24px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     margin: 1px;
+}
+.button.solid {
+  background-color: #7c4dff;
 }
 pre {
     white-space: pre-wrap;       /* Since CSS 2.1 */

@@ -9,16 +9,15 @@ mixin boxWithLinks(description, links)
         p #{description}
         +unorderedListOfLinks(links)
 
-mixin boxWithTokens(tokenPairs)
+mixin boxWithTokens(tokens)
     div
         p Tokens
-        if tokenPairs
+        if tokens
             ul
-                each val in tokenPairs
+                each val in tokens
                     li
                         p
-                            span #{val.service}:
-                            code #{val.token}
+                            span #{val}
 
 html
     head
@@ -26,10 +25,11 @@ html
 
     body
         h1="PROV4ITDaTa-DAPSI"
-        +boxWithTokens(tokenPairs)
+        +boxWithTokens(tokens)
         +boxWithLinks("Authentication & Authorization", authRoutes)
         +boxWithLinks("GET Requests to services", serviceGetRoutes)
         +boxWithLinks("Execute RML Mapping", executeMappingRoutes)
         +boxWithLinks("Download RML Mapping", downloadRoutes)
         +boxWithLinks("Transfers", transferRoutes)
+        +boxWithLinks("Dev routes", devRoutes)
 

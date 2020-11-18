@@ -4,7 +4,8 @@ var generatedRDF = null
 var provenance = null
 
 const urlDirPrivate = 'https://dapsi-client.solidcommunity.net/private/'
-const imgurDataFileName = 'imgur.ttl'
+var provider = null
+var dataFileName = null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// HELPERS
@@ -39,6 +40,11 @@ async function readAndDecodeBody(response) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// ON LOAD
 window.onload = function(loadEvent) {
+
+    // Get provider
+    provider = document.getElementById('code_provider').innerText
+    // Filename of the corresponding turtle file on the Solid pod
+    dataFileName = `${provider}.ttl`
 
     solid.auth.trackSession(session => {
         if (!session)
@@ -78,7 +84,6 @@ window.onload = function(loadEvent) {
      * @returns {Promise<void>}
      */
     async function storeGeneratedRDFOnSolidPod(url, data) {
-
         // Insert query
         const query = `INSERT DATA {${data}}`
 
@@ -115,9 +120,9 @@ window.onload = function(loadEvent) {
         console.log("clicked btn_execute_mapping")
         // Retrieving the filename of the selected mapping from the code_filename_rml_mapping-element
         const filenameMapping = document.getElementById('code_filename_rml_mapping').innerText
-
+        const provider = document.getElementById('code_provider').innerText
         // Create url for calling the rmlmapper using this mapping file
-        const url = `/rmlmapper/${filenameMapping}`
+        const url = `/rmlmapper/${provider}/${filenameMapping}`
 
         // Create request parameters
         const params = {
@@ -199,7 +204,7 @@ window.onload = function(loadEvent) {
 
     // Fetch data from Solid pod and render it on the web page
     document.getElementById("btn_fetch_from_solid").onclick = async function () {
-        let url =  new URL(imgurDataFileName, urlDirPrivate).toString()
+        let url =  new URL(dataFileName, urlDirPrivate).toString()
 
         const solidPodData = await fetchFromSolidPod(url)
         document.getElementById("pre_solidpod_data").innerText = solidPodData
@@ -207,7 +212,7 @@ window.onload = function(loadEvent) {
 
     // Store generated RDF on Solid Pod
     document.getElementById("btn_post_to_solid").onclick = async function () {
-        let url =  new URL(imgurDataFileName, urlDirPrivate).toString()
+        let url =  new URL(dataFileName, urlDirPrivate).toString()
 
         if(generatedRDF != null)
             await storeGeneratedRDFOnSolidPod(url, generatedRDF)
@@ -215,21 +220,21 @@ window.onload = function(loadEvent) {
             alert("There's no generated RDF data.")
     }
 
-    // DELETE Imgur data file
+    // DELETE data file from Solid pod
     document.getElementById("btn_delete_from_solid").onclick = async function () {
         console.log("btn_delete_from_solid")
         const params = {
             'method' : 'DELETE',
         }
-        let url =  new URL(imgurDataFileName, urlDirPrivate).toString()
+        let url =  new URL(dataFileName, urlDirPrivate).toString()
         const response = await solid.auth.fetch(url, params)
         await handleReponse(response,
             (res)=>{
-                console.log("Succesfully DELETED file: "  + imgurDataFileName)
+                console.log("Succesfully DELETED file: "  + dataFileName)
 
             },
             async (res)=>{
-                const alertMsg = `Error while deleting file: ${imgurDataFileName}.\n
+                const alertMsg = `Error while deleting file: ${dataFileName}.\n
                 Error message: ${await readAndDecodeBody(res)}
                 `
                 alert(alertMsg)
@@ -240,25 +245,24 @@ window.onload = function(loadEvent) {
 
     }
 
-    // CREATE Imgur data file
-    document.getElementById("btn_create_imgurfile_on_solid").onclick = async function () {
-        console.log("btn_create_imgurfile_on_solid")
+    // CREATE data file on Solid pod
+    document.getElementById("btn_create_datafile_on_solid").onclick = async function () {
         const params = {
             'method' : 'POST',
             'body' :'',
             headers : {
                 'Content-Type' : 'text/turtle',
                 'Link': '<http://www.w3.org/ns/ldp#Resource>; rel="type"',
-                'Slug' : imgurDataFileName
+                'Slug' : dataFileName
             }
         }
         const response = await solid.auth.fetch(urlDirPrivate, params)
         handleReponse(response,
             (res)=>{
-                console.log("Succesfully created file: "  + imgurDataFileName)
+                console.log("Succesfully created file: "  + dataFileName)
             },
             async (res)=>{
-                    const alertMsg = `Error while creating file: ${imgurDataFileName}.\n
+                    const alertMsg = `Error while creating file: ${dataFileName}.\n
                     Error message: ${await readAndDecodeBody(res)}
                     `
                     alert(alertMsg)
