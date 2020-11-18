@@ -125,7 +125,9 @@ and linked them to the specific sections of the features we currently support,
 - Data Interoperability (by using RDF as intermediate data model and configuration data model, see [section](#output-rdf) and [section](#mapping-files-to-transfer-data))
 - [ ] TODO write list of requirements, and link to the different sections that fixes those requirements
 - Security (using standard secure connections such as HTTPS, see [section](#security))
-- Quality
+- Quality (using default configuration files crafted by experts, and bound to quality checks, see [section](#quality))
+
+In general, our system is comparable to DTP, as it supports (and is extensible to) multiple data sources, and allows data import into SOLID (see [section](#data-portability)).
 
 ## Demonstrator
 
@@ -135,7 +137,7 @@ and linked them to the specific sections of the features we currently support,
 ## Use cases
 
 - [ ] TODO clarify this is all extensible
-- [ ] TODO list all data fields
+- [ ] TODO list all data fields that are being mapped for each source
 
 ### Flickr
 
@@ -180,13 +182,12 @@ Access control: you need the developer key of the individual services
 
 ### Data portability
 
+- [ ] prove it works for multiple data sources
 - [ ] prove it works for SOLID
 
-### Query-based
-
-_This is not complete yet._
-
 ## Legal
+
+- [ ] TODO @bdm complete this section
 
 - [ ] TODO clarify that users take control of their own data: they become data controllers.
 
