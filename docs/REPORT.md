@@ -21,6 +21,8 @@ with automatic data provenance and fine-grained configuration to extract and tra
 - Using Comunica, we can query multiple intermediate datasets to transfer to a new
 service, generating a provenance trail of where the resulting data came from.
 
+![RML.io logo](./img/rmlio-logo.png)
+
 Combining RML.io and Comunica for a fully transparent transfer process,
 we improve current data portability approaches.
 Also, assessing the provenance trail can add trust to a transfer process.
