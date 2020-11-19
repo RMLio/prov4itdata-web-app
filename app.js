@@ -41,7 +41,7 @@ app.set('view engine', 'pug')
     .use(grant)
     // client-side Solid auth
     .use('/solid-auth', express.static(path.join(__dirname, 'solid-auth')))
-    .use('/', router(grant, logConfig))
+    .use('/', router(grant,environmentConfig, logConfig))
     .use(express.static('public'))
 
 if(USE_HTTPS){

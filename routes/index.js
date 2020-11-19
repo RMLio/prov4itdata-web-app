@@ -14,9 +14,9 @@ const statusCodes = {
     500: "Internal Server Error"
 }
 
-function createRouter(grant, config = null) {
-    if (config) {
-        if (config.logConfig.logRoute)
+function createRouter(grant, environmentConfig, logConfig = null) {
+    if (logConfig) {
+        if (logConfig.logConfig.logRoute)
             // Writes the current route to the console
             router.use((req, res, next) => {
                 console.log(`route: ${req.path}`)
@@ -109,7 +109,7 @@ function createRouter(grant, config = null) {
                 mapping = mappingUtils.doReplacement(mapping, replacementMapping)
 
                 // TODO: refactor this to some controller
-                executeRMLMapping(mapping,
+                executeRMLMapping(environmentConfig.rmlmapper_webapi, mapping,
                     // Process the reponse
                     (response) => {
                         // If succesful, output the generated RDF as plain text
@@ -304,11 +304,9 @@ const getAuthorizedData = async (url, bearerToken, cb) => {
     }
 }
 
-async function executeRMLMapping(mapping, cb) {
+async function executeRMLMapping(urlRMLMapper, mapping, cb) {
     console.log("@executeRMLMapping")
     try {
-        const urlRMLMapper = "http://localhost:4000/execute"
-
         // Construct the parameters used to execute the RML Mapping
         const paramsRMLMapperRequest = {
             'rml': mapping,
@@ -320,6 +318,8 @@ async function executeRMLMapping(mapping, cb) {
         cb(data)
 
     } catch (error) {
+        console.error("Error while executing RML Mapping")
+        console.error("\turl RMLMapper web api: ", urlRMLMapper)
         console.error(error.message)
     }
 }
