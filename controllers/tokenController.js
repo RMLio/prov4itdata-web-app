@@ -6,6 +6,12 @@ exports.getBearerToken = function(req) {
     return null
 }
 
+exports.getConnectedProviders = function(req) {
+    if(req.session.hasOwnProperty('tokens'))
+        return req.session.tokens
+    else
+        return null
+}
 exports.getProviderCredentials = function (req, provider) {
     // If provider is present, return tokens object, otherwise null
     if(req.session.hasOwnProperty('tokens') && req.session.tokens.hasOwnProperty(provider)){

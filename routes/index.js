@@ -4,6 +4,7 @@ const router = express.Router();
 const rmlRulesController = require('../controllers/rmlRulesController')
 const tokenController = require('../controllers/tokenController')
 const mappingUtils = require('../lib/utils/mappingUtils')
+const configurationController = require('../controllers/configuration-controller')
 const path = require('path')
 
 const statusCodes = {
@@ -23,50 +24,26 @@ function createRouter(grant, config = null) {
             })
     }
 
-    // root
     router.get('/', (req, res) => {
-        // Create key-value pairs for each RML Mapping file
-        const mappingList = rmlRulesController.getMappingList();
-        var downloadRoutes = rmlRulesController.getMappingList()
-            .flatMap((f) => [{
-                'text': f, 'href': path.join('/download/rml', f)
-            }])
+        var paramsRender = {}
+        const  rmlMappingFiles = rmlRulesController.getMappingList()
+        // Creates a structure that groups mapping files per provider
+        const groupedMappingFiles = rmlMappingFiles.reduce((acc, fpath)=>{
+            let [provider, filename] = fpath.split('/')
+            let record = {
+                'provider' : provider,
+                'filename' :filename,
+                'relativeFilepath' :  fpath
+            }
+            if(!acc.hasOwnProperty(provider))
+                acc[provider] = [record]
+            else
+                acc[provider].push(record)
 
-        // Create key-value pairs for the routes to pages
-        const authRoutes = [
-            {'text': 'Connect Imgur', 'href': '/connect/imgur'},
-            {'text': 'Connect Flickr', 'href': '/connect/flickr'},
-            {'text': 'Solid Authentication', 'href': '/solid-auth'},
-        ]
-        // Create key-value pairs for the routes to test GET requests to the services (e.g. Imgur)
-        const serviceGetRoutes = [
-            {'text': 'Imgur: GET my images', 'href': '/get/imgur'},
-        ]
+            return acc
+        }, {})
 
-        // Create key-value pairs for routes for executing RML Rules
-        const executeMappingRoutes = rmlRulesController.getMappingList()
-            .flatMap((f) => [{'text': f, 'href': path.join('/rmlmapper', f)}])
-
-        // Create key-value pairs for routes for executing the transfer pipeline
-        const transferRoutes = rmlRulesController.getMappingList()
-            .flatMap((f) => [{'text': f, 'href': path.join('/transfer', f)}])
-
-        // Dev routes
-        const devRoutes = [
-            {'text': 'flickr provider, no file', 'href': '/rmlmapper/flickr'},
-            {'text': 'flickr provider, flickr-001-TEMPLATED.ttl', 'href': '/rmlmapper/flickr/flickr-001-TEMPLATED.ttl'}
-        ]
-
-        // Construct render parameters
-        var paramsRender = {
-            'tokens': req.session.tokens ? Object.keys(req.session.tokens) : null,
-            'downloadRoutes': downloadRoutes,
-            'authRoutes': authRoutes,
-            'serviceGetRoutes': serviceGetRoutes,
-            'executeMappingRoutes': executeMappingRoutes,
-            'transferRoutes': transferRoutes,
-            'devRoutes': devRoutes
-        }
+        paramsRender['GROUPED_MAPPINGS'] =  groupedMappingFiles
         // Render
         res.render('index', paramsRender)
     })
@@ -90,16 +67,16 @@ function createRouter(grant, config = null) {
      * If a filename is specified, read and send that file.
      * Otherwise, return a list of available mappings.
      */
-    router.get('/rml/rules/:filename?', (req, res) => {
-        console.log("/rml/rules/:filename")
+    router.get('/rml/rules/:provider/:filename?', (req, res) => {
+        const provider = req.params.provider
         const filename = req.params.filename
         // When the filename parameter is not provided, return the available mapping files
-        if (filename === undefined) {
+        if (provider === undefined || filename === undefined) {
             res.send(rmlRulesController.getMappingList())
         }
         // If the filename parameter is defined, return the file it points to, if it exists.
         else {
-            const mapping = rmlRulesController.readMapping(filename)
+            const mapping = rmlRulesController.readMapping(provider, filename)
             if (mapping != null)
                 res.send(mapping)
             else
@@ -248,6 +225,50 @@ function createRouter(grant, config = null) {
      */
     router.get('/download/rml/:provider/:filename', rmlRulesController.downloadMappingToClient)
 
+    /**
+     * TODO: document
+     */
+    router.get('/status/:provider/connected', (req,res)=>{
+        const provider = req.params.provider
+        let responseObject = {
+            'provider' : provider,
+            'connected' : false
+        }
+        // If there are credentials for the given provider, we consider it connected
+        if(tokenController.getProviderCredentials(req,provider)!==null)
+            responseObject.connected = true
+
+        res.send(responseObject)
+    })
+
+    /**
+     * Routes for getting the configurations
+     */
+    router.get('/configuration/:provider/:configKey', (req,res)=>{
+        const provider = req.params.provider
+        const configKey = req.params.configKey
+        if(provider){
+            switch (configKey) {
+                case 'solid':
+                    // TODO: send solid configuration
+                    let solidConfig = configurationController.getSolidConfigurationForProvider(provider)
+                    console.log("solidConfig: " , solidConfig)
+                    res.send(solidConfig)
+                    break
+                case 'connect':
+                    let connectionConfig = configurationController.getConnectionUrlForProvider(provider)
+                    console.log("connection config: " , connectionConfig)
+                    res.send(connectionConfig)
+                    break
+                default:
+                    handleStatusCode(req,res, 422, "Invalid configuration key")
+
+            }
+        }else {
+            handleStatusCode(req,res, 422, "Provider should not be null")
+        }
+    })
+
     return router
 }
 
@@ -266,7 +287,6 @@ function updateTokens(req) {
         'request': g.request ? g.request : {},
         'response': g.response ? g.response : {}
     }
-
 }
 
 const getAuthorizedData = async (url, bearerToken, cb) => {

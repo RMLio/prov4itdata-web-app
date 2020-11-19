@@ -6,10 +6,11 @@ const path = require('path');
 const https = require('https')
 const pem = require('pem')
 const router = require('./routes/index')
+const fs = require('fs')
 
 // Configuration
 const PORT = 3000
-
+const USE_HTTPS = true
 const config = {
     logConfig : {
         logRoute : true,
@@ -25,12 +26,19 @@ app.set('view engine', 'pug')
     // client-side Solid auth
     .use('/solid-auth', express.static(path.join(__dirname, 'solid-auth')))
     .use('/', router(grant, config))
+    .use(express.static('public'))
 
-// Enable HTTPS / Crete certificate
-pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-    console.log("create cert")
-    if (err) {
-        throw err
-    }
-    https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(PORT)
-})
+if(USE_HTTPS){
+    console.log("USING HTTPS")
+    // Enable HTTPS / Create certificate
+    pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+        console.log("created certificate")
+        if (err) {
+            throw err
+        }
+        https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(PORT)
+    })
+}else {
+    console.log("USING HTTP")
+    app.listen(PORT)
+}

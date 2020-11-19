@@ -1,35 +1,126 @@
-mixin unorderedListOfLinks(links)
-    ul
-        each val in links
-            li
-                a(href=val.href) #{val.text}
+mixin transferSection()
+    section(id="transfer" class="section-bg")
+        div(class="container")
+            div(class="section-title")
+                h2 TRANSFER
 
-mixin boxWithLinks(description, links)
-    div
-        p #{description}
-        +unorderedListOfLinks(links)
+        div(class="row icon-boxes")
+            div(class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0")
+                div(class="icon-box")
+                    div(class="icon")
+                    h4(class="title") RML Mapping
+                    p(class="description") Select RML Mapping & press Execute!
 
-mixin boxWithTokens(tokens)
-    div
-        p Tokens
-        if tokens
-            ul
-                each val in tokens
-                    li
-                        p
-                            span #{val}
+
+            div(class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0")
+                div(class="icon-box")
+                    div(class="icon")
+                    h4(class="title")
+                    p(class="description")
+                    select(name="select_mapping" id="select_grouped_mappings")
+                        option(value=null) Select mapping
+                        each v,k in GROUPED_MAPPINGS
+                            optgroup(label=k)
+                                each record in v
+                                    option(value=record.relativeFilepath) #{record.filename}
+
+                    button(id="btn_execute_mapping" class="button btn btn-secondary") Execute
+
+
+mixin outputSection()
+    div(class="accordion" id="accordionExample")
+        // 1
+        div(class="card")
+            div(class="card-header" id="headingOne")
+                h2(class="mb-0")
+                    button(class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne") RML Rules
+                button(id="btn_download_RML_rules" class="button btn btn-secondary") Download
+
+        div(id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample")
+            div(class="card-body")
+                pre(id="pre_rules")
+
+
+        // 2
+        div(class="card")
+            div(class="card-header" id="headingTwo")
+                h2(class="mb-0")
+                    button(class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo") Generated RDF
+                button(id="btn_download_RDF" class="button btn btn-secondary") Download
+
+        div(id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample")
+            div(class="card-body")
+                pre(id="pre_output")
+
+        // 3
+        div(class="card")
+           div(class="card-header" id="headingThree")
+               h2(class="mb-0")
+                   button(class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                       data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree") Provenance
+               button(id="btn_download_provenance" class="button btn btn-secondary") Download
+
+        div(id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample")
+           div(class="card-body")
+               pre(id="pre_provenance")
+
+mixin solidSection()
+    div(class="card")
+        div(class="card-header" id="headingFour")
+            h2(class="mb-0")
+                button(class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour") Solid
+
+    div(id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample")
+        div(class="card-body")
+            div
+                button(id="btn_fetch_from_solid" class="button solid") Fetch
+                button(id="btn_delete_from_solid" class="button solid") Delete
+            div
+                pre(id="pre_solidpod_data")
 
 html
     head
         title= "PROV4ITDaTa DAPSI"
+        script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous")
 
-    body
-        h1="PROV4ITDaTa-DAPSI"
-        +boxWithTokens(tokens)
-        +boxWithLinks("Authentication & Authorization", authRoutes)
-        +boxWithLinks("GET Requests to services", serviceGetRoutes)
-        +boxWithLinks("Execute RML Mapping", executeMappingRoutes)
-        +boxWithLinks("Download RML Mapping", downloadRoutes)
-        +boxWithLinks("Transfers", transferRoutes)
-        +boxWithLinks("Dev routes", devRoutes)
+
+
+
+        link(href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet")
+        link(href="assets/vendor/icofont/icofont.min.css" rel="stylesheet")
+        link(href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet")
+
+        link(href="assets/vendor/remixicon/remixicon.css" rel="stylesheet")
+        link(href="assets/vendor/venobox/venobox.css" rel="stylesheet")
+        link(href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet")
+
+        link(href="assets/vendor/aos/aos.css" rel="stylesheet")
+        link(href="assets/css/style.css" rel="stylesheet")
+
+        script(async defer src="https://solid.github.io/solid-auth-client/dist/solid-auth-client.bundle.js")
+
+        script
+            include js/index.js
+
+        style
+            include css/index.css
+
+
+body
+    div(class="container")
+        h1 PROV4ITDaTa-DAPSI
+
+        main(id="main")
+            +transferSection()
+            +outputSection()
+            +solidSection()
+
+
+
+
+
 
