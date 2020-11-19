@@ -1,0 +1,19 @@
+{
+  "environment" : "dev",
+  "environmentConfigs" : {
+    "dev" : {
+      "https" : true,
+      "port" : 3000,
+      "grant" : {
+        "config_filename" : "config.json"
+      }
+    },
+    "testbed" : {
+      "https": false,
+      "port": 3000,
+      "grant": {
+        "config_filename": "config-testbed.json"
+      }
+    }
+  }
+}
