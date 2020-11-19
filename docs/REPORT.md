@@ -190,6 +190,8 @@ In general, our system is comparable to DTP, as it supports (and is extensible t
 - [ ] TODO describe the current demonstrator
 - [ ] TODO @gdm Please create a gif of a working demonstrator
 
+![Walkthrough (not final)](img/walkthroughv01.gif)
+
 ## Use cases
 
 - [ ] TODO clarify this is all extensible
