@@ -147,6 +147,8 @@ The main component is the PROV4ITDaTa Web App, which performs the different step
 
 #### [RML Mapping documents][RML-spec]
 
+An RML Mapping provides the means to create semantically enriched RDF data from heterogenous (semi-) structured sources, using a declarative set of rules ([RML-spec]).
+
 #### [RMLMapper][RMLMapper-JAVA]
 
 - [ ] TODO @gdm Make sure to mention the PROV generation and link to [section](#automatic-data-provenance-generation)
@@ -189,9 +191,17 @@ In general, our system is comparable to DTP, as it supports (and is extensible t
 
 - [ ] TODO describe the current demonstrator
 - [ ] TODO @gdm Please create a gif of a working demonstrator
-The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod.
 
-The lower part allows the user to inspect the [RML Mapping], the generated [RDF], and provenance. Hence, upholding the transparency of our solution.
+The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping], the transfer can be initiated by clicking the Execute-button. Initially, will be prompted to authorize with the [Solid] pod and service defined as source in the [RML Mapping].
+
+The lower part allows the user to review
+
+- The [RML Mapping]
+- The generated [RDF]
+- The [provenance](#automatic-data-provenance-generation). Hence, upholding the transparency of our solution. 
+
+Furthermore, the user can inspect and verify that the generated [RDF] was successfully stored on to the [Solid] pod.
+
 ![Walkthrough (not final)](img/walkthroughv01.gif)
 
 ## Use cases
