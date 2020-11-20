@@ -192,7 +192,7 @@ In general, our system is comparable to DTP, as it supports (and is extensible t
 - [ ] TODO describe the current demonstrator
 - [ ] TODO @gdm Please create a gif of a working demonstrator
 
-The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping], the transfer can be initiated by clicking the Execute-button. Initially, will be prompted to authorize with the [Solid] pod and service defined as source in the [RML Mapping].
+The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping], the transfer can be initiated by clicking the Execute-button. Initially, the user will be prompted to authorize with the [Solid] pod and service defined as source in the [RML Mapping].
 
 The lower part allows the user to review
 
