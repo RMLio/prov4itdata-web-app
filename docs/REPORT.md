@@ -147,11 +147,13 @@ The main component is the PROV4ITDaTa Web App, which performs the different step
 
 #### [RML Mapping documents][RML-spec]
 
-An RML Mapping provides the means to create semantically enriched RDF data from heterogenous (semi-) structured sources, using a declarative set of rules ([RML-spec]).
+An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules ([RML-spec]).
 
 #### [RMLMapper][RMLMapper-JAVA]
 
 - [ ] TODO @gdm Make sure to mention the PROV generation and link to [section](#automatic-data-provenance-generation)
+
+The [RMLMapper], proxied by the [RMLMapper Web API], processes the  selected [RML Mapping] and yields both the generated [RDF] and [provenance](#automatic-data-provenance-generation) data.
 
 #### Web App
 
