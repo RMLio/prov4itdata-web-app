@@ -189,7 +189,9 @@ In general, our system is comparable to DTP, as it supports (and is extensible t
 
 - [ ] TODO describe the current demonstrator
 - [ ] TODO @gdm Please create a gif of a working demonstrator
+The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod.
 
+The lower part allows the user to inspect the [RML Mapping], the generated [RDF], and provenance. Hence, upholding the transparency of our solution.
 ![Walkthrough (not final)](img/walkthroughv01.gif)
 
 ## Use cases
