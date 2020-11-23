@@ -222,7 +222,9 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 
 <!--@bendm: wdyt?-->
 
-For our use cases, we opted to transfer data from [Flickr](#Flickr) and [Imgur](#Imgur). Both services share a common purpose: uploading and sharing image-content. However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.
+For our use cases, we opted to transfer data from [Flickr](#Flickr) and [Imgur](#Imgur). Both services share a common purpose: uploading and sharing image-content. However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed. 
+
+Describing a service's Web API using an [RML Mapping] requires a one-time effort and avoids hard-coded implementations for each service. The mapping can easily be reused for similar Web APIs.
 
 ### [Flickr](https://www.flickr.com/about)
 
