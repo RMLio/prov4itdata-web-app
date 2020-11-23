@@ -248,6 +248,15 @@ When making requests for protected resources it suffices to add a bearer token t
 
 - [ ] TODO list of features
 
+- Transparant transfer of user data to [Solid] pods.
+
+  Allowing the users to inspect how data was transformed by the selected [RML Mapping]. See [provenance](#automatic-data-provenance-generation).
+
+- Allowing users to choose from [RML Mapping]s crafted by experts.
+  Reassuring qualitative transformation.
+
+- Extensible to any number of services, without requiring rebuilding the software.
+
 ### Mapping files to transfer data
 
 _All transformation configuration is published as RML Mapping documents, which are [RDF] using established vocabularies_
