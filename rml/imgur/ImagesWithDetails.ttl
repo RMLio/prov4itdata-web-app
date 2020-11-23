@@ -38,5 +38,9 @@
 
     rr:predicateObjectMap [ rr:predicate ex:imgUrl; rr:objectMap [ rml:reference "link"] ];
     rr:predicateObjectMap [ rr:predicate ex:imgDescription; rr:objectMap [ rml:reference "description"] ];
+    rr:predicateObjectMap [ rr:predicate ex:imgViews; rr:objectMap [ rml:reference "views"] ];
+
+    rr:predicateObjectMap [ rr:predicate ex:imgHeight; rr:objectMap [ rml:reference "height"] ];
+    rr:predicateObjectMap [ rr:predicate ex:imgWidth; rr:objectMap [ rml:reference "width"] ];
 
 .

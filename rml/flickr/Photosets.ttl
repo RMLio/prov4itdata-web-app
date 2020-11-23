@@ -41,21 +41,19 @@
 
                                   fno:parameterMapping [
                                                            fnom:functionParameter [ a fno:Parameter; fno:name "oauth_nonce"; ];
-                                                           fnom:implementationProperty "{{oauth_nonce}}"; # TODO: use fno function to generate nonce
+                                                           fnom:implementationProperty "{{oauth_nonce}}";
                                                        ];
 
                                   fno:parameterMapping [
                                                            fnom:functionParameter [ a fno:Parameter; fno:name "oauth_timestamp"; ];
-                                                           fnom:implementationProperty "{{oauth_timestamp}}"; # TODO: use fno function to generate timestamp
+                                                           fnom:implementationProperty "{{oauth_timestamp}}";
                                                        ];
 
-# TODO
                                   fno:parameterMapping [
                                                            fnom:functionParameter [ a fno:Parameter; fno:name "method"; ];
                                                            fnom:implementationProperty "flickr.photosets.getList";
                                                        ];
 
-# TODO
                                   fno:parameterMapping [
                                                            fnom:functionParameter [ a fno:Parameter; fno:name "client_secret"; ];
                                                            fnom:implementationProperty "{{client_secret}}";
