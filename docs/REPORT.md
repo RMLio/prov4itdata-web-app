@@ -145,13 +145,17 @@ The main component is the PROV4ITDaTa Web App, which performs the different step
 
 #### [RML Mapping documents][RML-spec]
 
-An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules ([RML-spec]).
+An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules ([RML-spec]). 
+
+Describing the Web API as a source in an [RML Mapping] allows the [RMLMapper] to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for similar Web APIs.
 
 #### [RMLMapper][RMLMapper-JAVA]
 
 - [ ] TODO @gdm Make sure to mention the PROV generation and link to [section](#automatic-data-provenance-generation)
 
 The [RMLMapper], proxied by the [RMLMapper Web API], processes the  selected [RML Mapping] and yields both the generated [RDF] and [provenance](#automatic-data-provenance-generation) data.
+
+In the background, the [RML Mapper] determines how to consume a Web API based on its description, without the need for integrating code that is tightly coupled to a specific Web API. Such hard-coded implementations are error-prone and time-consuming (consider,  for example, the creation of tests and rebuilding the application every time a service is added).
 
 #### Web App
 
@@ -223,8 +227,6 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 <!--@bendm: wdyt?-->
 
 For our use cases, we opted to transfer data from [Flickr](#Flickr) and [Imgur](#Imgur). Both services share a common purpose: uploading and sharing image-content. However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed. 
-
-Describing a service's Web API using an [RML Mapping] requires a one-time effort and avoids hard-coded implementations for each service. The mapping can easily be reused for similar Web APIs.
 
 ### [Flickr](https://www.flickr.com/about)
 
