@@ -220,9 +220,25 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 - [ ] TODO clarify this is all extensible
 - [ ] TODO list all data fields that are being mapped for each source
 
-### Flickr
+<!--@bendm: wdyt?-->
 
-### Imgur
+For our use cases, we opted to transfer data from [Flickr](#Flickr) and [Imgur](#Imgur). Both services share a common purpose: uploading and sharing image-content. However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.
+
+### [Flickr](https://www.flickr.com/about)
+
+<!--@bendm: wdyt?-->
+
+Flickr is an online photo management and sharing application.
+Its resources are made available through the [Flickr API](https://www.flickr.com/services/developer/api/), which uses OAuth 1.0 for authentication and authorization purposes.
+Requests for protected resources is cumbersome and error-prone when it has to be implemented in code.
+
+### [Imgur](https://imgur.com/)
+
+<!--@bendm: wdyt?-->
+
+Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
+Unlike the Flickr API, the [Imgur API](https://apidocs.imgur.com/) uses OAuth 2.0.
+When making requests for protected resources it suffices to add a bearer token to the HTTP headers.
 
 ## Features
 
