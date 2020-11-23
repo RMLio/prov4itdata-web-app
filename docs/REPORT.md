@@ -157,18 +157,18 @@ The [RMLMapper], proxied by the [RMLMapper Web API], processes the  selected [RM
 
 - [x] TODO @gdm Make sure to mention the PROV download
 - [x] TODO @gdm Make sure to mention the Solid storage
-- [ ] TODO @gdm Make sure to mention the HTTPS connection everywhere
+- [x] TODO @gdm Make sure to mention the HTTPS connection everywhere
 
 The Web App is the main entrypoint. Allowing the user to select and execute an [RML Mapping] describing which service to consume and how that data will be transformed to [RDF]. 
 
 Upon selecting an [RML Mapping], the user can view and download its contents through the corresponding "RML Rules"-card (see [Demonstrator](#Demonstrator)).
-The Web App guides the user through the necessary authorization steps, prior to execution. 
+The Web App guides the user through the necessary authorization steps, prior to execution. Given the vulnerable information being exchanged, communication with the Web App occurs over [HTTPS].
 
 After successful execution, the generated [RDF] and [provenance](#automatic-data-provenance-generation) become available for inspection and download. 
 
 By providing the user not only with the generated [RDF] but also with the [data-provenance](#automatic-data-provenance-generation), we address the transparency requirement other solutions lack.
 
-Furthermore, the resulting [RDF] will also be stored onto the user's [Solid] pod. Which can also be verified through the "Solid"-card (see [Demonstrator](#Demonstrator)).
+Furthermore, the resulting [RDF] will also be stored onto the user's [Solid] pod, which can be verified through the "Solid"-card (see [Demonstrator](#Demonstrator)).
 
 ### Relation to DTP
 
