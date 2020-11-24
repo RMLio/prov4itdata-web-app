@@ -22,7 +22,7 @@ mixin transferSection()
                         each v,k in GROUPED_MAPPINGS
                             optgroup(label=k)
                                 each record in v
-                                    option(value=record.relativeFilepath) #{record.filename}
+                                    option(value=record.relativeFilepath) #{record.label}
 
                     button(id="btn_execute_mapping" class="button btn btn-secondary") Execute
 

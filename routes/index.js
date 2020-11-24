@@ -26,24 +26,7 @@ function createRouter(grant, environmentConfig, logConfig = null) {
 
     router.get('/', (req, res) => {
         var paramsRender = {}
-        const  rmlMappingFiles = rmlRulesController.getMappingList()
-        // Creates a structure that groups mapping files per provider
-        const groupedMappingFiles = rmlMappingFiles.reduce((acc, fpath)=>{
-            let [provider, filename] = fpath.split('/')
-            let record = {
-                'provider' : provider,
-                'filename' :filename,
-                'relativeFilepath' :  fpath
-            }
-            if(!acc.hasOwnProperty(provider))
-                acc[provider] = [record]
-            else
-                acc[provider].push(record)
-
-            return acc
-        }, {})
-
-        paramsRender['GROUPED_MAPPINGS'] =  groupedMappingFiles
+        paramsRender['GROUPED_MAPPINGS'] =  rmlRulesController.getMappingsWithMetadata()
         // Render
         res.render('index', paramsRender)
     })
@@ -325,8 +308,7 @@ async function executeRMLMapping(urlRMLMapper, mapping, cb) {
 }
 
 function handleStatusCode(req, res, code, optionalMessage = "") {
-    if (logConfig.logErrors)
-        console.error(`${req.path}\tSTATUS: ${code}\t${statusCodes[code]}\n${optionalMessage}`)
+    console.error(`${req.path}\tSTATUS: ${code}\t${statusCodes[code]}\n${optionalMessage}`)
     res.sendStatus(code)
 }
 
