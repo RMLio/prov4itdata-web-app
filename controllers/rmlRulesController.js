@@ -3,7 +3,7 @@ var fs = require('fs')
 var glob = require('glob')
 const dirRML = path.join(path.dirname(require.main.filename), 'rml')
 const GLOB_PATTERN_GET_MAPPINGLIST = `${dirRML}/*/*.ttl`
-
+const mappingsMetaData = JSON.parse(fs.readFileSync(path.join(dirRML, 'mappings-metadata.json'), {'encoding' : 'utf8'}))
 /**
  * TODO: document
  * @returns {string[]}: .ttl files
@@ -22,6 +22,7 @@ function readMapping(provider,filename){
  * @returns {string[]}
  */
 function getProviderList() {
+    // TODO: change to return Object.keys(mappingsMetaData)
     return fs.readdirSync(dirRML, {'encoding': 'utf8'})
 }
 
@@ -30,11 +31,25 @@ function getProviderList() {
  * @returns {*}
  */
 function getMappingList() {
-    // Glob will return absolute paths. Therefore, we map the absolute paths to relative paths (relative to dirRML)
-    const relativePaths = glob
-        .sync(GLOB_PATTERN_GET_MAPPINGLIST)
-        .map(x=>path.relative(dirRML, x))
+    let providers = Object.keys(mappingsMetaData)
+    let relativePaths = providers.flatMap(p => {
+        let providerMappingsMeta = Array.from(mappingsMetaData[p])
+        return providerMappingsMeta.map(meta => path.join(p, meta.filename))
+    })
     return relativePaths
+}
+
+function getMappingsWithMetadata() {
+    // Adds relativeFilepath to every mapping's metadata
+    const entries = Object.keys(mappingsMetaData).map(
+        p =>
+            [p,
+                mappingsMetaData[p].map(mappingMeta => {
+                mappingMeta['relativeFilepath'] = path.join(p, mappingMeta.filename)
+                return mappingMeta
+                })
+            ])
+    return Object.fromEntries(entries)
 }
 
 /**
@@ -69,5 +84,7 @@ function downloadMappingToClient(req, res) {
 // Export
 exports.getProviderList = getProviderList
 exports.getMappingList = getMappingList
+exports.getMappingsWithMetadata = getMappingsWithMetadata
 exports.readMapping = readMapping
 exports.downloadMappingToClient = downloadMappingToClient
+exports.getDirRML = () => {return dirRML}

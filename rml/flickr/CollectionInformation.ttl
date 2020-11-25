@@ -1,0 +1,104 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#>.
+@prefix fno: <https://w3id.org/function/ontology#>.
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#>.
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#>.
+@prefix void: <http://rdfs.org/ns/void#>.
+@prefix dc: <http://purl.org/dc/terms/>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix : <http://mapping.example.com/>.
+@prefix ex: <http://example.com/>.
+@prefix spod: <https://dapsi-client.solidcommunity.net/>.
+@prefix schema: <http://schema.org/> .
+
+:flickr_request_parameter_mapping a fno:Mapping;
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "oauth_version"; ];
+                                                           fnom:implementationProperty "1.0";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "oauth_token"; ];
+                                                           fnom:implementationProperty "{{oauth_token}}";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "token_secret"; ];
+                                                           fnom:implementationProperty "{{token_secret}}";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "oauth_consumer_key"; ];
+                                                           fnom:implementationProperty "{{oauth_consumer_key}}";
+                                                       ];
+
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "oauth_signature_method"; ];
+                                                           fnom:implementationProperty "HMAC-SHA1";
+                                                       ];
+
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "oauth_nonce"; ];
+                                                           fnom:implementationProperty "{{oauth_nonce}}";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "oauth_timestamp"; ];
+                                                           fnom:implementationProperty "{{oauth_timestamp}}";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "method"; ];
+                                                           fnom:implementationProperty "flickr.collections.getTree";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "client_secret"; ];
+                                                           fnom:implementationProperty "{{client_secret}}";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "format"; ];
+                                                           fnom:implementationProperty "json";
+                                                       ];
+
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "nojsoncallback"; ];
+                                                           fnom:implementationProperty "1";
+                                                       ];
+
+.
+
+:flickr_my_images_source
+    a schema:WebAPI;
+    schema:name "Flickr API";
+    schema:url <https://api.flickr.com/services/rest/>;
+
+    ex:requestParameterMapping :flickr_request_parameter_mapping;
+
+.
+
+:flickr_triplesmap
+    a rr:TriplesMap;
+
+    rml:logicalSource [
+        rml:source :flickr_my_images_source;
+        rml:referenceFormulation ql:JSONPath; 
+        rml:iterator "$.collections.collection.[*]";
+    ];
+
+    rr:subjectMap [
+                      rr:template "http://dapsi.com/services/flickr/collection/{id}";
+                  ];
+
+    rr:predicateObjectMap [ rr:predicate ex:title; rr:objectMap [ rml:reference "title"] ];
+    rr:predicateObjectMap [ rr:predicate ex:description; rr:objectMap [ rml:reference "description"] ];
+
+.
+
