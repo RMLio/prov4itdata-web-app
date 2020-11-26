@@ -249,15 +249,9 @@ However, despite this commonality, they differ in various aspects such as the un
 > however, more use cases will be supported in following sprints.
 
 ### [Flickr]
-<!-- wip @gdm -->
 
 Flickr is an online photo management and sharing application.
-Its resources are made available through the [Flickr API](https://www.flickr.com/services/developer/api/),
-which uses OAuth 1.0 for authentication and authorization purposes.
-Requests for protected resources is cumbersome and error-prone when it has to be implemented in code.
-
-- [ ] TODO @gdm give example about what is cumbersome
-- [ ] TODO @gdm list all data fields that are being mapped
+Its resources are made available through the [Flickr API](https://www.flickr.com/services/developer/api/). Flickr follows the [OAuth1.0a] protocol which requires that requests to protected resources are signed using the Consumer Secret and Token Secret. By specifying the protocol in the [RML Mapping][RML-mapping] the [RMLMapper-JAVA] takes care of the necessary steps for creating requests to protected resources. This also contributes to the extensibility of our solution: when a service decides to change to another protocol, only changes to the [RML Mapping][RML-mapping] must be made. Hence, avoiding the need for rebuilding code.
 
 The data fields mapped from a Flickr Collection resource are
 
