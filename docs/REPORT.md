@@ -407,9 +407,16 @@ e.g., using standard protocols such as [OAuth] to obtain API keys.
 
 ### Personalization
 
-- [ ] TODO it's configurable: show configurability
+In PROV4ITData, [RML Mapping][RML-mapping]s are used to configure the data transfer process.
+Multiple RML Mappings are available for the user, allowing for personalization:
+the user can inspect the different RML Mappings, see which data fields are being processed,
+and based on its context, choose which RML Mapping to execute.
 
 ### Quality
+
+#### Data Quality
+
+#### Software Quality
 
 - [ ] TODO prove quality
 
