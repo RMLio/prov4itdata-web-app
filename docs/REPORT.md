@@ -370,6 +370,7 @@ These mapping files are manually created according to best practices TODO.
 This supports data transparency because TODO.
 
 ### Output RDF
+<!-- wip: @gdm -->
 
 - [ ] Check Syntactic Interoperability (connectivity, endpoint invocation), Check Semantic Interoperability, Check Structural interoperability, Data Compatibility, specific standard
 
