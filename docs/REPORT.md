@@ -262,13 +262,13 @@ Requests for protected resources is cumbersome and error-prone when it has to be
 The data fields mapped from a Flickr Collection resource are
 
 - `id`
-- ` title`
+- `title`
 - `description`
 
 The data fields mapped from a Flickr Photoset resource are
 
 - `id`
-- ` owner`
+- `owner`
 
 ### [Imgur]
 <!-- wip @gdm -->
@@ -301,7 +301,9 @@ The data fields mapped from the Imgur image resources are
   - Imgur: actually contains a http header mapping (cfr. the AuthorizationHeader)
     - Additional note: actually, the ex:AuthorizationHeader should be wrapped inside some kind of ex:httpHeaderMapping (which can be an fno:Mapping) 
 -->
+
 Regardless of the difference on how requests are made to different  services, they can be defined uniformly in the logical source of an RML Mapping. Every service is described as a `schema:WebAPI` with a `schema:name` and `schema:url` attribute.
+
 ```turtle
 :flickr_my_images_source
     a schema:WebAPI;
