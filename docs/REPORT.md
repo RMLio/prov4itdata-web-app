@@ -249,6 +249,7 @@ However, despite this commonality, they differ in various aspects such as the un
 > however, more use cases will be supported in following sprints.
 
 ### [Flickr]
+<!-- wip @gdm -->
 
 Flickr is an online photo management and sharing application.
 Its resources are made available through the [Flickr API](https://www.flickr.com/services/developer/api/),
@@ -257,6 +258,17 @@ Requests for protected resources is cumbersome and error-prone when it has to be
 
 - [ ] TODO @gdm give example about what is cumbersome
 - [ ] TODO @gdm list all data fields that are being mapped
+
+The data fields mapped from a Flickr Collection resource are
+
+- `id`
+- ` title`
+- `description`
+
+The data fields mapped from a Flickr Photoset resource are
+
+- `id`
+- ` owner`
 
 ### [Imgur]
 <!-- wip @gdm -->
