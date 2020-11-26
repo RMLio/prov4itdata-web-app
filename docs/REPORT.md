@@ -279,6 +279,16 @@ When making requests for protected resources it suffices to add a bearer token t
 
 - [ ] TODO @gdm list all data fields that are being mapped
 - [ ] TODO @gdm showcase how this difference in requests makes no difference in the RML Mapping doc: include the logical source snippets for each below.
+
+The data fields mapped from the Imgur image resources are
+
+- `id`: a unique identifier for that image
+- `link`: the URL to the image
+- `description`: the description of the image
+- `views`: the number of views
+- `height`: height of the image
+- `width`: width of the image
+
 <!-- 
   @bdm: I'm really not sure about this.
   For example, when considering on how to define the rml:source, the only similarities between these services are:
