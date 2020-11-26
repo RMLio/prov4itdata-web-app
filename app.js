@@ -43,6 +43,7 @@ app.set('view engine', 'pug')
     .use('/solid-auth', express.static(path.join(__dirname, 'solid-auth')))
     .use('/', router(grant,environmentConfig, logConfig))
     .use(express.static('public'))
+    .use('/docs', express.static('docs'))
 
 if(USE_HTTPS){
     console.log("USING HTTPS")

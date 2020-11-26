@@ -1,5 +1,7 @@
 # PROV4ITDaTa - Technical Report
 
+> An online version of this report is available at <https://prov4itdata.ilabt.imec.be/docs/>
+
 Data portability is one of the pillars to enable users to control their data on the Web.
 Initiatives such as the [Data Transfer Project][DTP] (DTP) take a step in this direction,
 by providing an open-source, service-to-service data portability platform
@@ -290,7 +292,18 @@ This supports data transparency because TODO.
 
 ### Output RDF
 
+<!-- GDM working -->
+
 - [ ] Check Syntactic Interoperability (connectivity, endpoint invocation), Check Semantic Interoperability, Check Structural interoperability, Data Compatibility, specific standard
+
+
+asdf
+asdf
+asd
+fasd
+f
+asdf
+
 
 ### Security
 
