@@ -304,14 +304,30 @@ The data fields mapped from the Imgur image resources are
 
 ### Use Open Standards and Open Source
 
-<!-- BDM working -->
-
-- [ ] TODO clarify
-
-By supporting existing standards where possible (like OAuth and REST), we aim to minimizethe foundational work required before the DTP can be built and put into action. Widespreadadoption and understanding of existing standards makes this possible. As new standardsare developed and adopted, they will be reviewed and, where applicable, incorporated intothe DTP.
+By supporting existing standards where possible,
+we aim to minimize the required foundational work.
+Widespread adoption and understanding of existing standards makes this possible.
 
 PROV4ITDaTa is an Open Source initiative to transparently transfer data from Web services to your own personal data vault.
-It makes use of Open Standards such as OAuth, REST, RDF, R2RML, SPARQL, and LDP, to enable an open ecosystem.
+
+It makes use of Open Standards such as:
+
+- the [OAuth] protocol to authenticate with Web services where possible,
+- an [OpenID Connect][OpenIDConnect] extension to authenticate with the Solid pods,
+- the [REST architectural style][REST] to publish our PROV4ITDaTa Web app,
+- the [Resource Description Format][RDF] (RDF) to model our personal data in a structured and semantic knowledge graph,
+- the [R2RML] extension [RML][RML-spec] to declaratively describe how to generate RDF knowledge graphs from heterogeneous data sources, and
+- the [Linked Data Platform][LDP] specification to interact with the Solid pods.
+
+It contributes to following Open Source projects:
+
+- [RMLMapper-java][RMLMapper-JAVA] (MIT licensed): the RML processor the generate the RDF knowledge graphs;
+- [RMLMapper web API][RMLMapper-api] (MIT licensed): a wrapper to publish the RMLMapper-java as a RESTful web service; and
+- PROV4ITData Web app (MIT licensed): the web application to interlink the different components.
+
+- [ ] @BDM publish PROV4ITDaTa web app
+
+> In later iterations, it is assumed we will include [Comunica], a knowledge graph querying framework.
 
 ### Mapping files to transfer data
 
@@ -440,6 +456,14 @@ The security requirements are in line with Article 32 of the GDRP:
 > At the time of writing, consent of the user is given via the authorization flows in the different Web services and Solid pods.
 > We plan to include a clear privacy statement in the demonstrator.
 
+## Conclusion
+
+- [ ] TODO
+
+## References
+
+- Fielding, Roy T., and Richard N. Taylor. _Architectural styles and the design of network-based software architectures_. Vol. 7. Irvine: University of California, Irvine, 2000.
+
 [RML-mapping]: #rml-mapping-documents
 [provenance]: #automatic-data-provenance-generation
 
@@ -448,13 +472,18 @@ The security requirements are in line with Article 32 of the GDRP:
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
 [Imgur]: https://imgur.com/
+[LDP]: https://www.w3.org/TR/ldp/
 [OAuth]: https://oauth.net/
 [OAuth1.0a]: https://oauth.net/core/1.0a/
+[OpenIDConnect]: https://openid.net/connect/
 [PIMS]: https://edps.europa.eu/data-protection/our-work/subjects/personal-information-management-system_en
 [PROV-O]: https://www.w3.org/TR/prov-o/
 [RDF]: https://www.w3.org/TR/rdf-concepts/
+[REST]: https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
+[R2RML]: https://www.w3.org/TR/r2rml/
 [RML.io]: https://rml.io
 [RML-spec]: http://rml.io/spec.html
 [RMLMapper-JAVA]: https://github.com/RMLio/rmlmapper-java
+[RMLMapper-api]: https://github.com/RMLio/rmlmapper-webapi-js
 [Solid]: https://inrupt.com/solid/
 [Turtle]: https://www.w3.org/TR/turtle/

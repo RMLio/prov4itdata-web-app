@@ -1,13 +1,13 @@
 {
   "name": "webapp-express-min",
   "version": "1.0.0",
-  "description": "",
+  "description": "PROV4ITDaTa Web app",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.20.0",
     "crypto": "^1.0.1",
