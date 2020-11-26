@@ -292,18 +292,7 @@ This supports data transparency because TODO.
 
 ### Output RDF
 
-<!-- GDM working -->
-
 - [ ] Check Syntactic Interoperability (connectivity, endpoint invocation), Check Semantic Interoperability, Check Structural interoperability, Data Compatibility, specific standard
-
-
-asdf
-asdf
-asd
-fasd
-f
-asdf
-
 
 ### Security
 
