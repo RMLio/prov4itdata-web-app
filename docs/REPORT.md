@@ -284,9 +284,6 @@ Imgur, an image hosting and sharing website, enables its users to quickly upload
 Unlike the Flickr API, the [Imgur API](https://apidocs.imgur.com/) uses OAuth 2.0.
 When making requests for protected resources it suffices to add a bearer token to the HTTP headers.
 
-- [ ] TODO @gdm list all data fields that are being mapped
-- [ ] TODO @gdm showcase how this difference in requests makes no difference in the RML Mapping doc: include the logical source snippets for each below.
-
 The data fields mapped from the Imgur image resources are
 
 - `id`: a unique identifier for that image
@@ -296,39 +293,7 @@ The data fields mapped from the Imgur image resources are
 - `height`: height of the image
 - `width`: width of the image
 
-<!-- 
-  @bdm: I'm really not sure about this.
-  For example, when considering on how to define the rml:source, the only similarities between these services are:
-  1. both are defined as a schema:WebAPI
-  2. both have a schema:name
-  3. both have a schema:url
-
-  Now, when comparing the differences, we have the following
-  - Flickr: uses a request parameter mapping. 
-  - Imgur: actually contains a http header mapping (cfr. the AuthorizationHeader)
-    - Additional note: actually, the ex:AuthorizationHeader should be wrapped inside some kind of ex:httpHeaderMapping (which can be an fno:Mapping) 
--->
-
-Regardless of the difference on how requests are made to different  services, they can be defined uniformly in the logical source of an RML Mapping. Every service is described as a `schema:WebAPI` with a `schema:name` and `schema:url` attribute.
-
-```turtle
-:flickr_my_images_source
-    a schema:WebAPI;
-    schema:name "Flickr API";
-    schema:url <https://api.flickr.com/services/rest/>;
-
-    ex:requestParameterMapping :flickr_request_parameter_mapping;
-.
-```
-
-```turtle
-:imgur_my_images_source
-    a schema:WebAPI;
-    schema:name "Imgur API";
-    schema:url <https://api.imgur.com/3/account/me/images>;
-    ex:AuthorizationHeader "{{authorizationHeader}}";
-.
-```
+> We plan to include a more technical section detailing the how different Web services can be handled uniformly using the RML.io toolchain
 
 ## Features
 
