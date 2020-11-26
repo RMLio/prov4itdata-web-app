@@ -259,6 +259,7 @@ Requests for protected resources is cumbersome and error-prone when it has to be
 - [ ] TODO @gdm list all data fields that are being mapped
 
 ### [Imgur]
+<!-- wip @gdm -->
 
 Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
 Unlike the Flickr API, the [Imgur API](https://apidocs.imgur.com/) uses OAuth 2.0.
@@ -266,6 +267,26 @@ When making requests for protected resources it suffices to add a bearer token t
 
 - [ ] TODO @gdm list all data fields that are being mapped
 - [ ] TODO @gdm showcase how this difference in requests makes no difference in the RML Mapping doc: include the logical source snippets for each below.
+
+
+```turtle
+:flickr_my_images_source
+    a schema:WebAPI;
+    schema:name "Flickr API";
+    schema:url <https://api.flickr.com/services/rest/>;
+
+    ex:requestParameterMapping :flickr_request_parameter_mapping;
+.
+```
+
+```turtle
+:imgur_my_images_source
+    a schema:WebAPI;
+    schema:name "Imgur API";
+    schema:url <https://api.imgur.com/3/account/me/images>;
+    ex:AuthorizationHeader "{{authorizationHeader}}";
+.
+```
 
 ## Features
 
