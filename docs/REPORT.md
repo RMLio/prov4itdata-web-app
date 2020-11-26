@@ -360,15 +360,11 @@ Our solution provides multiple levels of Syntactic Interoperability by leveragin
 
 #### Semantic Interoperability
 
-- TODO: because we use general ontologies to describe the Web API (using schema.org)? 
-  - later on we can also update the mappings to map the imgur/flickr images using widely known vocs, for example: https://schema.org/ImageObject ? 
-- TODO: because our solution also adds metadata (prov) to the actual generated data (the output)
-- TODO: because we allow machines to 
-  - query ...
-  - do inferencing...
-
 Semantic Interoperability is achieved when multiple systems are able to develop the same understanding of the data.
-To this end, the source data originating from the web services is mapped in a generic manner using widely known vocabularies.
+To this end, the following choices where made
+
+- The generated [RDF] data is accompanied by the corresponding provenance data.
+- The source data originating from the web services is mapped in a generic manner using widely known vocabularies.
 
 ### Security and Privacy
 
