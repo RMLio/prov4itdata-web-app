@@ -335,6 +335,8 @@ Access control: you need the developer key of the individual services
 
 ## Legal
 
+<!-- BDM working here -->
+
 - [ ] TODO @bdm complete this section
 
 - [ ] TODO clarify that users take control of their own data: they become data controllers.
