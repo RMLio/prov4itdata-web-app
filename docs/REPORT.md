@@ -488,6 +488,7 @@ InsourcecodeContributions into the main Source Code Repository, hosted on ​Git
 [Flickr]: https://www.flickr.com/about
 [Imgur]: https://imgur.com/
 [OAuth]: https://oauth.net/
+[OAuth1.0a]: https://oauth.net/core/1.0a/
 [PROV-O]: https://www.w3.org/TR/prov-o/
 [RDF]: https://www.w3.org/TR/rdf-concepts/
 [RML.io]: https://rml.io
