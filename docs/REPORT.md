@@ -379,11 +379,12 @@ it can personalize how the data is processed.
 
 #### Minimal Scopes for Auth Tokens
 
-- [ ] TODO @gdm is this correct?
+- [ ] TODO @gdm is this correct? 
+@bdm: Well, for the Flickr-service this is correct, because the Flickr service uses a [`scope`](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/blob/feature/report/config.json#L15) parameter that we set to `read`. However, AFAIK, the Imgur-service doesn't provide the opiton to set scope-levels / permissions.
 
 Only minimal (read-only) scopes are requested for Auth Tokens at the different Web services.
 This further increases transparency into exactly what data will be moved,
-and increses security so that if tokens are somehow leaked they have the minimal possible privilege.
+and increases security so that if tokens are somehow leaked they have the minimal possible privilege.
 
 PROV4ITDaTa does not delete data from the Web services as part of the transfer.
 This functionality is left to the Web services.
