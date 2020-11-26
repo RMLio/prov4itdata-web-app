@@ -367,6 +367,9 @@ Our solution provides multiple levels of Syntactic Interoperability by leveragin
   - query ...
   - do inferencing...
 
+Semantic Interoperability is achieved when multiple systems are able to develop the same understanding of the data.
+To this end, the source data originating from the web services is mapped in a generic manner using widely known vocabularies.
+
 ### Security and Privacy
 
 As there are multiple parties involved in the data transfer (the user, Web Services, Solid pods, and PROV4ITDaTa Web App)
