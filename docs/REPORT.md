@@ -313,17 +313,17 @@ It makes use of Open Standards such as OAuth, REST, RDF, R2RML, SPARQL, and LDP,
 
 _All transformation configuration is published as RML Mapping documents, which are [RDF] using established vocabularies_
 
-This enables FAIR data Transfer because TODO.
+- [ ] This enables FAIR data Transfer because TODO.
 
-This enables data Interoperability because TODO.
+- [ ] This enables data Interoperability because TODO.
 
-These mapping files are manually created according to best practices TODO.
+- [ ] These mapping files are manually created according to best practices TODO.
 
 ### Automatic Data Provenance Generation
 
 - [ ] TODO @bdm list relevant papers and relevant other stuff
 
-This supports data transparency because TODO.
+- [ ] This supports data transparency because TODO.
 
 ### Output RDF
 <!-- wip: @gdm -->
