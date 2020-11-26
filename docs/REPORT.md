@@ -304,6 +304,10 @@ The data fields mapped from the Imgur image resources are
 
 ### Use Open Standards and Open Source
 
+<!-- BDM working -->
+
+- [ ] TODO clarify
+
 By supporting existing standards where possible (like OAuth and REST), we aim to minimizethe foundational work required before the DTP can be built and put into action. Widespreadadoption and understanding of existing standards makes this possible. As new standardsare developed and adopted, they will be reviewed and, where applicable, incorporated intothe DTP.
 
 PROV4ITDaTa is an Open Source initiative to transparently transfer data from Web services to your own personal data vault.
