@@ -81,8 +81,6 @@ for exporting the data, see our progress in M4.
 
 Our first sprint is finished with an end-to-end solution without query-based importer, see [Demonstrator](#demonstrator).
 
-- [ ] TODO check the _minimum_ we should adhere to
-
 ## Architecture
 
 ```mermaid
@@ -153,13 +151,11 @@ The main component is the PROV4ITDaTa Web App, which performs the different step
 
 An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules ([RML][RML-spec]).
 
-Describing the Web API as a source in an RML Mapping allows the [RMLMapper] to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for -- and extended to -- similar Web APIs.
+Describing the Web API as a source in an RML Mapping allows the [RMLMapper] to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.
 
 #### [RMLMapper][RMLMapper-JAVA]
 
-- [ ] TODO @gdm Make sure to mention the PROV generation and link to [section](#automatic-data-provenance-generation)
-
-The [RMLMapper], proxied by the [RMLMapper Web API](#web-app), processes the  selected RML Mapping and yields both the generated [RDF] and [provenance](#automatic-data-provenance-generation) data.
+The [RMLMapper], proxied by the [RMLMapper Web API](#web-app), processes the  selected RML Mapping and yields both the generated [RDF] and [provenance] data.
 
 In the background, the RML Mapper determines how to consume a Web API based on its description, without the need for integrating code that is tightly coupled to a specific Web API. Such hard-coded implementations are error-prone and time-consuming (consider,  for example, the creation of tests and rebuilding the application every time a service is added).
 
@@ -228,8 +224,6 @@ the DTP Input-Service utilitary functions are reused to authenticate and fetch d
 
 ## Requirements
 
-- [ ] clarify it can do that same as DTP
-
 We set out following requirements,
 and linked them to the specific sections of the features we currently support,
 
@@ -244,9 +238,6 @@ and linked them to the specific sections of the features we currently support,
 In general, our system is comparable to DTP, as it supports (and is extensible to) multiple data sources, and allows data import into SOLID pods (see [section](#data-portability)).
 
 ## Demonstrator
-
-- [x] TODO describe the current demonstrator
-- [x] TODO @gdm Please create a gif of a working demonstrator
 
 The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping][RML-mapping], the transfer can be initiated by clicking the Execute-button. Initially, the user will be prompted to authorize with the [Solid] pod and service defined as source in the [RML Mapping][RML-mapping].
 
@@ -395,7 +386,7 @@ All generated data is sent to the Solid pod, which is under full control of the 
 
 All PROV4ITDaTa transfer processes are initiated by the user, never automatically.
 For each transfer process, the user needs to (re-)authenticate the PROV4ITDaTa process
--- for both the Web services as the Solid pod --
+— for both the Web services as the Solid pod —
 using standardized authentication mechanisms such as [OAuth] where possible.
 Also, no authentication tokens are stored after the process completes.
 This to guarantee no unwilling data transfer processes are initiated.
@@ -411,7 +402,7 @@ it can personalize how the data is processed.
 
 #### Minimal Scopes for Auth Tokens
 
-- [ ] TODO @gdm is this correct? 
+- [ ] TODO @gdm is this correct?
 @bdm: Well, for the Flickr-service this is correct, because the Flickr service uses a [`scope`](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/blob/feature/report/config.json#L15) parameter that we set to `read`. However, AFAIK, the Imgur-service doesn't provide the opiton to set scope-levels / permissions.
 
 Only minimal (read-only) scopes are requested for Auth Tokens at the different Web services.
