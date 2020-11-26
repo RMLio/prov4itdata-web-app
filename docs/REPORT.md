@@ -457,3 +457,4 @@ The security requirements are in line with Article 32 of the GDRP:
 [RML-spec]: http://rml.io/spec.html
 [RMLMapper-JAVA]: https://github.com/RMLio/rmlmapper-java
 [Solid]: https://inrupt.com/solid/
+[Turtle]: https://www.w3.org/TR/turtle/
