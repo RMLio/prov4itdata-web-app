@@ -318,6 +318,10 @@ Regardless of the difference on how requests are made to different  services, th
 - Transparent transfer of user data to [Solid] pods. See [Output RDF](#output-rdf)
 - Extensible to any number of services, without requiring rebuilding the software. See [Data portability](#data-portability)
 
+### Use Open Standards
+
+By supporting existing standards where possible (like OAuth and REST), we aim to minimizethe foundational work required before the DTP can be built and put into action. Widespreadadoption and understanding of existing standards makes this possible. As new standardsare developed and adopted, they will be reviewed and, where applicable, incorporated intothe DTP.
+
 ### Mapping files to transfer data
 
 _All transformation configuration is published as RML Mapping documents, which are [RDF] using established vocabularies_
@@ -338,10 +342,68 @@ This supports data transparency because TODO.
 
 - [ ] Check Syntactic Interoperability (connectivity, endpoint invocation), Check Semantic Interoperability, Check Structural interoperability, Data Compatibility, specific standard
 
-### Security
+### Security and Privacy
 
-HTTPS
-Access control: you need the developer key of the individual services
+As there are multiple parties involved in the data transfer (the user, Web Services, Solid pods, and PROV4ITDaTa Web App)
+no one person or entity can fully ensure the security and privacy of the entire system.
+Instead, responsibility is shared among all the participants.
+Here are some of the responsibilities and leading practices that contribute to the security and privacy of the system.
+We will describe how these responsabilities are tackled, specifically in PROV4ITDaTa.
+
+#### Data Minimization
+
+When transferring data between providers, data minimization should be practiced.
+Practically this means that all parties should only process and retain the minimum set of data that is needed to provide their service.
+In the PROV4ITDaTa components, no data is stored, only processed.
+The user can inspect exactly which data fields are processed by inspecting the [RML Mapping][RML-mapping],
+and how these data fields are processing by inspecting the [provenance data](#automatic-data-provenance-generation).
+All generated data is sent to the Solid pod, which is under full control of the user.
+
+#### User Control
+
+All PROV4ITDaTa transfer processes are initiated by the user, never automatically.
+For each transfer process, the user needs to (re-)authenticate the PROV4ITDaTa process
+-- for both the Web services as the Solid pod --
+using standardized authentication mechanisms such as [OAuth] where possible.
+Also, no authentication tokens are stored after the process completes.
+This to guarantee no unwilling data transfer processes are initiated.
+
+The user further has full control to which Solid pod its data is stored,
+and by providing multiple alternative [RML Mapping][RML-mapping]s,
+it can personalize how the data is processed.
+
+> Currently, a single Solid pod provider is supported (<https://solidcommunity.net>).
+> Our roadmap includes the possibility to choose your own Solid pod provider.
+
+- [ ] TODO rename 'Web services' to 'Data Providers', in concordance to [DTP]
+
+#### Minimal Scopes for Auth Tokens
+
+- [ ] TODO @gdm is this correct?
+
+Only minimal (read-only) scopes are requested for Auth Tokens at the different Web services.
+This further increases transparency into exactly what data will be moved,
+and increses security so that if tokens are somehow leaked they have the minimal possible privilege.
+
+PROV4ITDaTa does not delete data from the Web services as part of the transfer.
+This functionality is left to the Web services.
+
+#### Data retention
+
+PROV4ITDaTa stores data only for the duration of the transfer process,
+and all data transfer uses transport layer security over secure HTTPS connections.
+The provenance information is available for the remainder of the user session,
+and storage of that provenance information needs to be initiated by the user if needed.
+
+All authentication tokens are stored solely on the client-side for the duration of the transfer process,
+and are thus ephemeral: these tokens are automatically removed when the user's browser session ends.
+
+#### Abuse
+
+The Web services should have strong abuse protections built into their APIs.
+Due to the fact that PROV4ITDaTa retains no user data beyond the life of a single transfer,
+the Web services have the best tools to be able to detect and respond to abusive behavior,
+e.g., using standard protocols such as [OAuth] to obtain API keys.
 
 ### Personalization
 
@@ -362,6 +424,37 @@ Access control: you need the developer key of the individual services
 
 - [ ] TODO @bdm complete this section
 
+PROV4ITData acts as a 
+All of your data, under your control
+
+Individuals should be able to easily transfer their files and data directly between online service providers.
+
+Data Transfer Project (DTP) extends data portability beyond downloading a copy of your data from your service provider, to providing consumers the ability to directly transfer data in and out of any participating provider.
+
+Data Transfer Project is an open source initiative to encourage participation of as many Providers as possible. DTP will enhance the data portability ecosystem by reducing the infrastructure burden on both service providers and users which should in turn increase the number of services offering portability. The protocols and methodology of DTP enable direct, service-to-service data transfer with streamlined engineering work.
+
+SystemAccess
+
+Each provider will maintain full control over determining who has access to the data stored on theirsystems. When a Hosting Entity runs a Host Platform of the DTP, the Hosting Entity will need torequest keys from each provider they would like to be able to transfer data to and from. The DTPwill not mediate data access rights between providers.This ensures that API quotas continue to be managed by the provider, thereby helping to mitigatetraffic spikes and negative impacts across providers.While anyone can contribute Adapters to the DTP, each Hosting Entity decides which providers theywill interact with. Each Hosting Entity determines which providers to request API keys from, andeach provider chooses which Hosting Entity they grant API keys to. When making these choices, theHosting Entity should consider the privacy practices of the provider, as well as its reputation, andbenefit to the user to ensure the data will be used appropriately. It is up to all actors in theportability ecosystem (providers, Hosting Entities, Contributors, and Users) to be diligent in ensuringuser data is handled safely.
+
+Solid lets people store their data securely in decentralized data stores called Pods. Pods are like secure personal web servers for data. All data in a pod is accessible via the Solid Protocol. When data is stored in someone's pod, they control who and what can access it.
+
+Solid is led by the inventor of the Web, Sir Tim Berners-Lee, to help realise his vision for its future.
+Store anything
+
+Any kind of data can be stored in a Solid pod, including regular files that you might store in a Google Drive or Dropbox folder, but it is the ability to store Linked Data that makes Solid special.
+[]
+[]
+Using interoperable data standards
+
+Linked Data gives Solid a common way to describe things and how they relate to each other, in a way that other people and machines can understand. This means that the data stored by Solid is portable and completely interoperable.
+Share it safely
+
+Anyone or anything that accesses data in a Solid pod uses a unique ID, authenticated by a decentralized extension of OpenID Connect. Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
+
+InsourcecodeContributions into the main Source Code Repository, hosted on ​GitHub​, are encouraged tocontain an exporter coupled with each importer. This is to ensure at least an attempt atreciprocity.TransparencyEach hosting provider is encouraged to provide aggregated statistics about problems usersencountered when importing and exporting data to providers. This aims to ensure thatproviders are maintaining their exporting functionality to a similar level of reliability as theirimporting functionality.AutomatedfidelitytestHosting Entities can establish testing accounts with various providers and do periodicimports and exports of data to each service to ensure that data is exported with theappropriate fidelity. This information can again be provided in a transparent way to users atimport time to ensure users can make an informed decision when choosing which providersto entrust their data with.DataPortabilityProviderPledgeProviders can work together to create a data portability pledge that requires them to followbest practices on portability. Host Platforms can seek to support providers that commit to thepledge, user interfaces can display providers that commit to the pledge to users, and reportscan be published on the state of the ecosystem with regards to reciprocity.PersonalInformationManagementSystems(PIMS)Personal Information Management Systems​ have some overlapping sets of features with thisproject. Both allow users to control their data and send it to different online providers.For data minimization, we believe the DTP is a better alternative than PIMS since the DTP avoidsstoring the same data in multiple places. Typically, PIMS aggregate data from connected providersand create an extra copy of a user’s data appended with data from multiple sources. Using the DTP,data resides in the originating service and destination service without a new copy being created at athird-party. The data only exists at the providers a user chooses.PIMS are also subject to the risks and disadvantages outlined above in the description of theCentralized Deployment Model​.The Data Transfer Project makes it easier for PIMS to interact with providers. Without the DTP, eachPIMS would have to create Adapters for each data type and Vertical for each provider, therebygreatly increasing the number of Adapters they have to build and maintain.
+
+
 - [ ] TODO clarify that users take control of their own data: they become data controllers.
 
 - [ ] TODO GDPR ok because 1/2/3
@@ -374,6 +467,7 @@ Access control: you need the developer key of the individual services
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
 [Imgur]: https://imgur.com/
+[OAuth]: https://oauth.net/
 [PROV-O]: https://www.w3.org/TR/prov-o/
 [RDF]: https://www.w3.org/TR/rdf-concepts/
 [RML.io]: https://rml.io
