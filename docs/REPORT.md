@@ -253,7 +253,16 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 
 ![Walkthrough](img/walkthroughv02.gif)
 
-- [ ] TODO @gdm please include text about the walkthrough: what can the user do?
+- [x] TODO @gdm please include text about the walkthrough: what can the user do?
+
+The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.
+
+1. First, the user selects an [RML Mapping][RML-mapping] which comes available for inspection and download within the "RML Rules"-card.
+2. Once the user hsa decided on which [RML Mapping][RML-mapping] to use, the transfer process is triggered by pressing "Execute".
+3. When transferring for the first time, the user will have login to the Solid pod.
+4. Once the user has authenticated with Solid, the user will have to authenticate with the Data Provider (in this case, Flickr).
+5. At this point, the actual transfer takes place. Upon success, the user will be notified and the generated [RDF], accompanied by its [provenance], will be available for inspection and download in the "Generated RDF"-card and "Provenance"-card, respectively.
+6. Finally, the user can inspect the data being stored on the Solid pod through the "Solid"-card.
 
 ## Use cases
 
