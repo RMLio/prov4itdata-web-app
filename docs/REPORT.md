@@ -409,10 +409,10 @@ To this end, the following choices where made
 
 #### Structural Interoperability
 
-Our solution solely produces [RDF], which by itself, offers the means to accomodate for Structural Interoperability.
+Our solution solely produces [RDF] data, which by itself, offers the means to accomodate for Structural Interoperability.
 
 #### Data Compatibility
-<!-- wip: @gdm -->
+<!-- Does the architecture include functions that support Data Compatibility? -->
 
 ### Security and Privacy
 
