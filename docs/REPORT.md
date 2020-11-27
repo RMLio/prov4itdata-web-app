@@ -428,7 +428,7 @@ When transferring data between providers, data minimization should be practiced.
 Practically this means that all parties should only process and retain the minimum set of data that is needed to provide their service.
 In the PROV4ITDaTa components, no data is stored, only processed.
 The user can inspect exactly which data fields are processed by inspecting the [RML Mapping][RML-mapping],
-and how these data fields are processing by inspecting the [provenance data](#automatic-data-provenance-generation).
+and how these data fields are processed by inspecting the [provenance data](#automatic-data-provenance-generation).
 All generated data is sent to the Solid pod, which is under full control of the user.
 
 #### User Control
