@@ -404,7 +404,7 @@ To this end, the following choices where made
 - The generated [RDF] data is accompanied by the corresponding provenance data.
 - The source data originating from the Data Providers is mapped in a generic manner using established ontologies.
 
-#### Structural Interopability
+#### Structural Interoperability
 
 Our solution solely produces [RDF], which by itself, offers the means to accomodate for Structural Interoperability.
 
