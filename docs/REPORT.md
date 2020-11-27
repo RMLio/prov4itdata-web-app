@@ -185,7 +185,7 @@ Solid's access control system uses these IDs to determine whether a person or ap
 
 #### Web App
 
-The Web App is the main entrypoint, allowing the user to select and execute an [RML Mapping] describing which service to consume and how that data will be transformed to [RDF].
+The Web App is the main entrypoint, allowing the user to select and execute an [RML Mapping][RML-mapping] describing which Data Provider to consume data from, and how that data will be transformed to [RDF].
 
 Upon selecting an RML Mapping, the user can view and download its contents through the corresponding "RML Rules"-card (see [Demonstrator](#Demonstrator)).
 Using this RML Mapping, the user can inspect *how* its data will be processed **prior to execution**, and **without requiring to inspect the source code**.
@@ -291,7 +291,6 @@ The data fields mapped from a Flickr Photoset resource are
 - `owner`
 
 ### [Imgur]
-<!-- wip @gdm -->
 
 Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
 Unlike the Flickr API, the [Imgur API][Imgur-API] uses OAuth 2.0.
@@ -346,7 +345,7 @@ It contributes to following Open Source projects:
 
 In PROV4ITDaTa, the original Web service data is transformed into well-defined [RDF] knowledge graphs.
 As such, the resulting data have a clear context and meaning by using established semantic ontologies,
-and the original data is made interoperabel.
+and the original data is made interoperable.
 
 Instead of relying on a hard-coded system to generate the RDF knowledge graph,
 we make use of the [RDF Mapping Language][RML-spec]:
@@ -384,9 +383,13 @@ metadata is generated in a systematic way and the generated provenance and metad
 Because of this provenance information the data transfer process is not only fully transparent before, but also after processing the data.
 
 ### Output RDF
-<!-- wip: @gdm -->
 
-- [ ] Check Syntactic Interoperability (connectivity, endpoint invocation), Check Semantic Interoperability, Check Structural interoperability, Data Compatibility, specific standard
+@bdm: can you check whether the following subsections are correct?
+
+- [ ] Check Syntactic Interoperability (connectivity, endpoint invocation) @bdm: what do you mean with connectivity & endpoint invocation?
+- [ ] Check Semantic Interoperability
+- [ ] Check Structural interoperability
+- [ ] Data Compatibility, specific standard
 
 #### Syntactic Interoperability
 
@@ -407,6 +410,9 @@ To this end, the following choices where made
 #### Structural Interoperability
 
 Our solution solely produces [RDF], which by itself, offers the means to accomodate for Structural Interoperability.
+
+#### Data Compatibility
+<!-- wip: @gdm -->
 
 ### Security and Privacy
 
