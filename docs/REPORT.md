@@ -513,7 +513,7 @@ At <https://rml.io/implementation-report/>, you can compare our RMLMapper-JAVA p
 ### GDPR
 
 As defined by Article 4 of the GDPR, PROV4ITData acts as a data processor for the end-user
-(which become their own data controllers, conform the EU digital souvereignty vision),
+(which become their own data controllers, conform the EU digital sovereignty vision),
 as it allows individuals to easily transfer their files and data directly from Data Providers to their personal Solid pods.
 
 This does not influence the GDPR roles of its complementary modules.
@@ -525,7 +525,7 @@ thereby helping to mitigate traffic spikes and negative impacts across Data Prov
 
 The security requirements are in line with Article 32 of the GDRP:
 
-- personal data is transfered using transport layer security
+- personal data is transferred using transport layer security
 - no original personal data is destroyed
 - no original personal data is accessed or transmitted without authorization
 
