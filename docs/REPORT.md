@@ -253,6 +253,8 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 
 ![Walkthrough](img/walkthroughv02.gif)
 
+- [ ] TODO @gdm please include text about the walkthrough: what can the user do?
+
 ## Use cases
 
 Our toolchain is extensible to a wide variety of service.
@@ -489,11 +491,6 @@ and consist of unit and integration tests for
 
 At <https://rml.io/implementation-report/>, you can compare our RMLMapper-JAVA processor with other RML processors.
 
-### Data portability
-
-- [ ] prove it works for multiple data sources
-- [ ] prove it works for SOLID
-
 ### GDPR
 
 As defined by Article 4 of the GDPR, PROV4ITData acts as a data processor for the end-user
@@ -518,7 +515,14 @@ The security requirements are in line with Article 32 of the GDRP:
 
 ## Conclusion
 
-- [ ] TODO
+Currently, PROV4ITData showcases how users can transparently transfer their data from different Data Providers
+to their own Solid pod, using the RML.io toolchain.
+We showcase transparency (by providing the [RML Mapping][RML-mapping]s the and [provenance] data),
+and flexibility (by providing multiple Data Providers).
+
+In our roadmap, we envision a general improvement of our demonstrator,
+include a provenance-aware query-based importer using [Comunica],
+and provide integration alternatives with, e.g., [DTP].
 
 ## References
 
