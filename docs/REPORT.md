@@ -414,6 +414,10 @@ Our solution solely produces [RDF] data, which by itself, offers the means to ac
 #### Data Compatibility
 <!-- Does the architecture include functions that support Data Compatibility? -->
 
+### Data Portability
+
+- [ ] Check if it covers data portability? prove it works for SOLID
+
 ### Security and Privacy
 
 As there are multiple parties involved in the data transfer (the user, Data Providers, Solid pods, and PROV4ITDaTa Web App)
