@@ -281,14 +281,14 @@ Its resources are made available through the [Flickr API][Flickr-API]. Flickr fo
 
 The data fields mapped from a Flickr Collection resource are
 
-- `id`
-- `title`
-- `description`
+- `id`: a unique identifier for that Collection resource
+- `title`: the title of the Collection resource
+- `description`: the description of the Collection resource
 
 The data fields mapped from a Flickr Photoset resource are
 
-- `id`
-- `owner`
+- `id`: a unique identifier for that Photoset resource
+- `owner`: owner of the Photoset resource
 
 ### [Imgur]
 
