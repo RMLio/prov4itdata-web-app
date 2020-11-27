@@ -327,17 +327,26 @@ It contributes to following Open Source projects:
 
 - [ ] @BDM publish PROV4ITDaTa web app
 
-> In later iterations, it is assumed we will include [Comunica], a knowledge graph querying framework.
+> In later iterations, it is assumed we will include [Comunica], a knowledge graph querying framework, to further expand the functionalities of PROV4ITDaTa.
 
 ### Mapping files to transfer data
 
-_All transformation configuration is published as RML Mapping documents, which are [RDF] using established vocabularies_
+In PROV4ITDaTa, the original Web service data is transformed into well-defined [RDF] knowledge graphs.
+As such, the resulting data have a clear context and meaning by using established semantic ontologies,
+and the original data is made interoperabel.
 
-- [ ] This enables FAIR data Transfer because TODO.
+Instead of relying on a hard-coded system to generate the RDF knowledge graph,
+we make use of the [RDF Mapping Language][RML-spec]:
+a language to declaratively describe how to generate RDF knowledge graphs from heterogeneous data sources.
+These mapping files are created manually by experts,
+to ensure that established ontologies are used, and high-quality knowledge graphs are generated.
 
-- [ ] This enables data Interoperability because TODO.
+The resulting data transfer process adheres to the [FAIR] principles, as the [RML Mapping][RML-mapping]s are
 
-- [ ] These mapping files are manually created according to best practices TODO.
+- _Findable_ on the Web App as RDF resources following the [RML specification][RML-spec], based on the [R2RML W3C standard][R2RML],
+- _Accessible_ via [RESTful APIs][REST],
+- _Interoperable_ as established semantic ontologies are used, and
+- _Reusable_ as all mappings are published within the Web app as MIT license
 
 ### Automatic Data Provenance Generation
 
@@ -364,7 +373,7 @@ Semantic Interoperability is achieved when multiple systems are able to develop 
 To this end, the following choices where made
 
 - The generated [RDF] data is accompanied by the corresponding provenance data.
-- The source data originating from the web services is mapped in a generic manner using widely known vocabularies.
+- The source data originating from the web services is mapped in a generic manner using established ontologies.
 
 ### Security and Privacy
 
@@ -478,7 +487,9 @@ The security requirements are in line with Article 32 of the GDRP:
 
 ## References
 
-- Fielding, Roy T., and Richard N. Taylor. _Architectural styles and the design of network-based software architectures_. Vol. 7. Irvine: University of California, Irvine, 2000.
+- A. Dimou, M. Vander Sande, P. Colpaert, R. Verborgh, E. Mannens, and R. Van de Walle, “RML: A Generic Language for Integrated RDF Mappings of Heterogeneous Data,” in _Proceedings of the 7th Workshop on Linked Data on the Web_, 2014, vol. 1184. <http://ceur-ws.org/Vol-1184/ldow2014_paper_01.pdf>.
+- R. T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures,” phdthesis, University of California, Irvine, 2000.
+- M. D. Wilkinson et al., “The FAIR Guiding Principles for scientific data management and stewardship,” _Scientific Data_, vol. 3, p. 160018, Mar. 2016, doi: [10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18).
 
 [RML-mapping]: #rml-mapping-documents
 [provenance]: #automatic-data-provenance-generation
