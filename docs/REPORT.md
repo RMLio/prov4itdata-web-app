@@ -266,7 +266,7 @@ However, despite this commonality, they differ in various aspects such as the un
 ### [Flickr]
 
 Flickr is an online photo management and sharing application.
-Its resources are made available through the [Flickr API](https://www.flickr.com/services/developer/api/). Flickr follows the [OAuth1.0a] protocol which requires that requests to protected resources are signed using the Consumer Secret and Token Secret. By specifying the protocol in the [RML Mapping][RML-mapping] the [RMLMapper-JAVA] takes care of the necessary steps for creating requests to protected resources. This also contributes to the extensibility of our solution: when a service decides to change to another protocol, only changes to the [RML Mapping][RML-mapping] must be made. Hence, avoiding the need for rebuilding code.
+Its resources are made available through the [Flickr API][Flickr-API]. Flickr follows the [OAuth1.0a] protocol which requires that requests to protected resources are signed using the Consumer Secret and Token Secret. By specifying the protocol in the [RML Mapping][RML-mapping] the [RMLMapper-JAVA] takes care of the necessary steps for creating requests to protected resources. This also contributes to the extensibility of our solution: when a service decides to change to another protocol, only changes to the [RML Mapping][RML-mapping] must be made. Hence, avoiding the need for rebuilding code.
 
 The data fields mapped from a Flickr Collection resource are
 
@@ -283,7 +283,7 @@ The data fields mapped from a Flickr Photoset resource are
 <!-- wip @gdm -->
 
 Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
-Unlike the Flickr API, the [Imgur API](https://apidocs.imgur.com/) uses OAuth 2.0.
+Unlike the Flickr API, the [Imgur API][Imgur-API] uses OAuth 2.0.
 When making requests for protected resources it suffices to add a bearer token to the HTTP headers.
 
 The data fields mapped from the Imgur image resources are
@@ -432,10 +432,10 @@ Where possible, only minimal (read-only) scopes are requested for Auth Tokens at
 This further increases transparency into exactly what data will be moved,
 and increases security so that if tokens are somehow leaked they have the minimal possible privilege.
 
-- [ ] TODO @gdm please include the links to the online documentation of Flickr and Imgur
+- [x] TODO @gdm please include the links to the online documentation of Flickr and Imgur
 
-> For example, for the Flickr-service we only request the `read` scope, as this is possible in the [Flickr API](TODO LINK TO THE API).
-> For the [Imgur API](TODO LINK TO THE API), however, there is no option to set a specific scope, so the default scope is used.
+> For example, for the Flickr-service we only request the `read` scope, as this is possible in the [Flickr API][Flickr-API].
+> For the [Imgur API][Imgur-API], however, there is no option to set a specific scope, so the default scope is used.
 
 PROV4ITDaTa does not delete data from the Data Providers as part of the transfer.
 This functionality is left to the Data Providers.
@@ -536,7 +536,9 @@ The security requirements are in line with Article 32 of the GDRP:
 [DTP]: https://datatransferproject.dev/
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
+[Flickr-API]: (https://www.flickr.com/services/developer/api/)
 [Imgur]: https://imgur.com/
+[Imgur-API]: https://apidocs.imgur.com/
 [LDP]: https://www.w3.org/TR/ldp/
 [OAuth]: https://oauth.net/
 [OAuth1.0a]: https://oauth.net/core/1.0a/
