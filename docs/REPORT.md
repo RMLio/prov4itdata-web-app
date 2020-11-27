@@ -466,11 +466,28 @@ and based on its context, choose which RML Mapping to execute.
 
 ### Quality
 
+In PROV4ITDaTa, we ensure quality, both on data level as on software level.
+
 #### Data Quality
+
+The [RML Mapping][RML-mapping]s allow to transform data from heterogeneous data sources
+into RDF Knowledge graphs.
+The RML.io toolchain has been used in a [variety of existing projects and use cases](https://rml.io/usage/),
+and allow to clean the original data by means of [FnO functions](https://fno.io/rml/).
+
+The mappings are created manually by experts to ensure best practices,
+and use established vocabularies.
 
 #### Software Quality
 
-- [ ] TODO prove quality
+All processing tools have been [tested and applied](https://rml.io/usage/) in production-like environments (TRL7),
+and consist of unit and integration tests for
+
+- RMLMapper-JAVA: <https://github.com/RMLio/rmlmapper-java/tree/master/src/test>
+- RMLMapper-Web-API: <https://github.com/RMLio/rmlmapper-webapi-js/tree/master/test>
+- Comunica: <https://coveralls.io/github/comunica/comunica?branch=master>
+
+At <https://rml.io/implementation-report/>, you can compare our RMLMapper-JAVA processor with other RML processors.
 
 ### Data portability
 
