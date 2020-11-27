@@ -411,7 +411,7 @@ Our solution solely produces [RDF], which by itself, offers the means to accomod
 ### Security and Privacy
 
 As there are multiple parties involved in the data transfer (the user, Data Providers, Solid pods, and PROV4ITDaTa Web App)
-no one person or entity can fully ensure the security and privacy of the entire system.
+not one person or entity can fully ensure the security and privacy of the entire system.
 Instead, responsibility is shared among all the participants.
 Here are some of the responsibilities and leading practices that contribute to the security and privacy of the system.
 We will describe how these responsabilities are tackled, specifically in PROV4ITDaTa.
