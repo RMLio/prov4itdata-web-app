@@ -416,7 +416,9 @@ Our solution solely produces [RDF] data, which by itself, offers the means to ac
 
 ### Data Portability
 
-- [ ] Check if it covers data portability? prove it works for SOLID
+- [x] Check if it covers data portability? prove it works for SOLID
+
+By transferring data from Data Providers to the user's [Solid] pod we leverage Data Portability, which is one of [Solid]'s primary features.
 
 ### Security and Privacy
 
