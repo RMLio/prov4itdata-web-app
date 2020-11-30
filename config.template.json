@@ -1,0 +1,17 @@
+{
+  "defaults": {
+    "origin": "https://localhost:3000",
+    "transport": "session"
+  },
+  "imgur": {
+    "client_id": "[CLIENT_ID]",
+    "client_secret": "[CLIENT_SECRET]",
+    "callback": "/imgur/callback"
+  },
+  "flickr": {
+    "key": "[KEY]",
+    "secret": "[SECRET]",
+    "callback" : "/flickr/callback",
+    "scope" : ["read"]
+  }
+}
