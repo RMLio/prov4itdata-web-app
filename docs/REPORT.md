@@ -37,7 +37,7 @@ giving users full control over their data.
 
 > This is an intermediate report. As such, some sections are currently intentionally left blank or incomplete.
 
-## Alignment to the DAPSI milestones
+## Alignment to the milestones
 
 ### M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)
 
@@ -153,11 +153,11 @@ The main component is the PROV4ITDaTa Web App, which performs the different step
 
 An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules ([RML][RML-spec]).
 
-Describing the Web API as a source in an RML Mapping allows the [RMLMapper] to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.
+Describing the Web API as a source in an RML Mapping allows the [RMLMapper][RMLMapper-JAVA] to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.
 
 #### [RMLMapper][RMLMapper-JAVA]
 
-The [RMLMapper], proxied by the [RMLMapper Web API](#web-app), processes the selected RML Mapping and yields both the generated [RDF] and [provenance] data.
+The RMLMapper, proxied by the [RMLMapper Web API](#web-app), processes the selected RML Mapping and yields both the generated [RDF] and [provenance] data.
 
 In the background, the RML Mapper determines how to consume a Web API based on its description, without the need for integrating code that is tightly coupled to a specific Web API. Such hard-coded implementations are error-prone and time-consuming (consider, for example, the creation of tests and rebuilding the application every time a service is added).
 
@@ -180,7 +180,7 @@ in a way that other people and machines can understand.
 This means that the data stored by Solid is portable and completely interoperable.
 
 Anyone or anything that accesses data in a Solid pod uses a unique ID,
-authenticated by a decentralized extension of OpenID Connect.
+authenticated by a decentralized extension of [OpenID Connect][OpenIDConnect].
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
 
 #### Web App
@@ -199,9 +199,9 @@ Given the vulnerable information being exchanged, communication with the Web App
 
 After successful execution, the generated [RDF] and [provenance] become available for inspection and download.
 The provenance information, structured using the W3C recommended standard [PROV-O],
-allows further automatic processing to validate that all data is processing correctly acccording to the users expectations.
+allows further automatic processing to validate that all data is processed correctly acccording to the users expectations.
 
-By providing the user not only with the generated [RDF] but also with the [data-provenance][provenance],
+By providing the user not only with the generated [RDF] but also with the [data provenance][provenance],
 we address the transparency requirement other solutions lack.
 
 The resulting [RDF] is stored onto the user's [Solid] pod, which can be verified through the "Solid"-card (see [Demonstrator](#Demonstrator)).
@@ -229,19 +229,19 @@ the DTP Input-Service utilitary functions are reused to authenticate and fetch d
 We set out following requirements,
 and linked them to the specific sections of the features we currently support,
 
-- Configurable data portability and Personalization (available using personalized RML Mapping documents to configure the data transfer, see [section](#mapping-files-to-transfer-data))
-- White-box data portability (via automatic data provenance generation, see [section](#automatic-data-provenance-generation))
-- Data Transparency when transferring your data (available as RML Mapping documents are also RDF, see [section](#mapping-files-to-transfer-data))
-- FAIR Data Transfer (by using RDF as intermediate data model, see [section](#output-rdf))
-- Data Interoperability (by using RDF as intermediate data model and configuration data model, see [section](#output-rdf) and [section](#mapping-files-to-transfer-data))
-- Security (using standard secure connections such as HTTPS, see [section](#security))
-- Quality (using default configuration files crafted by experts, and bound to quality checks, see [section](#quality))
+- Configurable data portability and Personalization (available using personalized RML Mapping documents to configure the data transfer, see [this section](#mapping-files-to-transfer-data))
+- White-box data portability (via automatic data provenance generation, see [this section](#automatic-data-provenance-generation))
+- Data Transparency when transferring your data (available as RML Mapping documents are also RDF, see [this section](#mapping-files-to-transfer-data))
+- FAIR Data Transfer (by using RDF as intermediate data model, see [this section](#output-rdf))
+- Data Interoperability (by using RDF as intermediate data model and configuration data model, see [this section](#output-rdf) and [this section](#mapping-files-to-transfer-data))
+- Security (using standard secure connections such as HTTPS, see [this section](#security))
+- Quality (using default configuration files crafted by experts, and bound to quality checks, see [this section](#quality))
 
-In general, our system is comparable to DTP, as it supports (and is extensible to) multiple data sources, and allows data import into SOLID pods (see [section](#data-portability)).
+In general, our system is comparable to DTP, as it supports (and is extensible to) multiple data sources, and allows data import into SOLID pods (see [this section](#data-portability)).
 
 ## Demonstrator
 
-The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping][RML-mapping], the transfer can be initiated by clicking the Execute-button. Initially, the user will be prompted to authorize with the [Solid] pod and service defined as source in the [RML Mapping][RML-mapping].
+The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping][RML-mapping], the transfer can be initiated by clicking the `[Execute]`-button. Initially, the user will be prompted to authorize with the [Solid] pod and the service defined as source in the [RML Mapping][RML-mapping].
 
 The lower part allows the user to review
 
@@ -253,13 +253,11 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 
 ![Walkthrough](img/walkthroughv02.gif)
 
-- [x] TODO @gdm please include text about the walkthrough: what can the user do?
-
 The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.
 
 1. First, the user selects an [RML Mapping][RML-mapping] which comes available for inspection and download within the "RML Rules"-card.
-2. Once the user hsa decided on which [RML Mapping][RML-mapping] to use, the transfer process is triggered by pressing "Execute".
-3. When transferring for the first time, the user will have login to the Solid pod.
+2. Once the user hsa decided on which [RML Mapping][RML-mapping] to use, the transfer process is triggered by pressing `[Execute]`.
+3. When transferring for the first time, the user will have to login to the Solid pod.
 4. Once the user has authenticated with Solid, the user will have to authenticate with the Data Provider (in this case, Flickr).
 5. At this point, the actual transfer takes place. Upon success, the user will be notified and the generated [RDF], accompanied by its [provenance], will be available for inspection and download in the "Generated RDF"-card and "Provenance"-card, respectively.
 6. Finally, the user can inspect the data being stored on the Solid pod through the "Solid"-card.
@@ -305,14 +303,17 @@ The data fields mapped from the Imgur image resources are
 - `height`: height of the image
 - `width`: width of the image
 
-> We plan to include a more technical section detailing the how different Data Providers can be handled uniformly using the RML.io toolchain
+> We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain
 
 ## Features
 
-- Allowing users to choose from [RML Mapping][RML-mapping]s crafted by experts. This allows for personalization of the data processing pipeline whilst reassuring qualitative transformation. See [Mapping files to transfer data](#mapping-files-to-transfer-data)
+Within this project, we envisioned following features.
+
+- Allowing users to choose from [RML Mapping][RML-mapping]s crafted by experts. This allows for personalization of the data processing pipeline whilst reassuring qualitative transformation. See [Mapping files to transfer data](#mapping-files-to-transfer-data).
 - Allowing the users to inspect how data was transformed by the selected [RML Mapping][RML-mapping]. See [provenance].
-- Transparent transfer of user data to [Solid] pods. See [Output RDF](#output-rdf)
-- Extensible to any number of services, without requiring rebuilding the software. See [Data portability](#data-portability)
+- Transparent transfer of user data to [Solid] pods. See [Output RDF](#output-rdf).
+- Extensible to any number of services, without requiring rebuilding the software. See [Data portability](#data-portability).
+- Making use of Open Standards and Open Source software. See [Use Open Standards and Open Source](#use-open-standards-and-open-source).
 
 ### Use Open Standards and Open Source
 
@@ -343,7 +344,7 @@ It contributes to following Open Source projects:
 
 ### Mapping files to transfer data
 
-In PROV4ITDaTa, the original Web service data is transformed into well-defined [RDF] knowledge graphs.
+In PROV4ITDaTa, the original Data Provider data is transformed into well-defined [RDF] knowledge graphs.
 As such, the resulting data have a clear context and meaning by using established semantic ontologies,
 and the original data is made interoperable.
 
@@ -530,8 +531,8 @@ As defined by Article 4 of the GDPR, PROV4ITData acts as a data processor for th
 as it allows individuals to easily transfer their files and data directly from Data Providers to their personal Solid pods.
 
 This does not influence the GDPR roles of its complementary modules.
-Each Web service will maintain full control over determining who has access to the data stored on their systems.
-Access tokens need to be requested from each Web service the user would like to transfer data from, and from each Solid pod it would like to transfer data to.
+Each Data Provider will maintain full control over determining who has access to the data stored on their systems.
+Access tokens need to be requested from each Data Provider the user would like to transfer data from, and from each Solid pod it would like to transfer data to.
 PROV4ITDaTa will not mediate data access rights between Data Providers or Solid pods.
 This ensures that API quotas continue to be managed by the Data Providers,
 thereby helping to mitigate traffic spikes and negative impacts across Data Providers.
@@ -573,6 +574,7 @@ and provide integration alternatives with, e.g., [DTP].
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
 [Flickr-API]: https://www.flickr.com/services/developer/api/
+[HTTPS]: https://www.ietf.org/rfc/rfc2818.txt
 [Imgur]: https://imgur.com/
 [Imgur-API]: https://apidocs.imgur.com/
 [LDP]: https://www.w3.org/TR/ldp/
