@@ -4,6 +4,29 @@
 
 > An online version of this report is available at <https://prov4itdata.ilabt.imec.be/docs/>
 
+- [PROV4ITDaTa - Technical Report](#prov4itdata---technical-report)
+  - [Alignment to the milestones](#alignment-to-the-milestones)
+  - [Architecture](#architecture)
+    - [Components](#components)
+    - [Relation to DTP](#relation-to-dtp)
+  - [Requirements](#requirements)
+  - [Demonstrator](#demonstrator)
+  - [Use cases](#use-cases)
+    - [[Flickr]](#flickr)
+    - [[Imgur]](#imgur)
+  - [Features](#features)
+    - [Use Open Standards and Open Source](#use-open-standards-and-open-source)
+    - [Mapping files to transfer data](#mapping-files-to-transfer-data)
+    - [Automatic Data Provenance Generation](#automatic-data-provenance-generation)
+    - [Output RDF](#output-rdf)
+    - [Data Portability](#data-portability)
+    - [Security and Privacy](#security-and-privacy)
+    - [Personalization](#personalization)
+    - [Quality](#quality)
+    - [GDPR](#gdpr)
+  - [Conclusion](#conclusion)
+  - [References](#references)
+
 Data portability is one of the pillars to enable users to control their data on the Web.
 Initiatives such as the [Data Transfer Project][DTP] (DTP) take a step in this direction,
 by providing an open-source, service-to-service data portability platform
@@ -39,37 +62,37 @@ giving users full control over their data.
 
 ## Alignment to the milestones
 
-### M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)
+#### M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)
 
 See [Architecture](#architecture) on how we used RML.io to export data from DTP-like services
 
-### M2: Improve data provenance of the DTP exporter (deadline 12/2020)
+#### M2: Improve data provenance of the DTP exporter (deadline 12/2020)
 
 > This work is ongoing
 
 See [Components/RMLMapper](#rmlmapper) and [Components/Web App](#web-app)
 on how we automatically generate and showcase data provenance information as an interoperable resource in RDF.
 
-### M3: Design query-based DTP importer for Solid, applying it to a use case (deadline 01/2020)
+#### M3: Design query-based DTP importer for Solid, applying it to a use case (deadline 01/2020)
 
 > This work is ongoing
 
 Currently, we directly import the exported data in RDF into a Solid pod, see [Components/Web App](#web-app).
 
-### M4: Implement configuration-based DTP exporter (deadline 04/2020)
+#### M4: Implement configuration-based DTP exporter (deadline 04/2020)
 
 > This work is ongoing
 
 See [Components/RML Mapping Documents](#rml-mapping-documents) and [Components/RMLMapper](#rmlmapper)
 on how we allow personalizable and configurable export of multiple DTP services in RDF, using RML.io.
 
-### M5: Implement provenance-based DTP exporter (deadline 05/2020)
+#### M5: Implement provenance-based DTP exporter (deadline 05/2020)
 
 > This work is ongoing
 
 We are currently prototyping this feature, based on the design we made in <https://github.com/comunica/comunica/issues/732/>.
 
-### M6: Implement query-based DTP importer for Solid (deadline 04/2020)
+#### M6: Implement query-based DTP importer for Solid (deadline 04/2020)
 
 > This work is ongoing
 
@@ -77,7 +100,7 @@ Currently, we directly import the exported data in RDF into a Solid pod, see [Co
 To allow for configurability, we already support multiple configurations
 for exporting the data, see our progress in M4.
 
-### M7: Integrate and finalize the exporter and importer, showcasing the use case (deadline 05/2020)
+#### M7: Integrate and finalize the exporter and importer, showcasing the use case (deadline 05/2020)
 
 > This work is ongoing
 
@@ -98,7 +121,7 @@ graph LR
     SP[(Pod)]
     WA[Web App]
 
-    subgraph  sgServices [Services]
+    subgraph  sgServices [Data Providers]
       IMGUR
       FLICKR
       OTHER
@@ -338,8 +361,6 @@ It contributes to following Open Source projects:
 - [RMLMapper web API][RMLMapper-api] (MIT licensed): a wrapper to publish the RMLMapper-java as a RESTful web service; and
 - PROV4ITData Web app (MIT licensed): the web application to interlink the different components.
 
-- [ ] @BDM publish PROV4ITDaTa web app
-
 > In later iterations, it is assumed we will include [Comunica], a knowledge graph querying framework, to further expand the functionalities of PROV4ITDaTa.
 
 ### Mapping files to transfer data
@@ -369,7 +390,7 @@ As such, the data transfer process is fully transparent.
 ### Automatic Data Provenance Generation
 
 Provenance and other metadataare essential for determining ownership and trust.
-However, defining such metadata typically remained independent of the generation process.
+However, defining such metadata typically stayed independent of the generation process.
 In most cases, metadata is manually defined by the data publishers, rather than produced by the involved applications.
 In PROV4ITDaTa, we rely on the [RML Mapping][RML-mapping]s that specify how the RDF knowledge graphs are generated
 to automatically and incrementally generate complete provenance and metadata information of the data transfer process.
@@ -385,12 +406,7 @@ Because of this provenance information the data transfer process is not only ful
 
 ### Output RDF
 
-@bdm: can you check whether the following subsections are correct?
-
-- [ ] Check Syntactic Interoperability (connectivity, endpoint invocation) 
-- [ ] Check Semantic Interoperability
-- [ ] Check Structural interoperability
-- [ ] Data Compatibility, specific standard
+By relying on Semantic Web technologies, we achieve interoperability on multiple levels.
 
 #### Syntactic Interoperability
 
@@ -414,17 +430,9 @@ Our solution solely produces [RDF] data, which by itself, offers the means to ac
 
 #### Data Compatibility
 
-- [ ] @bdm: is this correct?
-
-<!-- 
-* Does the architecture include functions that support Data Compatibility? 
-* The integration of multiple data sets from different sources requires that they be compatible.
--->
 Storing the transformed data, provenance, and other metadata using the [RDF] model enables us to correctly integrate the resulting data sets from different Data Providers.
 
 ### Data Portability
-
-- [x] Check if it covers data portability? prove it works for SOLID
 
 By transferring data from Data Providers to the user's [Solid] pod we leverage Data Portability, which is one of [Solid]'s primary features.
 
@@ -466,8 +474,6 @@ it can personalize how the data is processed.
 Where possible, only minimal (read-only) scopes are requested for Auth Tokens at the different Data Providers.
 This further increases transparency into exactly what data will be moved,
 and increases security so that if tokens are somehow leaked they have the minimal possible privilege.
-
-- [x] TODO @gdm please include the links to the online documentation of Flickr and Imgur
 
 > For example, for the Flickr-service we only request the `read` scope, as this is possible in the [Flickr API][Flickr-API].
 > For the [Imgur API][Imgur-API], however, there is no option to set a specific scope, so the default scope is used.

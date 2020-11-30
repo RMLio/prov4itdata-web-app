@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REPORT.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="prov4itdata---technical-report">PROV4ITDaTa - Technical Report</h1>
+<blockquote>
+<p>PROV4ITDaTa is available at <a href="https://prov4itdata.ilabt.imec.be">https://prov4itdata.ilabt.imec.be</a></p>
+</blockquote>
+<blockquote>
+<p>An online version of this report is available at <a href="https://prov4itdata.ilabt.imec.be/docs/">https://prov4itdata.ilabt.imec.be/docs/</a></p>
+</blockquote>
+<ul>
+<li><a href="#prov4itdata---technical-report">PROV4ITDaTa - Technical Report</a>
+<ul>
+<li><a href="#alignment-to-the-milestones">Alignment to the milestones</a></li>
+<li><a href="#architecture">Architecture</a>
+<ul>
+<li><a href="#components">Components</a></li>
+<li><a href="#relation-to-dtp">Relation to DTP</a></li>
+</ul>
+</li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#demonstrator">Demonstrator</a></li>
+<li><a href="#use-cases">Use cases</a>
+<ul>
+<li>[<a href="https://www.flickr.com/about">Flickr</a>](#flickr)</li>
+<li>[<a href="https://imgur.com/">Imgur</a>](#imgur)</li>
+</ul>
+</li>
+<li><a href="#features">Features</a>
+<ul>
+<li><a href="#use-open-standards-and-open-source">Use Open Standards and Open Source</a></li>
+<li><a href="#mapping-files-to-transfer-data">Mapping files to transfer data</a></li>
+<li><a href="#automatic-data-provenance-generation">Automatic Data Provenance Generation</a></li>
+<li><a href="#output-rdf">Output RDF</a></li>
+<li><a href="#data-portability">Data Portability</a></li>
+<li><a href="#security-and-privacy">Security and Privacy</a></li>
+<li><a href="#personalization">Personalization</a></li>
+<li><a href="#quality">Quality</a></li>
+<li><a href="#gdpr">GDPR</a></li>
+</ul>
+</li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<p>Data portability is one of the pillars to enable users to control their data on the Web.
+Initiatives such as the <a href="https://datatransferproject.dev/">Data Transfer Project</a> (DTP) take a step in this direction,
+by providing an open-source, service-to-service data portability platform
+so that individuals could move their data whenever they want.
+However, such efforts — being hard-coded — miss transparency and interoperability.
+On the one hand, when data is transferred between services,
+there is no trust in whether this transfer was of high quality.
+Assessment would require reviewing the source code, as data provenance is unavailable.
+On the other hand, complying to this hard-coded platform requires development effort to create custom data models.
+Existing interoperability standards are neglected.</p>
+<p>In PROV4ITDaTa, we create a solution that is fully transparent and has fine-grained configuration to improve interoperability with other data models. Furthermore, the intermediate dataset generated from the source data and its provenance are <a href="https://www.go-fair.org/">FAIR</a> resources.
+To achieve this, we will exploit and advance the existing open-source tools <a href="https://rml.io">RML.io</a> and <a href="https://comunica.dev/">Comunica</a>
+and show its extensibility by directly applying it to the <a href="https://inrupt.com/solid/">Solid</a> ecosystem.</p>
+<ul>
+<li>RML.io is a declarative and generic toolset
+to transparently generate FAIR Linked Data from (semi-)structured heterogeneous data
+with automatic data provenance and fine-grained configuration to extract and transform (parts of) the source data.</li>
+<li>Using Comunica, we can query multiple intermediate datasets to transfer to a new
+service, generating a provenance trail of where the resulting data came from.</li>
+</ul>
+<p>Combining RML.io and Comunica for a fully transparent transfer process,
+we improve current data portability approaches.
+Also, assessing the provenance trail can add trust to a transfer process.
+Being a fine-grained and declarative system, it sets up detailed configuration and provenance generation.
+The transfer of personal data can be assessed before the data is accessed,
+and legal audits can be performed automatically based on the structured and semantically sound provenance trail.
+To show its applicability and extensibility for decentralized environments,
+we will connect it to the Solid ecosystem,
+giving users full control over their data.</p>
+<blockquote>
+<p>This is an intermediate report. As such, some sections are currently intentionally left blank or incomplete.</p>
+</blockquote>
+<h2 id="alignment-to-the-milestones">Alignment to the milestones</h2>
+<h4 id="m1-design-configuration-based-dtp-exporter-applying-it-to-a-use-case-deadline-102020">M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)</h4>
+<p>See <a href="#architecture">Architecture</a> on how we used RML.io to export data from DTP-like services</p>
+<h4 id="m2-improve-data-provenance-of-the-dtp-exporter-deadline-122020">M2: Improve data provenance of the DTP exporter (deadline 12/2020)</h4>
+<blockquote>
+<p>This work is ongoing</p>
+</blockquote>
+<p>See <a href="#rmlmapper">Components/RMLMapper</a> and <a href="#web-app">Components/Web App</a>
+on how we automatically generate and showcase data provenance information as an interoperable resource in RDF.</p>
+<h4 id="m3-design-query-based-dtp-importer-for-solid-applying-it-to-a-use-case-deadline-012020">M3: Design query-based DTP importer for Solid, applying it to a use case (deadline 01/2020)</h4>
+<blockquote>
+<p>This work is ongoing</p>
+</blockquote>
+<p>Currently, we directly import the exported data in RDF into a Solid pod, see <a href="#web-app">Components/Web App</a>.</p>
+<h4 id="m4-implement-configuration-based-dtp-exporter-deadline-042020">M4: Implement configuration-based DTP exporter (deadline 04/2020)</h4>
+<blockquote>
+<p>This work is ongoing</p>
+</blockquote>
+<p>See <a href="#rml-mapping-documents">Components/RML Mapping Documents</a> and <a href="#rmlmapper">Components/RMLMapper</a>
+on how we allow personalizable and configurable export of multiple DTP services in RDF, using RML.io.</p>
+<h4 id="m5-implement-provenance-based-dtp-exporter-deadline-052020">M5: Implement provenance-based DTP exporter (deadline 05/2020)</h4>
+<blockquote>
+<p>This work is ongoing</p>
+</blockquote>
+<p>We are currently prototyping this feature, based on the design we made in <a href="https://github.com/comunica/comunica/issues/732/">https://github.com/comunica/comunica/issues/732/</a>.</p>
+<h4 id="m6-implement-query-based-dtp-importer-for-solid-deadline-042020">M6: Implement query-based DTP importer for Solid (deadline 04/2020)</h4>
+<blockquote>
+<p>This work is ongoing</p>
+</blockquote>
+<p>Currently, we directly import the exported data in RDF into a Solid pod, see <a href="#web-app">Components/Web App</a>.
+To allow for configurability, we already support multiple configurations
+for exporting the data, see our progress in M4.</p>
+<h4 id="m7-integrate-and-finalize-the-exporter-and-importer-showcasing-the-use-case-deadline-052020">M7: Integrate and finalize the exporter and importer, showcasing the use case (deadline 05/2020)</h4>
+<blockquote>
+<p>This work is ongoing</p>
+</blockquote>
+<p>Our first sprint is finished with an end-to-end solution without query-based importer, see <a href="#demonstrator">Demonstrator</a>.</p>
+<h2 id="architecture">Architecture</h2>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+  linkStyle default interpolate basis
+
+
+    RM[RMLMapper]
+    RMW[RMLMapper Web API]
+    IMGUR[Imgur]
+    FLICKR[Flickr]
+    OTHER[...]
+    SP[(Pod)]
+    WA[Web App]
+
+    subgraph  sgServices [Data Providers]
+      IMGUR
+      FLICKR
+      OTHER
+    end
+    subgraph sgRML [RML.io]
+      RM
+      RMW
+    end
+    subgraph sgSolid [Solid]
+      SP
+    end
+
+    subgraph PROV4ITDaTa
+      WA
+    end
+
+    RM --> RMW
+    RMW --> WA
+  
+    WA ---|1. Authorization| x( )
+    x --- IMGUR
+    x --- FLICKR
+    x --- OTHER
+    x --- SP
+
+    y( ) -->|2. Consume data from services| RM;
+    IMGUR --> y;
+    FLICKR --> y;
+    OTHER --> y;
+
+    WA -->|3. Store| SP
+</div></code></pre>
+<h3 id="components">Components</h3>
+<p>The architecture comprises four main components</p>
+<ul>
+<li>PROVIT4DaTa Web App: a user interface to allow users transparently transport their data</li>
+<li>Data Providers: an extensible set of existing (social) Data Providers from which the user can transfer its data</li>
+<li>RML.io toolset: a set of open-source tools to generate standardized knowledge graphs from heterogeneous data sources</li>
+<li>Solid pods: a personal data storage, putting the user in control of their own data</li>
+</ul>
+<p>The main component is the PROV4ITDaTa Web App, which performs the different steps required for transferring data from services (e.g. Flickr, Imgur, etc.) to a Solid pod.</p>
+<ol>
+<li>During the first step, the Web App obtains the credentials for authorized access to the services and the Solid pod.</li>
+<li>In the second step, the RML.io toolset provides the necessary components for
+<ol>
+<li>consuming (protected) resources from Web APIs, and</li>
+<li>transforming the fetched data to <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>.</li>
+</ol>
+</li>
+<li>In the third step, the <a href="#web-app">Web App</a> finalizes the data transfer by storing the <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>, generated by the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-JAVA</a>, to the Solid pod.</li>
+</ol>
+<h4 id="rml-mapping-documents"><a href="http://rml.io/spec.html">RML Mapping documents</a></h4>
+<p>An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules (<a href="http://rml.io/spec.html">RML</a>).</p>
+<p>Describing the Web API as a source in an RML Mapping allows the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper</a> to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.</p>
+<h4 id="rmlmapper"><a href="https://github.com/RMLio/rmlmapper-java">RMLMapper</a></h4>
+<p>The RMLMapper, proxied by the <a href="#web-app">RMLMapper Web API</a>, processes the selected RML Mapping and yields both the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> and <a href="#automatic-data-provenance-generation">provenance</a> data.</p>
+<p>In the background, the RML Mapper determines how to consume a Web API based on its description, without the need for integrating code that is tightly coupled to a specific Web API. Such hard-coded implementations are error-prone and time-consuming (consider, for example, the creation of tests and rebuilding the application every time a service is added).</p>
+<h4 id="solid-pods">Solid pods</h4>
+<p>Solid pods can be used to create a <a href="https://edps.europa.eu/data-protection/our-work/subjects/personal-information-management-system_en">Personal Information Management System</a> (PIMS),
+giving individuals more control over their personal data.
+Individuals can manage their personal data in secure online decentralized storage systems called pods:
+secure personal web servers for data.
+All data in a pod is accessible via the Solid Protocol.</p>
+<p>When data is stored in someone's pod, they control who and what can access it.
+and share them when and with whom they choose using Solid pods.
+Providers of online services and advertisers need to interact with the Solid pod if they plan to process the individual's data.
+This enables a human centric approach to personal information and new business models.</p>
+<p>Any kind of data can be stored in a Solid pod, however, the ability to store Linked Data is what makes Solid special.
+Linked Data gives Solid a common way to describe things and how they relate to each other,
+in a way that other people and machines can understand.
+This means that the data stored by Solid is portable and completely interoperable.</p>
+<p>Anyone or anything that accesses data in a Solid pod uses a unique ID,
+authenticated by a decentralized extension of <a href="https://openid.net/connect/">OpenID Connect</a>.
+Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.</p>
+<h4 id="web-app">Web App</h4>
+<p>The Web App is the main entrypoint, allowing the user to select and execute an <a href="#rml-mapping-documents">RML Mapping</a> describing which Data Provider to consume data from, and how that data will be transformed to <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>.</p>
+<p>Upon selecting an RML Mapping, the user can view and download its contents through the corresponding &quot;RML Rules&quot;-card (see <a href="#Demonstrator">Demonstrator</a>).
+Using this RML Mapping, the user can inspect <em>how</em> its data will be processed <strong>prior to execution</strong>, and <strong>without requiring to inspect the source code</strong>.</p>
+<blockquote>
+<p>At this point, the raw RDF RML description is shown to the user,
+however, since it is a structured semantic format,
+automatic visualizations and explanatory descriptions can be created.</p>
+</blockquote>
+<p>The Web App guides the user through the necessary authorization steps, prior to execution.
+Given the vulnerable information being exchanged, communication with the Web App occurs over <a href="https://www.ietf.org/rfc/rfc2818.txt">HTTPS</a>.</p>
+<p>After successful execution, the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> and <a href="#automatic-data-provenance-generation">provenance</a> become available for inspection and download.
+The provenance information, structured using the W3C recommended standard <a href="https://www.w3.org/TR/prov-o/">PROV-O</a>,
+allows further automatic processing to validate that all data is processed correctly acccording to the users expectations.</p>
+<p>By providing the user not only with the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> but also with the <a href="#automatic-data-provenance-generation">data provenance</a>,
+we address the transparency requirement other solutions lack.</p>
+<p>The resulting <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> is stored onto the user's <a href="https://inrupt.com/solid/">Solid</a> pod, which can be verified through the &quot;Solid&quot;-card (see <a href="#Demonstrator">Demonstrator</a>).</p>
+<p>As a result, this web app allows to unambiguously define the user's data using an RML Mapping and transparently transfer it between services.
+The automatically generated provenance allows for inspection and validation of the processing.</p>
+<h3 id="relation-to-dtp">Relation to DTP</h3>
+<p>After reviewing the DTP repository, we concluded that although utilitary functions could be reused in a later stage,
+we currently focus on an end-to-end system using solely RML.io and Comunica.
+On the one hand, because these technologies allow more advanced data transfer processes than DTP (such as joining data from <em>different services</em> on the fly),
+on the other hand, because integration efforts would put a too high burden on the current development sprints.</p>
+<p>Once we have successfully created and validated our end-to-end demonstrator,
+we will re-evaluate DTP and how we can properly integrate our technologies.</p>
+<p>Below, a sketch is found into how we can integrate our technologies:
+the DTP Input-Service utilitary functions are reused to authenticate and fetch data, the RML processing component and Comunica engine are wrapped in a DTP Data model interface as a new generic DTP component.</p>
+<p><img src="img/dtp-architecture.png" alt="DTP Architecture Draft"></p>
+<h2 id="requirements">Requirements</h2>
+<p>We set out following requirements,
+and linked them to the specific sections of the features we currently support,</p>
+<ul>
+<li>Configurable data portability and Personalization (available using personalized RML Mapping documents to configure the data transfer, see <a href="#mapping-files-to-transfer-data">this section</a>)</li>
+<li>White-box data portability (via automatic data provenance generation, see <a href="#automatic-data-provenance-generation">this section</a>)</li>
+<li>Data Transparency when transferring your data (available as RML Mapping documents are also RDF, see <a href="#mapping-files-to-transfer-data">this section</a>)</li>
+<li>FAIR Data Transfer (by using RDF as intermediate data model, see <a href="#output-rdf">this section</a>)</li>
+<li>Data Interoperability (by using RDF as intermediate data model and configuration data model, see <a href="#output-rdf">this section</a> and <a href="#mapping-files-to-transfer-data">this section</a>)</li>
+<li>Security (using standard secure connections such as HTTPS, see <a href="#security">this section</a>)</li>
+<li>Quality (using default configuration files crafted by experts, and bound to quality checks, see <a href="#quality">this section</a>)</li>
+</ul>
+<p>In general, our system is comparable to DTP, as it supports (and is extensible to) multiple data sources, and allows data import into SOLID pods (see <a href="#data-portability">this section</a>).</p>
+<h2 id="demonstrator">Demonstrator</h2>
+<p>The upper part of the landing page provides the means for quickly initiating the transfer from a service to a <a href="https://inrupt.com/solid/">Solid</a> pod. Once the user selects the desired <a href="#rml-mapping-documents">RML Mapping</a>, the transfer can be initiated by clicking the <code>[Execute]</code>-button. Initially, the user will be prompted to authorize with the <a href="https://inrupt.com/solid/">Solid</a> pod and the service defined as source in the <a href="#rml-mapping-documents">RML Mapping</a>.</p>
+<p>The lower part allows the user to review</p>
+<ul>
+<li>the <a href="#rml-mapping-documents">RML Mapping</a>,</li>
+<li>the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>, and</li>
+<li>the <a href="#automatic-data-provenance-generation">provenance</a>, hence, upholding the transparency of our solution.</li>
+</ul>
+<p>Furthermore, the user can inspect and verify that the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> was successfully stored on to the <a href="https://inrupt.com/solid/">Solid</a> pod.</p>
+<p><img src="img/walkthroughv02.gif" alt="Walkthrough"></p>
+<p>The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.</p>
+<ol>
+<li>First, the user selects an <a href="#rml-mapping-documents">RML Mapping</a> which comes available for inspection and download within the &quot;RML Rules&quot;-card.</li>
+<li>Once the user hsa decided on which <a href="#rml-mapping-documents">RML Mapping</a> to use, the transfer process is triggered by pressing <code>[Execute]</code>.</li>
+<li>When transferring for the first time, the user will have to login to the Solid pod.</li>
+<li>Once the user has authenticated with Solid, the user will have to authenticate with the Data Provider (in this case, Flickr).</li>
+<li>At this point, the actual transfer takes place. Upon success, the user will be notified and the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>, accompanied by its <a href="#automatic-data-provenance-generation">provenance</a>, will be available for inspection and download in the &quot;Generated RDF&quot;-card and &quot;Provenance&quot;-card, respectively.</li>
+<li>Finally, the user can inspect the data being stored on the Solid pod through the &quot;Solid&quot;-card.</li>
+</ol>
+<h2 id="use-cases">Use cases</h2>
+<p>Our toolchain is extensible to a wide variety of service.
+We opted to initially support <a href="#Flickr">Flickr</a> and <a href="#Imgur">Imgur</a>.
+Both services share a common purpose: uploading and sharing image-content.
+However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.</p>
+<blockquote>
+<p>Our current use cases already showcase the flexibility of our approach,
+however, more use cases will be supported in following sprints.</p>
+</blockquote>
+<h3 id="flickr"><a href="https://www.flickr.com/about">Flickr</a></h3>
+<p>Flickr is an online photo management and sharing application.
+Its resources are made available through the <a href="https://www.flickr.com/services/developer/api/">Flickr API</a>. Flickr follows the <a href="https://oauth.net/core/1.0a/">OAuth1.0a</a> protocol which requires that requests to protected resources are signed using the Consumer Secret and Token Secret. By specifying the protocol in the <a href="#rml-mapping-documents">RML Mapping</a> the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-JAVA</a> takes care of the necessary steps for creating requests to protected resources. This also contributes to the extensibility of our solution: when a service decides to change to another protocol, only changes to the <a href="#rml-mapping-documents">RML Mapping</a> must be made. Hence, avoiding the need for rebuilding code.</p>
+<p>The data fields mapped from a Flickr Collection resource are</p>
+<ul>
+<li><code>id</code>: a unique identifier for that Collection resource</li>
+<li><code>title</code>: the title of the Collection resource</li>
+<li><code>description</code>: the description of the Collection resource</li>
+</ul>
+<p>The data fields mapped from a Flickr Photoset resource are</p>
+<ul>
+<li><code>id</code>: a unique identifier for that Photoset resource</li>
+<li><code>owner</code>: owner of the Photoset resource</li>
+</ul>
+<h3 id="imgur"><a href="https://imgur.com/">Imgur</a></h3>
+<p>Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
+Unlike the Flickr API, the <a href="https://apidocs.imgur.com/">Imgur API</a> uses OAuth 2.0.
+When making requests for protected resources it suffices to add a bearer token to the HTTP headers.</p>
+<p>The data fields mapped from the Imgur image resources are</p>
+<ul>
+<li><code>id</code>: a unique identifier for that image</li>
+<li><code>link</code>: the URL to the image</li>
+<li><code>description</code>: the description of the image</li>
+<li><code>views</code>: the number of views</li>
+<li><code>height</code>: height of the image</li>
+<li><code>width</code>: width of the image</li>
+</ul>
+<blockquote>
+<p>We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain</p>
+</blockquote>
+<h2 id="features">Features</h2>
+<p>Within this project, we envisioned following features.</p>
+<ul>
+<li>Allowing users to choose from <a href="#rml-mapping-documents">RML Mapping</a>s crafted by experts. This allows for personalization of the data processing pipeline whilst reassuring qualitative transformation. See <a href="#mapping-files-to-transfer-data">Mapping files to transfer data</a>.</li>
+<li>Allowing the users to inspect how data was transformed by the selected <a href="#rml-mapping-documents">RML Mapping</a>. See <a href="#automatic-data-provenance-generation">provenance</a>.</li>
+<li>Transparent transfer of user data to <a href="https://inrupt.com/solid/">Solid</a> pods. See <a href="#output-rdf">Output RDF</a>.</li>
+<li>Extensible to any number of services, without requiring rebuilding the software. See <a href="#data-portability">Data portability</a>.</li>
+<li>Making use of Open Standards and Open Source software. See <a href="#use-open-standards-and-open-source">Use Open Standards and Open Source</a>.</li>
+</ul>
+<h3 id="use-open-standards-and-open-source">Use Open Standards and Open Source</h3>
+<p>By supporting existing standards where possible,
+we aim to minimize the required foundational work.
+Widespread adoption and understanding of existing standards makes this possible.</p>
+<p>PROV4ITDaTa is an Open Source initiative to transparently transfer data from Data Providers to your own personal data vault.</p>
+<p>It makes use of Open Standards such as:</p>
+<ul>
+<li>the <a href="https://oauth.net/">OAuth</a> protocol to authenticate with Data Providers where possible,</li>
+<li>an <a href="https://openid.net/connect/">OpenID Connect</a> extension to authenticate with the Solid pods,</li>
+<li>the <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">REST architectural style</a> to publish our PROV4ITDaTa Web app,</li>
+<li>the <a href="https://www.w3.org/TR/rdf-concepts/">Resource Description Format</a> (RDF) to model our personal data in a structured and semantic knowledge graph,</li>
+<li>the <a href="https://www.w3.org/TR/r2rml/">R2RML</a> extension <a href="http://rml.io/spec.html">RML</a> to declaratively describe how to generate RDF knowledge graphs from heterogeneous data sources, and</li>
+<li>the <a href="https://www.w3.org/TR/ldp/">Linked Data Platform</a> specification to interact with the Solid pods.</li>
+</ul>
+<p>It contributes to following Open Source projects:</p>
+<ul>
+<li><a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-java</a> (MIT licensed): the RML processor the generate the RDF knowledge graphs;</li>
+<li><a href="https://github.com/RMLio/rmlmapper-webapi-js">RMLMapper web API</a> (MIT licensed): a wrapper to publish the RMLMapper-java as a RESTful web service; and</li>
+<li>PROV4ITData Web app (MIT licensed): the web application to interlink the different components.</li>
+</ul>
+<blockquote>
+<p>In later iterations, it is assumed we will include <a href="https://comunica.dev/">Comunica</a>, a knowledge graph querying framework, to further expand the functionalities of PROV4ITDaTa.</p>
+</blockquote>
+<h3 id="mapping-files-to-transfer-data">Mapping files to transfer data</h3>
+<p>In PROV4ITDaTa, the original Data Provider data is transformed into well-defined <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> knowledge graphs.
+As such, the resulting data have a clear context and meaning by using established semantic ontologies,
+and the original data is made interoperable.</p>
+<p>Instead of relying on a hard-coded system to generate the RDF knowledge graph,
+we make use of the <a href="http://rml.io/spec.html">RDF Mapping Language</a>:
+a language to declaratively describe how to generate RDF knowledge graphs from heterogeneous data sources.
+These mapping files are created manually by experts,
+to ensure that established ontologies are used, and high-quality knowledge graphs are generated.</p>
+<p>As the <a href="#rml-mapping-documents">RML Mapping</a>s can include data transformations,
+we can ensure data is cleansed during the data transfer process.</p>
+<p>The resulting data transfer process adheres to the <a href="https://www.go-fair.org/">FAIR</a> principles, as the <a href="#rml-mapping-documents">RML Mapping</a>s are</p>
+<ul>
+<li><em>Findable</em> on the Web App as RDF resources following the <a href="http://rml.io/spec.html">RML specification</a>, based on the <a href="https://www.w3.org/TR/r2rml/">R2RML W3C standard</a>,</li>
+<li><em>Accessible</em> via <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">RESTful APIs</a>,</li>
+<li><em>Interoperable</em> as established semantic ontologies are used, and</li>
+<li><em>Reusable</em> as all mappings are published within the Web app as MIT license</li>
+</ul>
+<p>As such, the data transfer process is fully transparent.</p>
+<h3 id="automatic-data-provenance-generation">Automatic Data Provenance Generation</h3>
+<p>Provenance and other metadataare essential for determining ownership and trust.
+However, defining such metadata typically stayed independent of the generation process.
+In most cases, metadata is manually defined by the data publishers, rather than produced by the involved applications.
+In PROV4ITDaTa, we rely on the <a href="#rml-mapping-documents">RML Mapping</a>s that specify how the RDF knowledge graphs are generated
+to automatically and incrementally generate complete provenance and metadata information of the data transfer process.
+This way, it is assured that the metadata information is accurate, consistent and complete.
+The resulting provenance information can be inspected by the user once the transfer process is completed.</p>
+<p>The provenance information is described using the W3C recommended <a href="https://www.w3.org/TR/prov-o/">PROV-O</a> standard.
+It covers the RDF knowledge graph generation, including metadata for the mapping rules definition and the data descriptions.
+By automating the provenance and metadata generation relying on the machine interpretable descriptions in the <a href="#rml-mapping-documents">RML Mapping</a>s,
+metadata is generated in a systematic way and the generated provenance and metadata information becomes more accurate, consistent and complete.</p>
+<p>Because of this provenance information the data transfer process is not only fully transparent before, but also after processing the data.</p>
+<h3 id="output-rdf">Output RDF</h3>
+<p>By relying on Semantic Web technologies, we achieve interoperability on multiple levels.</p>
+<h4 id="syntactic-interoperability">Syntactic Interoperability</h4>
+<p>Our solution provides multiple levels of Syntactic Interoperability by leveraging the standardized <a href="https://www.w3.org/TR/turtle/">Turtle</a>-syntax for</p>
+<ol>
+<li>Defining the <a href="#rml-mapping-documents">RML Mapping</a>s, which includes describing the Data Provider's Web APIs.</li>
+<li>Representing the <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> and <a href="#automatic-data-provenance-generation">provenance</a> generated by the <a href="https://github.com/RMLio/rmlmapper-java">RML Mapper</a>.</li>
+<li>Storing the resulting <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> on the Solid pods.</li>
+</ol>
+<h4 id="semantic-interoperability">Semantic Interoperability</h4>
+<p>Semantic Interoperability is achieved when multiple systems are able to develop the same understanding of the data.
+To this end, the following choices where made</p>
+<ul>
+<li>The generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> data is accompanied by the corresponding provenance data.</li>
+<li>The source data originating from the Data Providers is mapped in a generic manner using established ontologies.</li>
+</ul>
+<h4 id="structural-interoperability">Structural Interoperability</h4>
+<p>Our solution solely produces <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> data, which by itself, offers the means to accomodate for Structural Interoperability.</p>
+<h4 id="data-compatibility">Data Compatibility</h4>
+<p>Storing the transformed data, provenance, and other metadata using the <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> model enables us to correctly integrate the resulting data sets from different Data Providers.</p>
+<h3 id="data-portability">Data Portability</h3>
+<p>By transferring data from Data Providers to the user's <a href="https://inrupt.com/solid/">Solid</a> pod we leverage Data Portability, which is one of <a href="https://inrupt.com/solid/">Solid</a>'s primary features.</p>
+<h3 id="security-and-privacy">Security and Privacy</h3>
+<p>As there are multiple parties involved in the data transfer (the user, Data Providers, Solid pods, and PROV4ITDaTa Web App)
+not one person or entity can fully ensure the security and privacy of the entire system.
+Instead, responsibility is shared among all the participants.
+Here are some of the responsibilities and leading practices that contribute to the security and privacy of the system.
+We will describe how these responsabilities are tackled, specifically in PROV4ITDaTa.</p>
+<h4 id="data-minimization">Data Minimization</h4>
+<p>When transferring data between providers, data minimization should be practiced.
+Practically this means that all parties should only process and retain the minimum set of data that is needed to provide their service.
+In the PROV4ITDaTa components, no data is stored, only processed.
+The user can inspect exactly which data fields are processed by inspecting the <a href="#rml-mapping-documents">RML Mapping</a>,
+and how these data fields are processed by inspecting the <a href="#automatic-data-provenance-generation">provenance data</a>.
+All generated data is sent to the Solid pod, which is under full control of the user.</p>
+<h4 id="user-control">User Control</h4>
+<p>All PROV4ITDaTa transfer processes are initiated by the user, never automatically.
+For each transfer process, the user needs to (re-)authenticate the PROV4ITDaTa process
+— for both the Data Providers as the Solid pod —
+using standardized authentication mechanisms such as <a href="https://oauth.net/">OAuth</a> where possible.
+Also, no authentication tokens are stored after the process completes.
+This to guarantee no unwilling data transfer processes are initiated.</p>
+<p>The user further has full control to which Solid pod its data is stored,
+and by providing multiple alternative <a href="#rml-mapping-documents">RML Mapping</a>s,
+it can personalize how the data is processed.</p>
+<blockquote>
+<p>Currently, a single Solid pod provider is supported (<a href="https://solidcommunity.net">https://solidcommunity.net</a>).
+Our roadmap includes the possibility to choose your own Solid pod provider.</p>
+</blockquote>
+<h4 id="minimal-scopes-for-auth-tokens">Minimal Scopes for Auth Tokens</h4>
+<p>Where possible, only minimal (read-only) scopes are requested for Auth Tokens at the different Data Providers.
+This further increases transparency into exactly what data will be moved,
+and increases security so that if tokens are somehow leaked they have the minimal possible privilege.</p>
+<blockquote>
+<p>For example, for the Flickr-service we only request the <code>read</code> scope, as this is possible in the <a href="https://www.flickr.com/services/developer/api/">Flickr API</a>.
+For the <a href="https://apidocs.imgur.com/">Imgur API</a>, however, there is no option to set a specific scope, so the default scope is used.</p>
+</blockquote>
+<p>PROV4ITDaTa does not delete data from the Data Providers as part of the transfer.
+This functionality is left to the Data Providers.</p>
+<h4 id="data-retention">Data retention</h4>
+<p>PROV4ITDaTa stores data only for the duration of the transfer process,
+and all data transfer uses transport layer security over secure HTTPS connections.
+The provenance information is available for the remainder of the user session,
+and storage of that provenance information needs to be initiated by the user if needed.</p>
+<p>All authentication tokens are stored solely on the client-side for the duration of the transfer process,
+and are thus ephemeral: these tokens are automatically removed when the user's browser session ends.</p>
+<h4 id="abuse">Abuse</h4>
+<p>The Data Providers should have strong abuse protections built into their APIs.
+Due to the fact that PROV4ITDaTa retains no user data beyond the life of a single transfer,
+the Data Providers have the best tools to be able to detect and respond to abusive behavior,
+e.g., using standard protocols such as <a href="https://oauth.net/">OAuth</a> to obtain API keys.</p>
+<h3 id="personalization">Personalization</h3>
+<p>In PROV4ITData, <a href="#rml-mapping-documents">RML Mapping</a>s are used to configure the data transfer process.
+Multiple RML Mappings are available for the user, allowing for personalization:
+the user can inspect the different RML Mappings, see which data fields are being processed,
+and based on its context, choose which RML Mapping to execute.</p>
+<h3 id="quality">Quality</h3>
+<p>In PROV4ITDaTa, we ensure quality, both on data level as on software level.</p>
+<h4 id="data-quality">Data Quality</h4>
+<p>The <a href="#rml-mapping-documents">RML Mapping</a>s allow to transform data from heterogeneous data sources
+into RDF Knowledge graphs.
+The RML.io toolchain has been used in a <a href="https://rml.io/usage/">variety of existing projects and use cases</a>,
+and allow to clean the original data by means of <a href="https://fno.io/rml/">FnO functions</a>.</p>
+<p>The mappings are created manually by experts to ensure best practices,
+and use established vocabularies.</p>
+<h4 id="software-quality">Software Quality</h4>
+<p>All processing tools have been <a href="https://rml.io/usage/">tested and applied</a> in production-like environments (TRL7),
+and consist of unit and integration tests for</p>
+<ul>
+<li>RMLMapper-JAVA: <a href="https://github.com/RMLio/rmlmapper-java/tree/master/src/test">https://github.com/RMLio/rmlmapper-java/tree/master/src/test</a></li>
+<li>RMLMapper-Web-API: <a href="https://github.com/RMLio/rmlmapper-webapi-js/tree/master/test">https://github.com/RMLio/rmlmapper-webapi-js/tree/master/test</a></li>
+<li>Comunica: <a href="https://coveralls.io/github/comunica/comunica?branch=master">https://coveralls.io/github/comunica/comunica?branch=master</a></li>
+</ul>
+<p>At <a href="https://rml.io/implementation-report/">https://rml.io/implementation-report/</a>, you can compare our RMLMapper-JAVA processor with other RML processors.</p>
+<h3 id="gdpr">GDPR</h3>
+<p>As defined by Article 4 of the GDPR, PROV4ITData acts as a data processor for the end-user
+(which become their own data controllers, conform the EU digital sovereignty vision),
+as it allows individuals to easily transfer their files and data directly from Data Providers to their personal Solid pods.</p>
+<p>This does not influence the GDPR roles of its complementary modules.
+Each Data Provider will maintain full control over determining who has access to the data stored on their systems.
+Access tokens need to be requested from each Data Provider the user would like to transfer data from, and from each Solid pod it would like to transfer data to.
+PROV4ITDaTa will not mediate data access rights between Data Providers or Solid pods.
+This ensures that API quotas continue to be managed by the Data Providers,
+thereby helping to mitigate traffic spikes and negative impacts across Data Providers.</p>
+<p>The security requirements are in line with Article 32 of the GDRP:</p>
+<ul>
+<li>personal data is transferred using transport layer security</li>
+<li>no original personal data is destroyed</li>
+<li>no original personal data is accessed or transmitted without authorization</li>
+</ul>
+<blockquote>
+<p>At the time of writing, consent of the user is given via the authorization flows in the different Data Providers and Solid pods.
+We plan to include a clear privacy statement in the demonstrator.</p>
+</blockquote>
+<h2 id="conclusion">Conclusion</h2>
+<p>Currently, PROV4ITData showcases how users can transparently transfer their data from different Data Providers
+to their own Solid pod, using the RML.io toolchain.
+We showcase transparency (by providing the <a href="#rml-mapping-documents">RML Mapping</a>s the and <a href="#automatic-data-provenance-generation">provenance</a> data),
+and flexibility (by providing multiple Data Providers).</p>
+<p>In our roadmap, we envision a general improvement of our demonstrator,
+include a provenance-aware query-based importer using <a href="https://comunica.dev/">Comunica</a>,
+and provide integration alternatives with, e.g., <a href="https://datatransferproject.dev/">DTP</a>.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>B. De Meester, A. Dimou, R. Verborgh, and E. Mannens, “Detailed Provenance Capture of Data Processing,” in <em>Proceedings of the First Workshop on Enabling Open Semantic Science (SemSci)</em>, Oct. 2017, vol. 1931, pp. 31–38. Available: <a href="http://ceur-ws.org/Vol-1931/#paper-05">http://ceur-ws.org/Vol-1931/#paper-05</a>.</li>
+<li>B. De Meester, W. Maroy, A. Dimou, R. Verborgh, and E. Mannens, “Declarative Data Transformations for Linked Data Generation: the case of DBpedia,” in <em>The Semantic Web: 14th International Conference, ESWC</em>, 2017, pp. 33–48, doi: <a href="https://doi.org/10.1007/978-3-319-58451-5_3">10.1007/978-3-319-58451-5_3</a>.</li>
+<li>A. Dimou, T. De Nies, R. Verborgh, E. Mannens, and R. Van de Walle, “Automated Metadata Generation for Linked Data Generation and Publishing Workflows,” in <em>Proceedings of the Workshop on Linked Data on the Web co-located with 25th International World Wide Web Conference (WWW2016)</em>, Montreal, Canada, Apr. 2016, vol. 1593. Available: <a href="http://events.linkeddata.org/ldow2016/papers/LDOW2016_paper_04.pdf">http://events.linkeddata.org/ldow2016/papers/LDOW2016_paper_04.pdf</a>.</li>
+<li>A. Dimou, M. Vander Sande, P. Colpaert, R. Verborgh, E. Mannens, and R. Van de Walle, “RML: A Generic Language for Integrated RDF Mappings of Heterogeneous Data,” in <em>Proceedings of the 7th Workshop on Linked Data on the Web</em>, 2014, vol. 1184. <a href="http://ceur-ws.org/Vol-1184/ldow2014_paper_01.pdf">http://ceur-ws.org/Vol-1184/ldow2014_paper_01.pdf</a>.</li>
+<li>R. T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures,” phdthesis, University of California, Irvine, 2000.</li>
+<li>M. D. Wilkinson et al., “The FAIR Guiding Principles for scientific data management and stewardship,” <em>Scientific Data</em>, vol. 3, p. 160018, Mar. 2016, doi: <a href="https://doi.org/10.1038/sdata.2016.18">10.1038/sdata.2016.18</a>.</li>
+</ul>
+
+</body>
+</html>
