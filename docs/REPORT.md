@@ -412,7 +412,14 @@ To this end, the following choices where made
 Our solution solely produces [RDF] data, which by itself, offers the means to accomodate for Structural Interoperability.
 
 #### Data Compatibility
-<!-- Does the architecture include functions that support Data Compatibility? -->
+
+- [ ] @bdm: is this correct?
+
+<!-- 
+* Does the architecture include functions that support Data Compatibility? 
+* The integration of multiple data sets from different sources requires that they be compatible.
+-->
+Storing the transformed data, provenance, and other metadata using the [RDF] model enables us to correctly integrate the resulting data sets from different Data Providers.
 
 ### Data Portability
 
