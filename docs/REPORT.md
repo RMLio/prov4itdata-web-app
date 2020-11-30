@@ -563,7 +563,7 @@ and provide integration alternatives with, e.g., [DTP].
 [DTP]: https://datatransferproject.dev/
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
-[Flickr-API]: (https://www.flickr.com/services/developer/api/)
+[Flickr-API]: https://www.flickr.com/services/developer/api/
 [Imgur]: https://imgur.com/
 [Imgur-API]: https://apidocs.imgur.com/
 [LDP]: https://www.w3.org/TR/ldp/
