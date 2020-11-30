@@ -1,6 +1,6 @@
 {
   "name": "webapp-express-min",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "PROV4ITDaTa Web app",
   "main": "app.js",
   "scripts": {
