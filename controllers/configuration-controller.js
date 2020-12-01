@@ -14,7 +14,6 @@ const configuration = {
         'connect' : '/connect/flickr'
     },
     'solid' : {
-        'podUrl' : 'https://dapsi-client.solidcommunity.net',
         'storageDirectory' : 'private'
     }
 
@@ -34,10 +33,7 @@ exports.getSolidConfigurationForProvider = function (provider) {
     let solidConfig = {}
 
     if(configuration.hasOwnProperty(provider)){
-        solidConfig['targetUrl']= [configuration.solid.podUrl,configuration.solid.storageDirectory,
-            configuration[provider].solid.filename].join('/').toString()
         solidConfig['filename'] = configuration[provider].solid.filename
-        solidConfig['podUrl'] = configuration.solid.podUrl
         solidConfig['storageDirectory'] = configuration.solid.storageDirectory
     }
     return solidConfig

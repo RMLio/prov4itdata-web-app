@@ -1,15 +1,7 @@
 // Identity provider
 const idp = 'https://solidcommunity.net'
-var generatedRDF = null
-var provenance = null
-
-const urlDirPrivate = 'https://dapsi-client.solidcommunity.net/private/'
-// var provider = null
-// var dataFileName = null
-// var filenameMapping = null
-// var selectedDestinationFilename = null
-
-
+//var generatedRDF = null // TODO: delete
+//var provenance = null // TODO: delete
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// HELPERS
@@ -78,7 +70,7 @@ async function executeRequest(url, params = {}){
         },
         (res)=>{
             // Callback: failure
-            alert("Error while doing connect url request ")
+            alert("Error while doing request")
             console.error(res)
             return null
         })
@@ -99,18 +91,23 @@ async function getConnectionUrl(provider) {
 }
 
 async function getSolidConfiguration(provider) {
-    // Create url for calling the rmlmapper using this mapping file
-    const url = `/configuration/${provider}/solid`
+    if(provider){
+        // Create url for calling the rmlmapper using this mapping file
+        const url = `/configuration/${provider}/solid`
 
-    console.log("configuration provider connect url : " , url)
-    // Create request parameters
-    const params = {
-        headers: {
-            'Content-Type': 'application/json'
+        console.log("configuration provider connect url : " , url)
+        // Create request parameters
+        const params = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
+        let result = await executeRequest(url, params)
+        return result
+    }else {
+        console.error("Can't get solid configuration when provider is null!")
     }
-    let result = await executeRequest(url, params)
-    return result
+
 }
 
 async function executeMapping() {
@@ -188,17 +185,20 @@ async function storeGeneratedRDFOnSolidPod(url, data) {
     return result
 }
 
-
 async function storeOnSolidPod() {
-    let solidConfiguration = getSolidConfigurationFromSessionStorage()
-    let data = sessionStorage.getItem('generatedRDF')
-    if(solidConfiguration && data){
-        let url = solidConfiguration.targetUrl
+    const data = sessionStorage.getItem('generatedRDF')
+    const session = await solid.auth.currentSession()
+    const solidConfiguration = getSolidConfigurationFromSessionStorage()
+
+    if(solidConfiguration && data && session){
+        const podUrl = new URL(session.webId).origin
+        const relativePath = [solidConfiguration.storageDirectory, solidConfiguration.filename].join('/')
+        const url = new URL(relativePath, podUrl).toString()
         console.log("storing data on solid pod at ", url)
         return await storeGeneratedRDFOnSolidPod(url, data)
 
     }else {
-        console.error("either solidconfiguration or data is null")
+        console.error("Error! Possible causes: not logged on to solid pod, solid configuration is null, generated rdf is nul")
         console.log("solidConfiguration: " , solidConfiguration)
         console.log("data to store: ", data)
         return false
@@ -290,10 +290,11 @@ function getSolidConfigurationFromSessionStorage() {
         let result = JSON.parse(plainSolidConfiguration)
         console.debug("result: ", result)
         return result
-    }else
-        throw "SOLID CONFIGURATION IN SESSION STORAGE IS NULL!"
+    }else {
+        console.error("No Solid configuration in session storage!")
+        return null
+    }
 }
-
 
 /**
  * Fetch sample data from the Solid pod
@@ -301,10 +302,23 @@ function getSolidConfigurationFromSessionStorage() {
  */
 async function fetchFromSolidPod(url) {
     console.debug("@fetchFromSolidPod. Url: ", url)
-    // Wait for the response
-    const response = await solid.auth.fetch(url)
-    // Return decoded data
-    return readAndDecodeBody(response)
+    if(await isSolidConnected()) {
+        // Wait for the response
+        const response = await solid.auth.fetch(url)
+        return handleReponse(response,
+            (res) =>  readAndDecodeBody(res),
+            (res)=> {
+                // failure callback
+                alert("Can't fetch data from " + url + ". Message: " + response.statusText)
+                return null
+            }
+        )
+    }else {
+        const errMessage = "You are not logged in to your Solid pod."
+        alert(errMessage)
+        console.error(errMessage)
+        return null
+    }
 }
 
 async function trackExecutionRoutine() {
@@ -351,9 +365,15 @@ function isSelectedMappingValid(){
         return false
 }
 
+async function suggestLoginToSolidPod() {
+    if(confirm("You're not logged in to your Solid pod! You want to the Solid login first?"))
+        await solid.auth.login(idp)
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// ON LOAD
 window.onload = async function(loadEvent) {
+
     const elementIds = [
         // selects
         'select_provider',
@@ -492,7 +512,6 @@ window.onload = async function(loadEvent) {
             alert('No RDF data available. Make sure to execute the RML Mapping first!')
         else
             executeClientDownload("output.ttl", generatedRDF)
-
     }
 
     // Download provenance
@@ -509,43 +528,51 @@ window.onload = async function(loadEvent) {
 
         // Fetch data from Solid pod and render it on the web page
         document.getElementById("btn_fetch_from_solid").onclick = async function () {
-            let solidConfig = getSolidConfigurationFromSessionStorage()
-            let url = solidConfig['targetUrl']
-            if(url){
-                const solidPodData = await fetchFromSolidPod(url)
-                document.getElementById("pre_solidpod_data").innerText = solidPodData
-            }else{
-                console.error("Error while fetching from Solid Pod.\n Solid Config: ", solidConfig)
-            }
+            let solidConfiguration = getSolidConfigurationFromSessionStorage()
+            const session = await solid.auth.currentSession()
+
+            if(session) {
+                const podUrl = new URL(session.webId).origin
+                const relativePath = [solidConfiguration.storageDirectory, solidConfiguration.filename].join('/')
+                const url = new URL(relativePath, podUrl).toString()
+
+                if(url){
+                    const solidPodData = await fetchFromSolidPod(url)
+                    document.getElementById("pre_solidpod_data").innerText = solidPodData
+                }else{
+                    console.error("url to solid pod file is null")
+                }
+            }else suggestLoginToSolidPod()
         }
 
         //DELETE data file from Solid pod
         document.getElementById("btn_delete_from_solid").onclick = async function () {
             console.log("btn_delete_from_solid")
-            let solidConfig = getSolidConfigurationFromSessionStorage()
-            let url = solidConfig.targetUrl
+            let solidConfiguration = getSolidConfigurationFromSessionStorage()
+            const session = await solid.auth.currentSession()
 
-            console.log("url: ", url)
-            const params = {
-                'method' : 'DELETE',
-            }
-            const response = await solid.auth.fetch(url, params)
-            await handleReponse(response,
-                (res)=>{
-                    console.log("Succesfully DELETED file: "  + solidConfig.filename)
-                    document.getElementById("pre_solidpod_data").innerText = ""
-
-
-                },
-                async (res)=>{
-                    const alertMsg = `Error while deleting file: ${solidConfig.filename}.\n
-                Error message: ${await readAndDecodeBody(res)}
-                `
-                    alert(alertMsg)
-                    console.error(alertMsg)
-
+            if(session) {
+                const podUrl = new URL(session.webId).origin
+                const relativePath = [solidConfiguration.storageDirectory, solidConfiguration.filename].join('/')
+                const url = new URL(relativePath, podUrl).toString()
+                const params = {
+                    'method' : 'DELETE',
                 }
-            )
+                const response = await solid.auth.fetch(url, params)
+                await handleReponse(response,
+                    (res)=>{
+                        console.log("Succesfully DELETED file: "  + solidConfiguration.filename)
+                        document.getElementById("pre_solidpod_data").innerText = ""
+                        alert(`Successfully deleted ${relativePath} from your Solid Pod (${podUrl})`)
+                    },
+                    async (res)=>{
+                        const alertMsg = `Error while deleting file: ${solidConfiguration.filename}.Error message: ${res.statusText}`
+                        alert(alertMsg)
+                        console.error(alertMsg)
+                    }
+                )
+
+            } else suggestLoginToSolidPod()
         }
 
         // CREATE data file on Solid pod
