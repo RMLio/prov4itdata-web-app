@@ -13,16 +13,6 @@
     ],
     "imgur" : [
         {
-            "filename" :  "ImageLinks.ttl",
-            "label" : "Transfer images from Imgur",
-            "description" : "Transfers image links from Imgur"
-        },
-        {
-            "filename" :  "ImagesWithDetails.ttl",
-            "label" : "Transfer images with details from Imgur",
-            "description" : "Transfers image links and properties from Imgur"
-        },
-        {
             "filename" :  "ImageTransferUsingSchemaOrg.ttl",
             "label" : "Transfer images from Imgur using Schema.org",
             "description" : "Transfers image links and properties from Imgur using the Schema.org vocabulary."
