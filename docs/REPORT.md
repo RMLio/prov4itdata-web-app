@@ -387,6 +387,14 @@ The resulting data transfer process adheres to the [FAIR] principles, as the [RM
 
 As such, the data transfer process is fully transparent.
 
+For each Data Provider, a mapping needs to be created manually (as is the case in DTP where a connector needs to be created for each service).
+The input of a mapping is defined by describing how a Data Provider's Web API will be accessed (endpoint URL, authorization protocol, response format, etc.).
+This way, the [RMLMapper][RMLMapper-JAVA] knows how to consume the Web API. Hence, the actual input of a mapping is the response returned by the Web API.
+Furthermore, the input will be mapped according to the rules in the mapping, resulting in semantically sound [RDF] which is stored on the user's Solid pod.
+
+Therefore, once the input of mapping is described, it can easily be reused for creating other mappings for that Data Provider.
+Our advantage is that the mapping process is transparent and more easily adaptable when the data model changes.
+
 ### Automatic Data Provenance Generation
 
 Provenance and other metadataare essential for determining ownership and trust.
