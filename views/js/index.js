@@ -1,7 +1,3 @@
-// Identity provider
-const idp = 'https://solidcommunity.net'
-//var generatedRDF = null // TODO: delete
-//var provenance = null // TODO: delete
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// HELPERS
@@ -44,12 +40,19 @@ async function isConnected(provider) {
         }
     }
 
-    let data = JSON.parse(await executeRequest(url, params))
-    if(data.hasOwnProperty('connected'))
-        return data.connected
-    else {
-        console.error("response data doesn't have connected property")
+    try {
+        let data = JSON.parse(await executeRequest(url, params))
+        if(data.hasOwnProperty('connected'))
+            return data.connected
+        else {
+            console.error("response data doesn't have connected property")
+            return false
+        }
+    }catch (err) {
+        console.error("Error while checking connection for provider: " , provider)
+        return false
     }
+
 }
 
 /**
@@ -131,6 +134,7 @@ async function executeMapping() {
             return data
         }catch (error) {
             console.error("Error!: ", error)
+            alert("Error while executing. Can you try again?")
         }
         return null
 
@@ -257,9 +261,14 @@ async function trackSolidConnection() {
         return true
     }else{
         console.log("Solid NOT connected. Redirecting to login!")
-        alert("It's required to login to your Solid Pod. Redirecting to Solid login.")
-        await solid.auth.login(idp);
-        return false
+        let session = null
+        if(confirm("It's required to login to your Solid Pod. Redirecting to Solid login.")){
+            console.debug("pre-popup solid login")
+            session = await popupLogin()
+            console.debug("post-popup solid login")
+        }
+
+        return !!session
     }
 }
 
@@ -335,20 +344,22 @@ async function fetchFromSolidPod(url) {
 async function trackExecutionRoutine() {
     console.log("@trackExecutionRoutine")
     if(isSelectedMappingValid()) {
-        let providerConnected = false
+        let providerConnected =  await trackProviderConnection()
         let mappingExecuted = false
-
-        let solidConnected = await trackSolidConnection()
-
-        if(solidConnected === true)
-            providerConnected = await trackProviderConnection()
-        else
-            console.error("solid not connected, can't proceed to trackProviderConnection")
+        let solidConnected = false
 
         if(providerConnected === true)
-            mappingExecuted = await executeMappingRoutine()
+            solidConnected = await trackSolidConnection()
         else
             console.error("provider not connected, can't proceed to executeMappingRoutine")
+
+
+        if(solidConnected === true)
+            mappingExecuted = await executeMappingRoutine()
+        else
+            console.error("solid not connected, can't proceed to executeMappingRoutine")
+
+
 
         // When execution routine is finished, we can remove the trigger
         if(mappingExecuted === true) {
@@ -378,12 +389,30 @@ function isSelectedMappingValid(){
 
 async function suggestLoginToSolidPod() {
     if(confirm("You're not logged in to your Solid pod! You want to the Solid login first?"))
-        await solid.auth.login(idp)
+        await popupLogin()
 }
+
+async function popupLogin() {
+    let session = await solid.auth.currentSession();
+    let popupUri = 'https://solidcommunity.net/common/popup.html';
+    if (!session)
+        session = await solid.auth.popupLogin({ popupUri });
+    if(session) {
+        alert(`Logged in as ${session.webId}`);
+        return session
+    }
+    else {
+        alert("Unable to login to Solid pod")
+        return null
+    }
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// ON LOAD
 window.onload = async function (loadEvent) {
+
 
     const elementIds = [
         // selects
@@ -581,7 +610,7 @@ window.onload = async function (loadEvent) {
                     }
                 )
 
-            } else suggestLoginToSolidPod()
+            } else await suggestLoginToSolidPod()
         }
 
         const btnLoginLogoutSolid = document.getElementById("btn_login_logout_solid")
@@ -601,13 +630,12 @@ window.onload = async function (loadEvent) {
                 console.log("the logout functionality")
                 await solid.auth.logout()
                 alert("You are now logged out from the Solid pod")
-                updateSolidLoginLogoutButton(btnLoginLogoutSolid)
+                await updateSolidLoginLogoutButton(btnLoginLogoutSolid)
             }
         } else {
             btnLoginLogoutSolid.innerText = "Log in to Solid pod"
             btnLoginLogoutSolid.onclick = async function () {
-                console.log("the LOG IN functionality")
-                await solid.auth.login(idp)
+                await popupLogin()
             }
         }
 
