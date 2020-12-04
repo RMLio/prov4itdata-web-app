@@ -129,15 +129,16 @@ async function executeMapping() {
             }
         }
 
+        let data = null;
         try {
-            let data = JSON.parse(await executeRequest(url, params))
-            return data
+            const response = await executeRequest(url, params)
+            data = JSON.parse(response)
         }catch (error) {
-            console.error("Error!: ", error)
-            alert("Error while executing. Can you try again?")
-        }
-        return null
+            console.error("Error while executing the mapping. Error:", error, "\n mapping respose: ", data)
 
+            alert("Error while executing mapping. Can you try again?")
+        }
+        return data
     }else {
         let errMessage = `Can't execute the RML Mapping... provider: ${provider}, filenameMapping: ${filenameMapping}`
         alert(errMessage)
@@ -304,16 +305,21 @@ async function updateSolidConfigurationInSessionStorage() {
 
 function getSolidConfigurationFromSessionStorage() {
     console.debug("@getSolidConfigurationFromSessionStorage")
-    let plainSolidConfiguration = sessionStorage.getItem('solidConfiguration')
-    if(plainSolidConfiguration) {
-        console.debug("plainSolidConfiguration: ", plainSolidConfiguration)
-        let result = JSON.parse(plainSolidConfiguration)
-        console.debug("result: ", result)
-        return result
-    }else {
-        console.error("No Solid configuration in session storage!")
-        return null
+    let result = null
+    try {
+        let plainSolidConfiguration = sessionStorage.getItem('solidConfiguration')
+        if(plainSolidConfiguration) {
+            console.debug("plainSolidConfiguration: ", plainSolidConfiguration)
+            result = JSON.parse(plainSolidConfiguration)
+            console.debug("result: ", result)
+        }else
+            throw "No Solid configuration in session storage!"
+
+
+    }catch (err) {
+        console.error(err)
     }
+    return result
 }
 
 /**
