@@ -71,6 +71,14 @@
                                            ]
                           ];
 
+# Image property: type
+    rr:predicateObjectMap [
+                              rr:predicate schema:encodingFormat;
+                              rr:objectMap [
+                                               rml:reference "type";
+                                           ]
+                          ];
+
 # Image interaction statistic: views
     rr:predicateObjectMap [
                               rr:predicate schema:interactionStatistic;
