@@ -9,6 +9,11 @@
             "filename" :  "Photosets.ttl",
             "label" : "Transfer Flickr photosets",
             "description" : "Transfers photosets from Flickr"
+        },
+        {
+            "filename" :  "CollectionTransferUsingSchemaOrg.ttl",
+            "label" : "Transfer Flickr collections using Schema.org vocabulary",
+            "description" : "Transfers collections from Flickr using Schema.org vocabulary"
         }
     ],
     "imgur" : [
@@ -21,6 +26,11 @@
             "filename" :  "ImagesWithDetails.ttl",
             "label" : "Transfer images with details from Imgur",
             "description" : "Transfers image links and properties from Imgur"
+        },
+        {
+            "filename" :  "ImageTransferUsingSchemaOrg.ttl",
+            "label" : "Transfer images from Imgur using Schema.org",
+            "description" : "Transfers image links and properties from Imgur using the Schema.org vocabulary."
         }
     ]
 }
