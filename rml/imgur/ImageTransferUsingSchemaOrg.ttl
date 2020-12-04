@@ -79,6 +79,14 @@
                                            ]
                           ];
 
+# Image property: title
+    rr:predicateObjectMap [
+                              rr:predicate schema:name;
+                              rr:objectMap [
+                                               rml:reference "title";
+                                           ]
+                          ];
+
 # Image interaction statistic: views
     rr:predicateObjectMap [
                               rr:predicate schema:interactionStatistic;
