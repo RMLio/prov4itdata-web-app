@@ -126,8 +126,14 @@ async function executeMapping() {
             }
         }
 
-        let data = JSON.parse(await executeRequest(url, params))
-        return data
+        try {
+            let data = JSON.parse(await executeRequest(url, params))
+            return data
+        }catch (error) {
+            console.error("Error!: ", error)
+        }
+        return null
+
     }else {
         let errMessage = `Can't execute the RML Mapping... provider: ${provider}, filenameMapping: ${filenameMapping}`
         alert(errMessage)
@@ -261,18 +267,23 @@ async function executeMappingRoutine() {
     console.log("@executeMappingRoutine")
     console.log("\t1. execute mapping")
     let executionResult = await executeMapping()
-    console.log("\t2. updateSessionWithExecutionResults")
-    updateSessionWithExecutionResults(executionResult)
-    console.log("\t3. store on solid pod")
-    let storeOk = await storeOnSolidPod()
-    if(storeOk) {
-        console.log("\t4. update output elements")
-        updateOutputElements()
-    }else{
-        console.error("Could not store on solid pod")
+    if(executionResult) {
+        console.log("execution Result: " , executionResult)
+        console.log("\t2. updateSessionWithExecutionResults")
+        updateSessionWithExecutionResults(executionResult)
+        console.log("\t3. store on solid pod")
+        let storeOk = await storeOnSolidPod()
+        if(storeOk) {
+            console.log("\t4. update output elements")
+            updateOutputElements()
+        }else{
+            console.error("Could not store on solid pod")
+            return false
+        }
+        return true
+    }else
         return false
-    }
-    return true
+
 }
 async function updateSolidConfigurationInSessionStorage() {
     console.debug("@updateSolidConfigurationInSessionStorage")
@@ -372,7 +383,7 @@ async function suggestLoginToSolidPod() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////// ON LOAD
-window.onload = async function(loadEvent) {
+window.onload = async function (loadEvent) {
 
     const elementIds = [
         // selects
@@ -398,25 +409,25 @@ window.onload = async function(loadEvent) {
     ]
 
     // map the ids to the DOM elements
-    const elements = Object.fromEntries(elementIds.map( (id) => [id, document.getElementById(id)]))
-    const outputElements = Object.fromEntries(outputElementIds.map( (id) => [id, document.getElementById(id)]))
+    const elements = Object.fromEntries(elementIds.map((id) => [id, document.getElementById(id)]))
+    const outputElements = Object.fromEntries(outputElementIds.map((id) => [id, document.getElementById(id)]))
 
     // Update select element for the RML Mapping
     let sidx = sessionStorage.getItem('selectedMappingIndex')
-    if(sidx)
+    if (sidx)
         elements.select_grouped_mappings.selectedIndex = sidx
 
     elements.btn_execute_mapping.disabled = !isSelectedMappingValid()
 
     // Update RML Rules element
     let rmlRules = sessionStorage.getItem('RMLRules')
-    if(rmlRules)
+    if (rmlRules)
         elements.pre_rules.innerText = sessionStorage.getItem('RMLRules')
 
 
     // Check whether an execution is triggered
     let executionTriggered = sessionStorage.getItem('executionTriggered') && sessionStorage.getItem('executionTriggered') === 'true'
-    if(executionTriggered) {
+    if (executionTriggered) {
         console.log("execution is triggered")
         await trackExecutionRoutine()
     }
@@ -432,11 +443,11 @@ window.onload = async function(loadEvent) {
      * Dropdown menu for selecting the RML Mapping to be
      * @returns {Promise<void>}
      */
-    elements.select_grouped_mappings.onchange = async ()=>{
+    elements.select_grouped_mappings.onchange = async () => {
         console.log("select_mapping change event")
         elements.btn_execute_mapping.disabled = !isSelectedMappingValid()
 
-        if(isSelectedMappingValid()) {
+        if (isSelectedMappingValid()) {
             // the currently selected index
             let sidx = elements.select_grouped_mappings.selectedIndex
             sessionStorage.setItem("selectedMappingIndex", sidx)
@@ -458,7 +469,7 @@ window.onload = async function(loadEvent) {
             // Execute & process response
             const response = await fetch(url, params)
             await handleReponse(response,
-                async (res)=>{
+                async (res) => {
                     // Callback: success
                     // Extract, read & decode body from response
                     let data = await readAndDecodeBody(response)
@@ -466,15 +477,13 @@ window.onload = async function(loadEvent) {
                     elements.pre_rules.innerText = sessionStorage.getItem('RMLRules')
                     await updateSolidConfigurationInSessionStorage()
                 },
-                (res)=>{
+                (res) => {
                     // Callback: failure
                     alert("Error while fetching mapping")
-                    console.error("Error while executing mapping")
                     console.error(res)
                 })
         }
     }
-
 
 
     /**
@@ -496,8 +505,8 @@ window.onload = async function(loadEvent) {
     // Download RML Rules
     elements.btn_download_RML_rules.onclick = function () {
         const rmlRules = sessionStorage.getItem('RMLRules')
-        const filename = sessionStorage.getItem('filenameMapping')?sessionStorage.getItem('filenameMapping') : 'mapping.ttl'
-        if(rmlRules==null)
+        const filename = sessionStorage.getItem('filenameMapping') ? sessionStorage.getItem('filenameMapping') : 'mapping.ttl'
+        if (rmlRules == null)
             alert('No RDF Rules available!')
         else
             executeClientDownload(filename, rmlRules)
@@ -508,7 +517,7 @@ window.onload = async function(loadEvent) {
     elements.btn_download_RDF.onclick = function () {
         let generatedRDF = sessionStorage.getItem('generatedRDF')
 
-        if(generatedRDF==null)
+        if (generatedRDF == null)
             alert('No RDF data available. Make sure to execute the RML Mapping first!')
         else
             executeClientDownload("output.ttl", generatedRDF)
@@ -517,7 +526,7 @@ window.onload = async function(loadEvent) {
     // Download provenance
     elements.btn_download_provenance.onclick = function () {
         let provenance = sessionStorage.getItem('provenance')
-        if(provenance==null)
+        if (provenance == null)
             alert('No provenance data available. Make sure to execute the RML Mapping first!')
         else
             executeClientDownload("provenance.ttl", provenance)
@@ -531,18 +540,18 @@ window.onload = async function(loadEvent) {
             let solidConfiguration = getSolidConfigurationFromSessionStorage()
             const session = await solid.auth.currentSession()
 
-            if(session) {
+            if (session) {
                 const podUrl = new URL(session.webId).origin
                 const relativePath = [solidConfiguration.storageDirectory, solidConfiguration.filename].join('/')
                 const url = new URL(relativePath, podUrl).toString()
 
-                if(url){
+                if (url) {
                     const solidPodData = await fetchFromSolidPod(url)
                     document.getElementById("pre_solidpod_data").innerText = solidPodData
-                }else{
+                } else {
                     console.error("url to solid pod file is null")
                 }
-            }else suggestLoginToSolidPod()
+            } else suggestLoginToSolidPod()
         }
 
         //DELETE data file from Solid pod
@@ -551,21 +560,21 @@ window.onload = async function(loadEvent) {
             let solidConfiguration = getSolidConfigurationFromSessionStorage()
             const session = await solid.auth.currentSession()
 
-            if(session) {
+            if (session) {
                 const podUrl = new URL(session.webId).origin
                 const relativePath = [solidConfiguration.storageDirectory, solidConfiguration.filename].join('/')
                 const url = new URL(relativePath, podUrl).toString()
                 const params = {
-                    'method' : 'DELETE',
+                    'method': 'DELETE',
                 }
                 const response = await solid.auth.fetch(url, params)
                 await handleReponse(response,
-                    (res)=>{
-                        console.log("Succesfully DELETED file: "  + solidConfiguration.filename)
+                    (res) => {
+                        console.log("Succesfully DELETED file: " + solidConfiguration.filename)
                         document.getElementById("pre_solidpod_data").innerText = ""
                         alert(`Successfully deleted ${relativePath} from your Solid Pod (${podUrl})`)
                     },
-                    async (res)=>{
+                    async (res) => {
                         const alertMsg = `Error while deleting file: ${solidConfiguration.filename}.Error message: ${res.statusText}`
                         alert(alertMsg)
                         console.error(alertMsg)
@@ -575,35 +584,34 @@ window.onload = async function(loadEvent) {
             } else suggestLoginToSolidPod()
         }
 
-        // CREATE data file on Solid pod
-        // document.getElementById("btn_create_datafile_on_solid").onclick = async function () {
-        //     let solidConfig = getSolidConfigurationFromSessionStorage()
-        //     let url = solidConfig.podUrl
-        //     const params = {
-        //         'method' : 'POST',
-        //         'body' :'',
-        //         headers : {
-        //             'Content-Type' : 'text/turtle',
-        //             'Link': '<http://www.w3.org/ns/ldp#Resource>; rel="type"',
-        //             'Slug' : solidConfig.filename
-        //         }
-        //     }
-        //     const response = await solid.auth.fetch(url, params)
-        //     await handleReponse(response,
-        //         (res)=>{
-        //             console.log("Succesfully created file: "  + solidConfig.filename)
-        //         },
-        //         async (res)=>{
-        //             const alertMsg = `Error while creating file: ${solidConfig.filename}.\n
-        //             Error message: ${await readAndDecodeBody(res)}
-        //             `
-        //             alert(alertMsg)
-        //             console.error(alertMsg)
-        //         }
-        //     )
-        // }
+        const btnLoginLogoutSolid = document.getElementById("btn_login_logout_solid")
+        if (btnLoginLogoutSolid)
+            updateSolidLoginLogoutButton(btnLoginLogoutSolid)
+
+
     }
+
     bindSolidControls()
+
+    async function updateSolidLoginLogoutButton(btnLoginLogoutSolid) {
+        if (await isSolidConnected()) {
+
+            btnLoginLogoutSolid.innerText = "Log out from Solid pod"
+            btnLoginLogoutSolid.onclick = async function () {
+                console.log("the logout functionality")
+                await solid.auth.logout()
+                alert("You are now logged out from the Solid pod")
+                updateSolidLoginLogoutButton(btnLoginLogoutSolid)
+            }
+        } else {
+            btnLoginLogoutSolid.innerText = "Log in to Solid pod"
+            btnLoginLogoutSolid.onclick = async function () {
+                console.log("the LOG IN functionality")
+                await solid.auth.login(idp)
+            }
+        }
+
+    }
 
 
 }

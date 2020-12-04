@@ -132,6 +132,9 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                             console.error(response)
                             res.send(`<p style="color:red">FAILURE</p>`)
                         }
+                    },
+                    (error) => {
+                        handleStatusCode(req,res,500, error.toString())
                     }
                 )
 
@@ -287,7 +290,7 @@ const getAuthorizedData = async (url, bearerToken, cb) => {
     }
 }
 
-async function executeRMLMapping(urlRMLMapper, mapping, cb) {
+async function executeRMLMapping(urlRMLMapper, mapping, cb, cbError) {
     console.log("@executeRMLMapping")
     try {
         // Construct the parameters used to execute the RML Mapping
@@ -304,6 +307,7 @@ async function executeRMLMapping(urlRMLMapper, mapping, cb) {
         console.error("Error while executing RML Mapping")
         console.error("\turl RMLMapper web api: ", urlRMLMapper)
         console.error(error.message)
+        cbError(error)
     }
 }
 
