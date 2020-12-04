@@ -6,9 +6,9 @@
             "description" : "Transfers collections from Flickr"
         },
         {
-            "filename" :  "Photosets.ttl",
-            "label" : "Transfer Flickr photosets",
-            "description" : "Transfers photosets from Flickr"
+            "filename" :  "PhotosetTransferUsingSchemaOrg.ttl",
+            "label" : "Transfer Flickr photosets using Schema.org vocabulary",
+            "description" : "Transfers photosets from Flickr using Schema.org vocabulary"
         },
         {
             "filename" :  "CollectionTransferUsingSchemaOrg.ttl",
