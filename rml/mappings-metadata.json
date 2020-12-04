@@ -1,11 +1,6 @@
 {
     "flickr":[
         {
-            "filename" :  "CollectionInformation.ttl",
-            "label" : "Transfer Flickr collections",
-            "description" : "Transfers collections from Flickr"
-        },
-        {
             "filename" :  "PhotosetTransferUsingSchemaOrg.ttl",
             "label" : "Transfer Flickr photosets using Schema.org vocabulary",
             "description" : "Transfers photosets from Flickr using Schema.org vocabulary"
