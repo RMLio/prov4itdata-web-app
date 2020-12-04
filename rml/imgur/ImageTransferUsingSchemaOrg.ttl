@@ -1,0 +1,114 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix : <http://mapping.example.com/>.
+@prefix ex: <http://example.com/>.
+@prefix schema: <http://schema.org/> .
+
+
+:imgur_source
+    a schema:WebAPI;
+    schema:name "Imgur API";
+    schema:url <https://api.imgur.com/3/account/me/images>;
+    ex:AuthorizationHeader "{{authorizationHeader}}";
+.
+
+
+:imgur_triplesmap
+    a rr:TriplesMap;
+
+    rml:logicalSource [
+                          rml:source :imgur_source;
+                          rml:referenceFormulation ql:JSONPath;
+                          rml:iterator "$.data[*]";
+                      ];
+
+
+
+    rr:subjectMap [
+                      rr:template "http://dapsi.com/{account_url}/services/imgur/myimages/{id}";
+                      rr:class schema:ImageObject;
+                  ];
+
+# Image link
+# Note: multiple predicates for the link to the image object
+    rr:predicateObjectMap [
+
+                              rr:predicate schema:image;
+                              rr:predicate schema:url;
+
+                              rr:objectMap [
+                                               rml:reference "link";
+                                               rr:termType rr:IRI;
+                                           ]
+                          ];
+
+# Image Description
+    rr:predicateObjectMap [
+                              rr:predicate schema:description;
+                              rr:objectMap [
+                                               rml:reference "description";
+                                           ]
+                          ];
+
+# Image property: height
+    rr:predicateObjectMap [
+                              rr:predicate schema:height;
+                              rr:objectMap [
+                                               rr:template "{height} px";
+                                               rr:termType rr:Literal;
+                                               rr:datatype schema:Distance;
+                                           ]
+                          ];
+
+# Image property: width
+    rr:predicateObjectMap [
+                              rr:predicate schema:width;
+                              rr:objectMap [
+                                               rr:template "{width} px";
+                                               rr:termType rr:Literal;
+                                               rr:datatype schema:Distance;
+                                           ]
+                          ];
+
+# Image interaction statistic: views
+    rr:predicateObjectMap [
+                              rr:predicate schema:interactionStatistic;
+
+                              rr:objectMap [
+                                               rr:parentTriplesMap :imgur_image_interaction_statistic_triplesmap;
+                                           ];
+
+                          ];
+
+.
+
+# TriplesMap for generating the view Interaction Statistic
+:imgur_image_interaction_statistic_triplesmap
+    a rr:TriplesMap;
+
+    rml:logicalSource [
+                          rml:source :imgur_source;
+                          rml:referenceFormulation ql:JSONPath;
+                          rml:iterator "$.data[*]";
+                      ];
+
+    rr:subjectMap [
+                      rr:template "http://dapsi.com/{account_url}/services/imgur/myimages/{id}/views";
+                      rr:class schema:InteractionCounter;
+                  ];
+
+    rr:predicateObjectMap [
+                              rr:predicate schema:interactionType;
+                              rr:object schema:ViewAction;
+                          ];
+
+    rr:predicateObjectMap [
+                              rr:predicate schema:userInteractionCount;
+
+                              rr:objectMap [
+                                               rml:reference "views";
+                                           ];
+
+                          ];
+.
