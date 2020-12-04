@@ -88,7 +88,7 @@
 
     rr:subjectMap [
                       rr:template "http://dapsi.com/services/flickr/collection/{id}";
-                      rr:class schema:ImageGallery;
+                      rr:class schema:Collection;
                   ];
 
     rr:predicateObjectMap [ rr:predicate schema:name; rr:objectMap [ rml:reference "title"] ];
