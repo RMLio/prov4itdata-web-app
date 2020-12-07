@@ -292,8 +292,50 @@ We opted to initially support [Flickr](#Flickr) and [Imgur](#Imgur).
 Both services share a common purpose: uploading and sharing image-content.
 However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.
 
+There are three different resources to model
+
+- A single Image resource
+- An Image Gallery that contains Image resources
+- A Collection that contains Image Gallery resources
+
 > Our current use cases already showcase the flexibility of our approach,
 > however, more use cases will be supported in following sprints.
+
+### Best-practice vocabularies
+
+#### Schema.org
+
+> TODO
+
+#### [DCAT]
+
+##### Image
+
+We can model an Image as a `dcat:Distribution`.
+
+> `dcat:Distribution`
+> A specific representation of a dataset. A dataset might be available in multiple serializations that may differ in various ways, including natural language, media-type or format, schematic organization, temporal and spatial resolution, level of detail or profiles (which might specify any or all of the above).
+
+- `dcat:Distribution` has the following properties
+
+  - `title`
+  - `description`
+  - `issued`: date of issuance (e.g publication)
+  - [`dcat:accessURL`](https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_access_url) *SHOULD* be used for the URL of a service or location that can provide access to this distribution, typically through a Web form, query or API call.
+  - [`dcat:downloadURL`](https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_download_url) is preferred for direct links to downloadable resources.
+  - `dcat:mediaType`: The media type of the distribution as defined by IANA 
+  - `dct:format`: The file format of the distribution.
+
+  - `dcat:accessService`, pointing to a `dcat:DataService`
+
+##### Image gallery
+
+We can model an Image Gallery as a `dcat:Dataset`, which can point to **zero or more** `dcat:Distribution`s.
+
+##### Collection
+
+[DCAT] contains a `dcat:Catalog` class, a curated collection of metadata about resources (e.g., datasets and data services in the context of a data catalog).
+A `dcat:Catalog` can be linked to **zero or more** `dcat:Dataset`s.
 
 ### [Flickr]
 
@@ -311,6 +353,16 @@ The data fields mapped from a Flickr Photoset resource are
 - `id`: a unique identifier for that Photoset resource
 - `owner`: owner of the Photoset resource
 
+#### Using [Schema.org]
+
+> TODO: describe how Flickr resources are mapped using schema.org
+
+#### Using [DCAT]
+
+- An image resource can be modelled by a `dcat:Distribution`
+- A Flickr Album can contain image resources
+- A Flickr Collection can contain Flickr Albums, which contain image resources. Therefore, a Flickr Collection can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums)
+
 ### [Imgur]
 
 Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
@@ -325,6 +377,14 @@ The data fields mapped from the Imgur image resources are
 - `views`: the number of views
 - `height`: height of the image
 - `width`: width of the image
+
+#### Using [Schema.org]
+
+> TODO: describe how Imgur resources are mapped using schema.org
+
+#### Using [DCAT]
+
+> TODO: describe how Imgur resources are mapped using schema.org
 
 > We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain
 
@@ -584,6 +644,7 @@ and provide integration alternatives with, e.g., [DTP].
 [provenance]: #automatic-data-provenance-generation
 
 [Comunica]: https://comunica.dev/
+[DCAT] : https://www.w3.org/TR/vocab-dcat-2/
 [DTP]: https://datatransferproject.dev/
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
@@ -604,5 +665,6 @@ and provide integration alternatives with, e.g., [DTP].
 [RML-spec]: http://rml.io/spec.html
 [RMLMapper-JAVA]: https://github.com/RMLio/rmlmapper-java
 [RMLMapper-api]: https://github.com/RMLio/rmlmapper-webapi-js
+[Schema.org]: https://schema.org/docs/full.html
 [Solid]: https://inrupt.com/solid/
 [Turtle]: https://www.w3.org/TR/turtle/
