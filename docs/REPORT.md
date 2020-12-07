@@ -644,7 +644,7 @@ and provide integration alternatives with, e.g., [DTP].
 [provenance]: #automatic-data-provenance-generation
 
 [Comunica]: https://comunica.dev/
-[DCAT] : https://www.w3.org/TR/vocab-dcat-2/
+[DCAT]: https://www.w3.org/TR/vocab-dcat-2/
 [DTP]: https://datatransferproject.dev/
 [FAIR]: https://www.go-fair.org/
 [Flickr]: https://www.flickr.com/about
