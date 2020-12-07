@@ -4,6 +4,8 @@
   "description": "PROV4ITDaTa Web app",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,5 +20,8 @@
     "install": "^0.13.0",
     "pem": "^1.14.4",
     "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

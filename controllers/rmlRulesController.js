@@ -45,7 +45,7 @@ function getMappingsWithMetadata() {
         p =>
             [p,
                 mappingsMetaData[p].map(mappingMeta => {
-                mappingMeta['relativeFilepath'] = path.join(p, mappingMeta.filename)
+                mappingMeta['relativeFilepath'] = `${p}/${mappingMeta.filename}`
                 return mappingMeta
                 })
             ])

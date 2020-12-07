@@ -32,7 +32,13 @@ Each `app-config` refers to a json file (template at `config.template.json`) tha
 Run the web-app using:
 
 ```bash
-node .
+npm run start
+```
+
+Run the web-app in development mode using:
+
+```bash
+npm run start:dev
 ```
 
 ## Use cases
