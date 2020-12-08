@@ -1,5 +1,5 @@
 {
-  "name": "webapp-express-min",
+  "name": "@prov4itdata/web-app",
   "version": "0.1.0",
   "description": "PROV4ITDaTa Web app",
   "main": "app.js",
