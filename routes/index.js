@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const rmlRulesController = require('../controllers/rml-rules-controller')
-const tokenController = require('../controllers/tokenController')
+const tokenController = require('../controllers/token-controller')
 const mappingUtils = require('../lib/utils/mapping-utils')
 const configurationController = require('../controllers/configuration-controller')
 
