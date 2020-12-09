@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+- RML Mappings for using DCAT vocabulary (see [issue #9](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/9))
+
 ### Changed
 - Updated report: clarified RML Mapping (see [MR 24](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/merge_requests/24))
 - Updated RML Mappings to use best-practice vocabularies (see [issue #8](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/8))
