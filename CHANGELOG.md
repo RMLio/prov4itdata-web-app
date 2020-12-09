@@ -13,10 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Updated report: clarified RML Mapping (see [MR 24](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/merge_requests/24))
 - Updated RML Mappings to use best-practice vocabularies (see [issue #8](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/8))
-- Clean-up: optimized imports, adhering to filename convention (see [MR 26](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/merge_requests/26))
+- Clean-up: optimized imports, adhering to filename convention (see [issue #30](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/30))
 
 ### Removed
-- Deprecated code  (see [MR 26](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/merge_requests/26))
+- Deprecated code  (see [issue #30](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/30))
 
 ## [0.1.0] - 2020-12-03
 
