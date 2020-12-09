@@ -303,9 +303,19 @@ There are three different resources to model
 
 ### Best-practice vocabularies
 
-#### Schema.org
+#### [Schema.org]
 
-> TODO
+##### Image
+
+Images can be mapped to `schema:ImageObject`-resources, which inherits properties from `schema:MediaObject` that can be used for describing the height, width, and more.
+
+##### Image Gallery
+
+An Image Gallery can be represented using `schema:ImageGallery`. Furthermore, the images it contains can be linked using the `schema:hasPart` property.
+ 
+##### Collection
+
+A Collection can be modelled by means of a `schema:Collection`, which can be linked to its Image Gallery resources through the `schema:hasPart` property.
 
 #### [DCAT]
 
@@ -316,17 +326,16 @@ We can model an Image as a `dcat:Distribution`.
 > `dcat:Distribution`
 > A specific representation of a dataset. A dataset might be available in multiple serializations that may differ in various ways, including natural language, media-type or format, schematic organization, temporal and spatial resolution, level of detail or profiles (which might specify any or all of the above).
 
-- `dcat:Distribution` has the following properties
+The `dcat:Distribution` class has the following properties
 
-  - `title`
-  - `description`
-  - `issued`: date of issuance (e.g publication)
-  - [`dcat:accessURL`](https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_access_url) *SHOULD* be used for the URL of a service or location that can provide access to this distribution, typically through a Web form, query or API call.
-  - [`dcat:downloadURL`](https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_download_url) is preferred for direct links to downloadable resources.
-  - `dcat:mediaType`: The media type of the distribution as defined by IANA 
-  - `dct:format`: The file format of the distribution.
-
-  - `dcat:accessService`, pointing to a `dcat:DataService`
+- `title`
+- `description`
+- `issued`: date of issuance (e.g publication)
+- [`dcat:accessURL`](https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_access_url) *SHOULD* be used for the URL of a service or location that can provide access to this distribution, typically through a Web form, query or API call.
+- [`dcat:downloadURL`](https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_download_url) is preferred for direct links to downloadable resources.
+- `dcat:mediaType`: The media type of the distribution as defined by IANA 
+- `dct:format`: The file format of the distribution.
+- `dcat:accessService`, pointing to a `dcat:DataService`
 
 ##### Image gallery
 
@@ -342,20 +351,23 @@ A `dcat:Catalog` can be linked to **zero or more** `dcat:Dataset`s.
 Flickr is an online photo management and sharing application.
 Its resources are made available through the [Flickr API][Flickr-API]. Flickr follows the [OAuth1.0a] protocol which requires that requests to protected resources are signed using the Consumer Secret and Token Secret. By specifying the protocol in the [RML Mapping][RML-mapping] the [RMLMapper-JAVA] takes care of the necessary steps for creating requests to protected resources. This also contributes to the extensibility of our solution: when a service decides to change to another protocol, only changes to the [RML Mapping][RML-mapping] must be made. Hence, avoiding the need for rebuilding code.
 
-The data fields mapped from a Flickr Collection resource are
-
-- `id`: a unique identifier for that Collection resource
-- `title`: the title of the Collection resource
-- `description`: the description of the Collection resource
-
-The data fields mapped from a Flickr Photoset resource are
-
-- `id`: a unique identifier for that Photoset resource
-- `owner`: owner of the Photoset resource
-
 #### Using [Schema.org]
 
-> TODO: describe how Flickr resources are mapped using schema.org
+- A Flickr Photo resource can be mapped to a `schema:ImageObject`.
+- A Flickr Photoset resource can be mapped to instances of `schema:ImageGallery`. The table below shows how its properties are mapped.
+- A Flickr Collection, which can contain Albums/Photosets, can be mapped using the `schema:Collection` class. The table below shows how its properties are mapped.
+
+| Flickr Photoset resource | `schema:ImageGallery` |
+| ------------------------ | --------------------- |
+| `id`                     | `schema:identifier`   |
+| `title._content`                  | `schema:name`         |
+| `description._content`            | `schema:description`  |
+
+| Flickr Collection resource | `schema:Collection`  |
+| -------------------------- | -------------------- |
+| `id`                       | `schema:identifier`  |
+| `title`                    | `schema:name`        |
+| `description`              | `schema:description` |
 
 #### Using [DCAT]
 
@@ -380,11 +392,27 @@ The data fields mapped from the Imgur image resources are
 
 #### Using [Schema.org]
 
-> TODO: describe how Imgur resources are mapped using schema.org
+An Imgur image can be mapped to a `schema:ImageObject`, along with the following properties:
+
+| Imgur image resource | `schema:ImageObject`    |      |
+| --------------------- | ----------------------- | ---- |
+| `id`                  | `schema:identifier`     |      |
+| `title`               | `schema:name`           |      |
+| `description`         | `schema:description`    |      |
+| `link`                | `schema:url`            | *    |
+|                       | `schema:image`          | *    |
+| `type`                | `schema:encodingFormat` |      |
+| `height`              | `schema:height`         |      |
+| `width`               | `schema:width`          |      |
+| `views`               | `schema:interactionStatistic` |      |
+
+> *Multiple properties are suitable for mapping the `link` property.
 
 #### Using [DCAT]
 
-> TODO: describe how Imgur resources are mapped using schema.org
+- An image resource can be modelled by a `dcat:Distribution`.
+- A Imgur Album can contain image resources, and can be modelled by `dcat:Dataset`.
+- An Imgur Gallery can contain Imgur Albums, which contain image resources. Therefore, an Imgur Gallery can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums).
 
 > We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain
 
