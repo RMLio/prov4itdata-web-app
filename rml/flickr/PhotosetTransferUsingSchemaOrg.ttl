@@ -72,6 +72,6 @@
     rr:predicateObjectMap [ rr:predicate schema:name ;
                             rr:objectMap [ rml:reference "title._content" ] ] ;
 
-    rr:predicateObjectMap [ rr:predicate ex:description ;
+    rr:predicateObjectMap [ rr:predicate schema:description ;
                             rr:objectMap [ rml:reference "description._content" ] ] ;
 .
