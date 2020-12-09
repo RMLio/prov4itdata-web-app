@@ -1,12 +1,14 @@
-var path = require('path')
-var fs = require('fs')
-var glob = require('glob')
+const path = require('path')
+const fs = require('fs')
+const axios = require('axios')
+
 const dirRML = path.join(path.dirname(require.main.filename), 'rml')
-const GLOB_PATTERN_GET_MAPPINGLIST = `${dirRML}/*/*.ttl`
+// Metadata read from mappings-metadata.json
 const mappingsMetaData = JSON.parse(fs.readFileSync(path.join(dirRML, 'mappings-metadata.json'), {'encoding' : 'utf8'}))
+
 /**
- * TODO: document
- * @returns {string[]}: .ttl files
+ * Reads the mapping file for the given provider and filename.
+ * @returns string or null if not existent
  */
 function readMapping(provider,filename){
     const filePath = path.join(dirRML,provider, filename)
@@ -18,20 +20,19 @@ function readMapping(provider,filename){
 }
 
 /**
- * TODO: document
+ * Returns a list of providers
  * @returns {string[]}
  */
 function getProviderList() {
-    // TODO: change to return Object.keys(mappingsMetaData)
-    return fs.readdirSync(dirRML, {'encoding': 'utf8'})
+    return Object.keys(mappingsMetaData)
 }
 
 /**
- * TODO: document
- * @returns {*}
+ * Returns a list of paths to the mapping files, relative to dirRML
+ * @returns {string[]}
  */
 function getMappingList() {
-    let providers = Object.keys(mappingsMetaData)
+    let providers = getProviderList()
     let relativePaths = providers.flatMap(p => {
         let providerMappingsMeta = Array.from(mappingsMetaData[p])
         return providerMappingsMeta.map(meta => path.join(p, meta.filename))
@@ -39,6 +40,10 @@ function getMappingList() {
     return relativePaths
 }
 
+/**
+ * Returns a key-value object with providers as keys and a list of metadata records as value.
+ * @returns {{[provider: string]: [{}]}}
+ */
 function getMappingsWithMetadata() {
     // Adds relativeFilepath to every mapping's metadata
     const entries = Object.keys(mappingsMetaData).map(
@@ -53,7 +58,7 @@ function getMappingsWithMetadata() {
 }
 
 /**
- * TODO: document
+ * Creates response for downloading the mapping specified in the request (req).
  * @param req
  * @param res
  */
@@ -81,6 +86,35 @@ function downloadMappingToClient(req, res) {
     res.end()
 }
 
+/**
+ * Executes RML Mapping.
+ * @param urlRMLMapper
+ * @param mapping
+ * @param cb
+ * @param cbError
+ * @returns {Promise<void>}
+ */
+async function executeRMLMapping(urlRMLMapper, mapping, cb, cbError) {
+    console.log("@executeRMLMapping")
+    try {
+        // Construct the parameters used to execute the RML Mapping
+        const paramsRMLMapperRequest = {
+            'rml': mapping,
+            'generateMetadata': true
+        }
+
+        const data = await axios.post(urlRMLMapper, paramsRMLMapperRequest)
+        // Execute callback cb on result
+        cb(data)
+
+    } catch (error) {
+        console.error("Error while executing RML Mapping")
+        console.error("\turl RMLMapper web api: ", urlRMLMapper)
+        console.error(error.message)
+        cbError(error)
+    }
+}
+
 // Export
 exports.getProviderList = getProviderList
 exports.getMappingList = getMappingList
@@ -88,3 +122,4 @@ exports.getMappingsWithMetadata = getMappingsWithMetadata
 exports.readMapping = readMapping
 exports.downloadMappingToClient = downloadMappingToClient
 exports.getDirRML = () => {return dirRML}
+exports.executeRMLMapping = executeRMLMapping

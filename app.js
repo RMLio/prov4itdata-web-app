@@ -39,8 +39,6 @@ const app = express()
 app.set('view engine', 'pug')
     .use(session({secret: 'grant', saveUninitialized: true, resave: false}))
     .use(grant)
-    // client-side Solid auth
-    .use('/solid-auth', express.static(path.join(__dirname, 'solid-auth')))
     .use('/', router(grant,environmentConfig, logConfig))
     .use(express.static('public'))
     .use('/docs', express.static('docs'))

@@ -248,10 +248,7 @@ async function trackProviderConnection() {
 
 async function isSolidConnected() {
     const session = await solid.auth.currentSession();
-    if(session)
-        return true
-    else
-        return false
+    return !!session;
 }
 
 async function trackSolidConnection() {
@@ -387,10 +384,7 @@ async function trackExecutionRoutine() {
  */
 function isSelectedMappingValid(){
     let select = document.getElementById('select_grouped_mappings')
-    if(select && select.selectedIndex >0)
-        return true
-    else
-        return false
+    return select && select.selectedIndex > 0;
 }
 
 async function suggestLoginToSolidPod() {
