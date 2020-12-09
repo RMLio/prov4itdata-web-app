@@ -1,0 +1,119 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix : <http://mapping.example.com/> .
+@prefix ex: <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+:flickr_my_images_source ex:requestParameterMapping :flickr_request_parameter_mapping ;
+	schema:name "Flickr API" ;
+	schema:url <https://api.flickr.com/services/rest/> ;
+	rdf:type schema:WebAPI .
+
+:flickr_request_parameter_mapping rdf:type fno:Mapping ;
+	fno:parameterMapping _:r12, _:r13, _:r14, _:r15, _:r17, _:r2, _:r23, _:r27, _:r29, _:r5, _:r8 .
+
+:flickr_triplesmap rml:logicalSource _:r11 ;
+	rdf:type rr:TriplesMap ;
+	rr:predicateObjectMap _:r1, _:r25, _:r6 ;
+	rr:subjectMap _:r10 .
+
+_:r0 rdf:type fno:Parameter ;
+	fno:name "oauth_nonce" .
+
+_:r1 rr:objectMap _:r7 ;
+	rr:predicate dct:title .
+
+_:r10 rr:class dcat:Catalog ;
+	rr:template "http://dapsi.com/services/flickr/collection/{id}" .
+
+_:r11 rml:iterator "$.collections.collection.[*]" ;
+	rml:referenceFormulation ql:JSONPath ;
+	rml:source :flickr_my_images_source .
+
+_:r12 fnom:functionParameter _:r18 ;
+	fnom:implementationProperty "{{oauth_timestamp}}" .
+
+_:r13 fnom:functionParameter _:r3 ;
+	fnom:implementationProperty "flickr.collections.getTree" .
+
+_:r14 fnom:functionParameter _:r21 ;
+	fnom:implementationProperty "1.0" .
+
+_:r15 fnom:functionParameter _:r16 ;
+	fnom:implementationProperty "{{client_secret}}" .
+
+_:r16 rdf:type fno:Parameter ;
+	fno:name "client_secret" .
+
+_:r17 fnom:functionParameter _:r26 ;
+	fnom:implementationProperty "{{token_secret}}" .
+
+_:r18 rdf:type fno:Parameter ;
+	fno:name "oauth_timestamp" .
+
+_:r19 rdf:type fno:Parameter ;
+	fno:name "oauth_token" .
+
+_:r2 fnom:functionParameter _:r28 ;
+	fnom:implementationProperty "{{oauth_consumer_key}}" .
+
+_:r20 rdf:type fno:Parameter ;
+	fno:name "format" .
+
+_:r21 rdf:type fno:Parameter ;
+	fno:name "oauth_version" .
+
+_:r22 rdf:type fno:Parameter ;
+	fno:name "oauth_signature_method" .
+
+_:r23 fnom:functionParameter _:r9 ;
+	fnom:implementationProperty "1" .
+
+_:r24 rml:reference "description" .
+
+_:r25 rr:objectMap _:r24 ;
+	rr:predicate dct:description .
+
+_:r26 rdf:type fno:Parameter ;
+	fno:name "token_secret" .
+
+_:r27 fnom:functionParameter _:r0 ;
+	fnom:implementationProperty "{{oauth_nonce}}" .
+
+_:r28 rdf:type fno:Parameter ;
+	fno:name "oauth_consumer_key" .
+
+_:r29 fnom:functionParameter _:r20 ;
+	fnom:implementationProperty "json" .
+
+_:r3 rdf:type fno:Parameter ;
+	fno:name "method" .
+
+_:r4 rml:reference "id" .
+
+_:r5 fnom:functionParameter _:r22 ;
+	fnom:implementationProperty "HMAC-SHA1" .
+
+_:r6 rr:objectMap _:r4 ;
+	rr:predicate dct:identifier .
+
+_:r7 rml:reference "title" .
+
+_:r8 fnom:functionParameter _:r19 ;
+	fnom:implementationProperty "{{oauth_token}}" .
+
+_:r9 rdf:type fno:Parameter ;
+	fno:name "nojsoncallback" .
+
