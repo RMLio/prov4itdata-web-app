@@ -9,6 +9,11 @@
             "filename" :  "collection-transfer-using-schema-org.ttl",
             "label" : "Transfer Flickr collections using Schema.org vocabulary",
             "description" : "Transfers collections from Flickr using Schema.org vocabulary"
+        },
+        {
+            "filename" :  "photoset-transfer-using-dcat.ttl",
+            "label" : "Transfer Flickr photosets using DCAT vocabulary",
+            "description" : "Transfer Flickr photosets using DCAT vocabulary"
         }
     ],
     "imgur" : [
