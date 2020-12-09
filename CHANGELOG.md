@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Updated report: clarified RML Mapping (see [MR 24](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/merge_requests/24))
+- Updated RML Mappings to use best-practice vocabularies (see [MR 23](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/merge_requests/23))
 
 ## [0.1.0] - 2020-12-03
 
