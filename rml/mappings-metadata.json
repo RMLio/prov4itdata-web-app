@@ -16,6 +16,11 @@
             "filename" :  "image-transfer-using-schema-org.ttl",
             "label" : "Transfer images from Imgur using Schema.org",
             "description" : "Transfers image links and properties from Imgur using the Schema.org vocabulary."
+        },
+        {
+            "filename" :  "image-transfer-using-dcat.ttl",
+            "label" : "Transfer images from Imgur using DCAT vocabulary",
+            "description" : "Transfer images from Imgur using DCAT vocabulary"
         }
     ]
 }
