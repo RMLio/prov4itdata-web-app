@@ -1,19 +1,19 @@
 {
     "flickr":[
         {
-            "filename" :  "PhotosetTransferUsingSchemaOrg.ttl",
+            "filename" :  "photoset-transfer-using-schema-org.ttl",
             "label" : "Transfer Flickr photosets using Schema.org vocabulary",
             "description" : "Transfers photosets from Flickr using Schema.org vocabulary"
         },
         {
-            "filename" :  "CollectionTransferUsingSchemaOrg.ttl",
+            "filename" :  "collection-transfer-using-schema-org.ttl",
             "label" : "Transfer Flickr collections using Schema.org vocabulary",
             "description" : "Transfers collections from Flickr using Schema.org vocabulary"
         }
     ],
     "imgur" : [
         {
-            "filename" :  "ImageTransferUsingSchemaOrg.ttl",
+            "filename" :  "image-transfer-using-schema-org.ttl",
             "label" : "Transfer images from Imgur using Schema.org",
             "description" : "Transfers image links and properties from Imgur using the Schema.org vocabulary."
         }
