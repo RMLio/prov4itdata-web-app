@@ -19,7 +19,9 @@
     "grant": "^5.4.5",
     "install": "^0.13.0",
     "pem": "^1.14.4",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "swagger-ui-express": "^4.1.6",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
