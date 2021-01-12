@@ -11,10 +11,24 @@ paths:
   /imgur/callback:
     get:
       summary: Updates imgur tokens and redirects back to root
+      responses: # TODO: update
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
 
   /flickr/callback:
     get:
       summary: Updates flickr tokens and redirects back to root
+      responses: # TODO: update
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
 
   /rml/rules/{provider}/{filename}: # note: will be removed
     get:
@@ -33,8 +47,8 @@ paths:
           schema:
             type: string
       responses:
-        200:
-          description: OK
+        '200':    # status code
+          description: A JSON array of user names
           content:
             text/plain:
               schema:
@@ -45,18 +59,20 @@ paths:
 
                 ex:me foaf:knows ex:you .
                 '
+
+
+
   /rmlmapper/{provider}/{filename}:
     get: # TODO: will change to POST
       summary: Returns the result returned by the RMLMapper.
-      For this, the token-controller is used to access the provider credentials, based on the provided request and provider.
-      Subsecuently, the rml-rules-controller will make call to the RMLMapper WEB API to execute the mapping.
+      description: For this, the token-controller is used to access the provider credentials, based on the provided request and provider. Subsecuently, the rml-rules-controller will make call to the RMLMapper WEB API to execute the mapping.
       parameters:
         - name: provider
-            in: path
-            description: Data provider (e.g. flickr)
-            required: true
-            schema:
-              type: string
+          in: path
+          description: Data provider (e.g. flickr)
+          required: true
+          schema:
+            type: string
         - name: filename
           in: path
           description: Filename of the RML Mapping file
@@ -65,28 +81,22 @@ paths:
             type: string
 
       responses:
-        200:
+        '200':
           description: The specific RML mapping has been executed succesfully and the resulting generated RDF and provenance are being returned.
-          content:
-            application/json:
-              schema:
-                $ref: '' #TODO: construct van { 'rdf' : '.....' , 'prov': '....' }
+          # TODO: content: application/json, etc..
 
-  /status/{provider}/connectede:
+  /status/{provider}/connected:
     get:
       summary: Returns whether the given provider is connected (i.e. whether the backend contains tokens for that provider.
       parameters:
-        parameters:
-          - name: provider
-              in: path
-              description: Data provider (e.g. flickr)
-              required: true
-              schema:
-                type: string
-        responses:
-          200:
-            description: Returns true or false, depending on whether the given provider is connected.
-            content:
-              boolean:
-                schema: # schema.org#Boolean?
-                  $ref: ''  # TODO
+        - name: provider
+          in: path
+          description: Data provider (e.g. flickr)
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Returns true or false, depending on whether the given provider is connected.
+          # TODO: content (boolean)
+
