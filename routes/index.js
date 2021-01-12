@@ -5,6 +5,11 @@ const tokenController = require('../controllers/token-controller')
 const mappingUtils = require('../lib/utils/mapping-utils')
 const configurationController = require('../controllers/configuration-controller')
 
+const YAML = require('yamljs');
+const swaggerDocs = YAML.load('./swagger.yaml')
+const swaggerUi = require('swagger-ui-express')
+
+
 const statusCodes = {
     401: "Unauthorized",
     404: "Not Found",
@@ -22,6 +27,10 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                 next()
             })
     }
+
+    // SWAGGER
+    router.use('/api-docs', swaggerUi.serve)
+    router.get('/api-docs', swaggerUi.setup(swaggerDocs))
 
     router.get('/', (req, res) => {
         var paramsRender = {}
