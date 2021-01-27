@@ -53,6 +53,13 @@ function createRouter(grant, environmentConfig, logConfig = null) {
         res.redirect('/')
     })
 
+    // callback for capturing the Google tokens
+    router.get('/google/callback', (req, res) => {
+        console.log(req.route.path)
+        updateTokens(req)
+        res.redirect('/')
+    })
+
     /**
      * Return RML Rules
      * If a filename is specified, read and send that file.

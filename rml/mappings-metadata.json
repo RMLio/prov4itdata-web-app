@@ -32,5 +32,13 @@
             "label" : "Transfer images from Imgur using DCAT vocabulary",
             "description" : "Transfer images from Imgur using DCAT vocabulary"
         }
+    ],
+    "google" : [
+        {
+            "filename" :  "contact-transfer-using-schema-org.ttl",
+            "label" : "Transfer Google contacts using Schema.org",
+            "description" : ""
+        }
+
     ]
 }
