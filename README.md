@@ -69,6 +69,7 @@ Steps:
         - For example, assuming the web-app is served locally on port `3000`, the redirect URI would be: `https://localhost:3000/connect/google/callback`
         - Don't forget to save the *Client ID* and *Client secret*, as you will need it later on.
     
+
 - Since our Google app's publishing status is "testing", only test users will be able to use it. Navigate to the *OAuth consent screen* using the panel on the left, and add the test users.
 ![Navigate to OAuth consent screen](docs/img/readme-adding-google-adding-test-users.png)
   
