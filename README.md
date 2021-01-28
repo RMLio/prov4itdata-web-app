@@ -32,14 +32,54 @@ Each `app-config` refers to a json file (template at `config.template.json`) tha
 Run the web-app using:
 
 ```bash
-npm run start
+yarn run start
 ```
 
 Run the web-app in development mode using:
 
 ```bash
-npm run start:dev
+yarn run start:dev
 ```
+
+### Adding data providers
+
+#### [Google People API](https://developers.google.com/people?hl=en)
+
+Prerequisites:
+- Google Developer Account
+
+- Go to the [Google Developer Console](https://console.developers.google.com/)
+   and the first thing to do, is creating a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
+- For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
+   
+![Make sure that the correct project is selected](docs/img/readme-adding-google-step001-selected-project.png)
+
+- Navigate to *APIs & Services*  
+
+![Go to APIs and Services](docs/img/readme-adding-google-navigate-to-APIs-and-Services.png)
+
+- Search and enable the API you wish to integrate. In this case, the [Google People API](https://console.cloud.google.com/apis/library/people.googleapis.com)
+
+- In order to make requests to the API, you need to set up authorization.
+    - Since we need to access private data, OAuth 2.0 credentials must be generated.
+    - Go to the [Credentials page](https://console.developers.google.com/apis/credentials) and click on *Create Credentials* and select *OAuth client ID*
+    </br>![Create credentials and select OAuth client ID ](docs/img/readme-adding-google-authorization-create-credentials-dropdown.png)
+
+    - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server
+    
+
+
+
+ - OAuth 2.0 Client
+  - added nearly all scopes w.r.t. reading from people API
+  - [ ] **can this be easily extended to other Google apis?**
+  - add testusers (in test-mode, only testusers can use the app (you can register up to 100 test users))
+  - create credentials
+   - API Key: `AIzaSyDNwWIFFpiOmAFiygS7eM-xcltFEWYIthk`
+   - Oauth Client
+    - name: `oauthclient-dapsi-dev`
+    - client id: `704703996998-mm0psiamc628soisd9hkovrjo5tlbd2q.apps.googleusercontent.com`
+    - client secret: `tatxC9Eli-VWJ5-i12IpSiST`
 
 ## Use cases
 
