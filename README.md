@@ -62,24 +62,43 @@ Prerequisites:
 
 - In order to make requests to the API, you need to set up authorization.
     - Since we need to access private data, OAuth 2.0 credentials must be generated.
-    - Go to the [Credentials page](https://console.developers.google.com/apis/credentials) and click on *Create Credentials* and select *OAuth client ID*
+    - Go to the [Credentials page](https://console.developers.google.com/apis/credentials), click on *Create Credentials* and select *OAuth client ID*
     </br>![Create credentials and select OAuth client ID ](docs/img/readme-adding-google-authorization-create-credentials-dropdown.png)
 
-    - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server
+    - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server.
+        - For example, assuming the web-app is served locally on port `3000`, the redirect URI would be: `https://localhost:3000/connect/google/callback`
+        - Don't forget to save the *Client ID* and *Client secret*, as you will need it later on.
     
+- Since our Google app's publishing status is "testing", only test users will be able to use it. Navigate to the *OAuth consent screen* using the panel on the left, and add the test users.
+![Navigate to OAuth consent screen](docs/img/readme-adding-google-adding-test-users.png)
+  
+- Finally, add the *Client ID*, *Client secret* to the `config.json`. This may look like
 
+```json
+{
+  "defaults": {
+    "origin": "https://localhost:3000",
+    "transport": "session"
+  },
+  "imgur": {
+    // ... 
+  },
+  "flickr": {
+    // ...
+  },
+  "google": {
+    "key": "<Client ID goes here>",
+    "secret": "<Client secret goes here>",
+    "callback" : "https://localhost:3000/google/callback",
+    "scope" : [ "https://www.googleapis.com/auth/contacts.readonly"]
+  }
+}
 
+```
 
- - OAuth 2.0 Client
-  - added nearly all scopes w.r.t. reading from people API
-  - [ ] **can this be easily extended to other Google apis?**
-  - add testusers (in test-mode, only testusers can use the app (you can register up to 100 test users))
-  - create credentials
-   - API Key: `AIzaSyDNwWIFFpiOmAFiygS7eM-xcltFEWYIthk`
-   - Oauth Client
-    - name: `oauthclient-dapsi-dev`
-    - client id: `704703996998-mm0psiamc628soisd9hkovrjo5tlbd2q.apps.googleusercontent.com`
-    - client secret: `tatxC9Eli-VWJ5-i12IpSiST`
+For more information on setting up a Google app that uses the Google People API, check out
+- https://developers.google.com/people/v1/how-tos/authorizing
+- https://developers.google.com/identity/protocols/oauth2
 
 ## Use cases
 
