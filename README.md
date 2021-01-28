@@ -65,7 +65,7 @@ Steps:
 - Go to the [Google Developer Console](https://console.developers.google.com/)
    and the first thing to do, is creating a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
 - For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
-![Make sure that the correct project is selected](docs/img/readme-adding-google-step001-selected-project.png)
+</br>![Make sure that the correct project is selected](docs/img/readme-adding-google-step001-selected-project.png)
 
 - Navigate to *APIs & Services*  
 
@@ -94,10 +94,8 @@ Steps:
     "transport": "session"
   },
   "imgur": {
-    // ... 
   },
   "flickr": {
-    // ...
   },
   "google": {
     "key": "<Client ID goes here>",
