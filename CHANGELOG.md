@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- Added Data Provider: Google People API (see [issue #44](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/44))
+
 ## [0.1.1] - 2020-12-21
 
 ### Added
