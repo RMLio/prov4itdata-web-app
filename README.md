@@ -29,6 +29,19 @@ You can configure the environment using the `app-config.json` file:
 
 Each `app-config` refers to a json file (template at `config.template.json`) that contains all credentials. Check the respective Data Provider APIs as to how to specify all credentials.
 
+Install the web-app as follows:
+```bash
+yarn install
+```
+
+Note: the ui dependency is pulled from our private GitLab server. So you'll need the appropriate access rights.
+Once the installation is completed, it's still required to run the script that builds the ui and moves it 
+to the `build/ui` directory. This can be done as follows:
+
+```bash
+yarn run ui:all
+```
+
 Run the web-app using:
 
 ```bash

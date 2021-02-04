@@ -32,13 +32,6 @@ function createRouter(grant, environmentConfig, logConfig = null) {
     router.use('/api-docs', swaggerUi.serve)
     router.get('/api-docs', swaggerUi.setup(swaggerDocs))
 
-    router.get('/', (req, res) => {
-        var paramsRender = {}
-        paramsRender['GROUPED_MAPPINGS'] =  rmlRulesController.getMappingsWithMetadata()
-        // Render
-        res.render('index', paramsRender)
-    })
-
     // callback for capturing the img tokens
     router.get('/imgur/callback', (req, res) => {
         console.log(req.route.path)
@@ -124,16 +117,16 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                                     res.send(output)
                                     break
 
+
                                 case 'application/json':
+                                default:
                                     res.setHeader('Content-Type', 'application/json')
                                     res.send({
                                         'rdf': output,
-                                        'provenance': metadata
+                                        'prov': metadata
                                     })
-                                    break
 
-                                default:
-                                    handleStatusCode(req,res,415) // 415: Unsupported Media Type
+
                             }
 
                         } else {
@@ -197,9 +190,8 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                     res.send(solidConfig)
                     break
                 case 'connect':
-                    let connectionConfig = configurationController.getConnectionUrlForProvider(provider)
-                    console.log("connection config: " , connectionConfig)
-                    res.send(connectionConfig)
+                    let connectionUrl = configurationController.getConnectionUrlForProvider(provider)
+                    res.send({url: connectionUrl})
                     break
                 default:
                     handleStatusCode(req,res, 422, "Invalid configuration key")

@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node app.js",
     "start:dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ui:install": "yarn --cwd node_modules/ui install --only=prod",
+    "ui:build": "yarn --cwd node_modules/ui run build",
+    "ui:moveBuild": "ncp -R node_modules/ui/build/* build/ui",
+    "ui:all": "yarn run ui:install && yarn run ui:build && yarn run ui:moveBuild"
   },
   "author": "",
   "license": "MIT",
@@ -21,9 +25,11 @@
     "pem": "^1.14.4",
     "pug": "^3.0.0",
     "swagger-ui-express": "^4.1.6",
+    "ui": "git+ssh://git@gitlab.ilabt.imec.be:prov4itdata-dapsi/ui.git#11563eaf8e3ca435f9bb72f29f16e122b48f3189",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "ncp": "^2.0.0",
     "nodemon": "^2.0.6"
   }
 }
