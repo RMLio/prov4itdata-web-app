@@ -223,6 +223,15 @@ Solid's access control system uses these IDs to determine whether a person or ap
 Comunica provides a meta-query engine which is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
 Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
 
+Incorporating Comunica allows us to select the data we wish to transfer to new services.
+Moreover, we are working on adding provenance to the Comunica architecture as well.
+The goal is to provide the ability to add different levels of provenance:
+
+- High-level: provenance w.r.t. the query result. This encompasses information about the SPARQL query that was executed, the query optimization plan, the sources that were queried, and configuration of the Comunica engine.
+- Low-level: provenance w.r.t. the elements of a query result. Such as adding information about the different query operations that were executed to yield a particular binding result.
+
+Currently, our prototype complements every binding in a query result with provenance about its source.
+
 #### Web App
 
 The Web App is the main entrypoint, allowing the user to select and execute an [RML Mapping][RML-mapping] describing which Data Provider to consume data from, and how that data will be transformed to [RDF].
