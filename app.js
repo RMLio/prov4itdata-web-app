@@ -39,9 +39,10 @@ const app = express()
 app.set('view engine', 'pug')
     .use(session({secret: 'grant', saveUninitialized: true, resave: false}))
     .use(grant)
-    .use('/', router(grant,environmentConfig, logConfig))
     .use(express.static('public'))
+    .use(express.static('build/ui'))
     .use('/docs', express.static('docs'))
+    .use('/', router(grant,environmentConfig, logConfig))
 
 if(USE_HTTPS){
     console.log("USING HTTPS")

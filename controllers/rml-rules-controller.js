@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const axios = require('axios')
 
-const dirRML = path.join(path.dirname(require.main.filename), 'rml')
+const dirRML = path.join(path.dirname(require.main.filename),'public', 'rml')
 // Metadata read from mappings-metadata.json
 const mappingsMetaData = JSON.parse(fs.readFileSync(path.join(dirRML, 'mappings-metadata.json'), {'encoding' : 'utf8'}))
 
