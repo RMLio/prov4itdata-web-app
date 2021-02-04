@@ -492,7 +492,7 @@ Our advantage is that the mapping process is transparent and more easily adaptab
 
 ### Automatic Data Provenance Generation
 
-Provenance and other metadataare essential for determining ownership and trust.
+Provenance and other metadata are essential for determining ownership and trust.
 However, defining such metadata typically stayed independent of the generation process.
 In most cases, metadata is manually defined by the data publishers, rather than produced by the involved applications.
 In PROV4ITDaTa, we rely on the [RML Mapping][RML-mapping]s that specify how the RDF knowledge graphs are generated
