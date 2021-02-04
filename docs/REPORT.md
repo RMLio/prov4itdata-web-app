@@ -206,6 +206,13 @@ Anyone or anything that accesses data in a Solid pod uses a unique ID,
 authenticated by a decentralized extension of [OpenID Connect][OpenIDConnect].
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
 
+#### Comunica
+
+<!--@gdm-->
+
+Comunica provides a meta-query engine which is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
+Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
+
 #### Web App
 
 The Web App is the main entrypoint, allowing the user to select and execute an [RML Mapping][RML-mapping] describing which Data Provider to consume data from, and how that data will be transformed to [RDF].
