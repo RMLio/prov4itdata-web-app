@@ -120,6 +120,8 @@ graph LR
     OTHER[...]
     SP[(Pod)]
     WA[Web App]
+    CE[Comunica engine]
+
 
     subgraph  sgServices [Data Providers]
       IMGUR
@@ -138,6 +140,10 @@ graph LR
       WA
     end
 
+    subgraph sgComunica [Comunica]
+        CE
+    end
+
     RM --> RMW
     RMW --> WA
   
@@ -153,6 +159,10 @@ graph LR
     OTHER --> y;
 
     WA -->|3. Store| SP
+
+    %% interactions: Comunica
+    WA -->|4. Query intermediate datasets| CE
+    CE --> SP
 ```
 
 ### Components
