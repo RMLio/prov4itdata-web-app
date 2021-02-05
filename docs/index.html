@@ -366,6 +366,16 @@ code {
     });
   </script>
 <h1 id="prov4itdata---technical-report">PROV4ITDaTa - Technical Report</h1>
+<style>
+:not(pre):not(.hljs) > code {
+	color: #695E25 !important; /* Override color */
+}
+
+:not(figure) > img {
+  max-width: 600px;
+  max-height: 600px
+}
+</style>
 <blockquote>
 <p>PROV4ITDaTa is available at <a href="https://prov4itdata.ilabt.imec.be">https://prov4itdata.ilabt.imec.be</a></p>
 </blockquote>
@@ -386,10 +396,13 @@ code {
 <li><a href="#demonstrator">Demonstrator</a></li>
 <li><a href="#use-cases">Use cases</a>
 <ul>
-<li>[<a href="https://www.flickr.com/about">Flickr</a>](#flickr)</li>
-<li>[<a href="https://imgur.com/">Imgur</a>](#imgur)</li>
+<li><a href="#best-practice-vocabularies">Best-practice vocabularies</a></li>
+<li><a href="#flickr">Flickr</a></li>
+<li><a href="#imgur">Imgur</a></li>
+<li><a href="#google-people-api">Google People API</a></li>
 </ul>
 </li>
+<li><a href="#adding-data-providers">Adding data providers</a></li>
 <li><a href="#features">Features</a>
 <ul>
 <li><a href="#use-open-standards-and-open-source">Use Open Standards and Open Source</a></li>
@@ -404,6 +417,13 @@ code {
 </ul>
 </li>
 <li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#changelog">Changelog</a>
+<ul>
+<li><a href="#v020---2021-02-05">v0.2.0 - 2021-02-05</a></li>
+<li><a href="#v011---2020-12-21">v0.1.1 - 2020-12-21</a></li>
+<li><a href="#v010---2020-11-30">v0.1.0 - 2020-11-30</a></li>
+</ul>
+</li>
 <li><a href="#references">References</a></li>
 </ul>
 </li>
@@ -444,27 +464,27 @@ giving users full control over their data.</p>
 <h4 id="m1-design-configuration-based-dtp-exporter-applying-it-to-a-use-case-deadline-102020">M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)</h4>
 <p>See <a href="#architecture">Architecture</a> on how we used RML.io to export data from DTP-like services</p>
 <h4 id="m2-improve-data-provenance-of-the-dtp-exporter-deadline-122020">M2: Improve data provenance of the DTP exporter (deadline 12/2020)</h4>
-<blockquote>
-<p>This work is ongoing</p>
-</blockquote>
 <p>See <a href="#rmlmapper">Components/RMLMapper</a> and <a href="#web-app">Components/Web App</a>
 on how we automatically generate and showcase data provenance information as an interoperable resource in RDF.</p>
 <h4 id="m3-design-query-based-dtp-importer-for-solid-applying-it-to-a-use-case-deadline-012020">M3: Design query-based DTP importer for Solid, applying it to a use case (deadline 01/2020)</h4>
-<blockquote>
-<p>This work is ongoing</p>
-</blockquote>
-<p>Currently, we directly import the exported data in RDF into a Solid pod, see <a href="#web-app">Components/Web App</a>.</p>
+<p>Currently, we directly import the exported data in RDF into a Solid pod, see <a href="#web-app">Components/Web App</a>.
+We further designed the query-based importer: we will extend Comunica to perform federated queries over both Solid pods and other RDF data sources,
+whilst automatically generating the correct provenance information.
+We are currently researching and implementing the automated provenance information, see <a href="#comunica">Components/Comunica</a>.</p>
 <h4 id="m4-implement-configuration-based-dtp-exporter-deadline-042020">M4: Implement configuration-based DTP exporter (deadline 04/2020)</h4>
 <blockquote>
 <p>This work is ongoing</p>
 </blockquote>
 <p>See <a href="#rml-mapping-documents">Components/RML Mapping Documents</a> and <a href="#rmlmapper">Components/RMLMapper</a>
-on how we allow personalizable and configurable export of multiple DTP services in RDF, using RML.io.</p>
+on how we allow personalizable and configurable export of multiple DTP services in RDF, using RML.io.
+We further extend this work allowing federated querying and schema translation
+-- resulting in more flexible export options --
+with Comunica, see <a href="#comunica">Components/Comunica</a>.</p>
 <h4 id="m5-implement-provenance-based-dtp-exporter-deadline-052020">M5: Implement provenance-based DTP exporter (deadline 05/2020)</h4>
 <blockquote>
 <p>This work is ongoing</p>
 </blockquote>
-<p>We are currently prototyping this feature, based on the design we made in <a href="https://github.com/comunica/comunica/issues/732/">https://github.com/comunica/comunica/issues/732/</a>.</p>
+<p>We aligned with the design executed in M3, and are currently prototyping this feature, see <a href="#comunica">Components/Comunica</a>.</p>
 <h4 id="m6-implement-query-based-dtp-importer-for-solid-deadline-042020">M6: Implement query-based DTP importer for Solid (deadline 04/2020)</h4>
 <blockquote>
 <p>This work is ongoing</p>
@@ -476,7 +496,9 @@ for exporting the data, see our progress in M4.</p>
 <blockquote>
 <p>This work is ongoing</p>
 </blockquote>
-<p>Our first sprint is finished with an end-to-end solution without query-based importer, see <a href="#demonstrator">Demonstrator</a>.</p>
+<p>Our first sprint contained an end-to-end solution without query-based importer.
+Our second sprint refactored the user interface to ease future extensibility and included an additional connector, see <a href="#demonstrator">Demonstrator</a>.
+Our ongoing sprint is to include the query-based configuration and Comunica engine.</p>
 <h2 id="architecture">Architecture</h2>
 <pre><code class="language-mermaid"><div class="mermaid">graph LR
   linkStyle default interpolate basis
@@ -489,6 +511,8 @@ for exporting the data, see our progress in M4.</p>
     OTHER[...]
     SP[(Pod)]
     WA[Web App]
+    CE[Comunica engine]
+
 
     subgraph  sgServices [Data Providers]
       IMGUR
@@ -507,6 +531,10 @@ for exporting the data, see our progress in M4.</p>
       WA
     end
 
+    subgraph sgComunica [Comunica]
+        CE
+    end
+
     RM --> RMW
     RMW --> WA
   
@@ -522,14 +550,19 @@ for exporting the data, see our progress in M4.</p>
     OTHER --> y;
 
     WA -->|3. Store| SP
+
+    %% interactions: Comunica
+    WA -->|4. Query intermediate datasets| CE
+    CE --> SP
 </div></code></pre>
 <h3 id="components">Components</h3>
-<p>The architecture comprises four main components</p>
+<p>The architecture comprises five main components</p>
 <ul>
 <li>PROVIT4DaTa Web App: a user interface to allow users transparently transport their data</li>
 <li>Data Providers: an extensible set of existing (social) Data Providers from which the user can transfer its data</li>
 <li>RML.io toolset: a set of open-source tools to generate standardized knowledge graphs from heterogeneous data sources</li>
 <li>Solid pods: a personal data storage, putting the user in control of their own data</li>
+<li>Comunica: a federated querying engine to integrate data from different sources and possibly rewrite the data schema</li>
 </ul>
 <p>The main component is the PROV4ITDaTa Web App, which performs the different steps required for transferring data from services (e.g. Flickr, Imgur, etc.) to a Solid pod.</p>
 <ol>
@@ -540,13 +573,14 @@ for exporting the data, see our progress in M4.</p>
 <li>transforming the fetched data to <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>.</li>
 </ol>
 </li>
-<li>In the third step, the <a href="#web-app">Web App</a> finalizes the data transfer by storing the <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>, generated by the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-JAVA</a>, to the Solid pod.</li>
+<li>In the third step, the <a href="#web-app">Web App</a> stores the <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> and <a href="#automatic-data-provenance-generation">provenance</a> data, generated by the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-JAVA</a>, to the Solid pod.</li>
+<li>In the fourth step, the newly generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> data can be integrated with internal and external data sources, transformed, and again stored in the Solid pod.</li>
 </ol>
-<h4 id="rml-mapping-documents"><a href="http://rml.io/spec.html">RML Mapping documents</a></h4>
+<h4 id="rml-mapping-documents">RML Mapping documents</h4>
 <p>An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules (<a href="http://rml.io/spec.html">RML</a>).</p>
 <p>Describing the Web API as a source in an RML Mapping allows the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper</a> to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.</p>
-<h4 id="rmlmapper"><a href="https://github.com/RMLio/rmlmapper-java">RMLMapper</a></h4>
-<p>The RMLMapper, proxied by the <a href="#web-app">RMLMapper Web API</a>, processes the selected RML Mapping and yields both the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> and <a href="#automatic-data-provenance-generation">provenance</a> data.</p>
+<h4 id="rmlmapper">RMLMapper</h4>
+<p>The <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper</a>, proxied by the <a href="#web-app">RMLMapper Web API</a>, processes the selected RML Mapping and yields both the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> and <a href="#automatic-data-provenance-generation">provenance</a> data.</p>
 <p>In the background, the RML Mapper determines how to consume a Web API based on its description, without the need for integrating code that is tightly coupled to a specific Web API. Such hard-coded implementations are error-prone and time-consuming (consider, for example, the creation of tests and rebuilding the application every time a service is added).</p>
 <h4 id="solid-pods">Solid pods</h4>
 <p>Solid pods can be used to create a <a href="https://edps.europa.eu/data-protection/our-work/subjects/personal-information-management-system_en">Personal Information Management System</a> (PIMS),
@@ -565,6 +599,78 @@ This means that the data stored by Solid is portable and completely interoperabl
 <p>Anyone or anything that accesses data in a Solid pod uses a unique ID,
 authenticated by a decentralized extension of <a href="https://openid.net/connect/">OpenID Connect</a>.
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.</p>
+<h4 id="comunica">Comunica</h4>
+<p>Comunica provides a meta-query engine which is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
+Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.</p>
+<p>Incorporating Comunica, as depicted in the Architectural diagram above, allows us to select data from the intermediary datasets on the Solid Pod and transfer it to new services.</p>
+<p>Moreover, we are working on adding provenance to the Comunica architecture as well, based on the design we made in <a href="https://github.com/comunica/comunica/issues/732/">https://github.com/comunica/comunica/issues/732/</a>.
+The goal is to provide the ability to add different levels of provenance:</p>
+<ul>
+<li>High-level: provenance w.r.t. the query result. This encompasses information about the SPARQL query that was executed, the query optimization plan, the sources that were queried, and configuration of the Comunica engine.</li>
+<li>Low-level: provenance w.r.t. the elements of a query result. Such as adding information about the different query operations that were executed to yield a particular binding result.</li>
+</ul>
+<p>Currently, our prototype complements every binding in a query result with provenance about its source.
+This is accomplished by adding a new actor to the <a href="https://comunica.dev/docs/modify/advanced/architecture_sparql/">Comunica architecture</a> that is able to extract all necessary metadata about the sources and add it to the provenance data.</p>
+<p>The following architectural diagram illustrates how we added the new Annotate Provenance actor to the Comunica architecture.</p>
+<pre><code class="language-mermaid"><div class="mermaid">
+graph TD
+
+
+
+  linkStyle default interpolate basis
+
+
+    B_I[Init]
+    A_CS(Comunica SPARQL)
+
+    B_QO[Query Operation]
+    A_QP(Quad Pattern)
+
+    B_RQP[RDF Resolve Quad Pattern]
+
+    A_Hm(Hypermedia)
+    A_F(Federated)
+
+    B_RDr[RDF Dereference]
+
+    B_RM[RDF Metadata]
+
+    B_RME[RDF Metadata Extract]
+
+    A_HC(Hydra Count)
+    A_SS(SPARQL Service)
+    A_AP(Annotate Provenance)
+    
+    
+    B_RHL[RDF Hypermedia Links]
+
+    B_RRH[RDF Resolve Hypermedia]
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%
+       %% connections
+
+    B_I  --> A_CS
+    
+    A_CS --> B_QO
+
+    B_QO --> A_QP
+
+    A_QP --> B_RQP
+
+    B_RQP --> A_Hm
+    B_RQP --> A_F
+    A_F --> B_RQP
+
+    A_Hm --> B_RDr
+    A_Hm --> B_RM
+    A_Hm --> B_RME
+    A_Hm --> B_RHL
+    A_Hm --> B_RRH
+
+    B_RME --> A_HC
+    B_RME --> A_SS
+    B_RME --> A_AP
+</div></code></pre>
 <h4 id="web-app">Web App</h4>
 <p>The Web App is the main entrypoint, allowing the user to select and execute an <a href="#rml-mapping-documents">RML Mapping</a> describing which Data Provider to consume data from, and how that data will be transformed to <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>.</p>
 <p>Upon selecting an RML Mapping, the user can view and download its contents through the corresponding &quot;RML Rules&quot;-card (see <a href="#Demonstrator">Demonstrator</a>).
@@ -622,34 +728,121 @@ and linked them to the specific sections of the features we currently support,</
 <li>First, the user selects an <a href="#rml-mapping-documents">RML Mapping</a> which comes available for inspection and download within the &quot;RML Rules&quot;-card.</li>
 <li>Once the user hsa decided on which <a href="#rml-mapping-documents">RML Mapping</a> to use, the transfer process is triggered by pressing <code>[Execute]</code>.</li>
 <li>When transferring for the first time, the user will have to login to the Solid pod.</li>
-<li>Once the user has authenticated with Solid, the user will have to authenticate with the Data Provider (in this case, Flickr).</li>
+<li>Once the user has authenticated with Solid, the user will have to authenticate with multiple Data Providers (in this case, Flickr, Imgur, and Google Contacts).</li>
 <li>At this point, the actual transfer takes place. Upon success, the user will be notified and the generated <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a>, accompanied by its <a href="#automatic-data-provenance-generation">provenance</a>, will be available for inspection and download in the &quot;Generated RDF&quot;-card and &quot;Provenance&quot;-card, respectively.</li>
 <li>Finally, the user can inspect the data being stored on the Solid pod through the &quot;Solid&quot;-card.</li>
 </ol>
 <h2 id="use-cases">Use cases</h2>
-<p>Our toolchain is extensible to a wide variety of service.
+<p>Our toolchain is extensible to a wide variety of services.
 We opted to initially support <a href="#Flickr">Flickr</a> and <a href="#Imgur">Imgur</a>.
 Both services share a common purpose: uploading and sharing image-content.
-However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.</p>
+However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.
+Additionally, we additionally support the <a href="#google-people-api">Google People API</a>.
+This latter connector has a similar access method to Imgur (JSON Web API via OAuth 2.0), but contains data in a very different data model.</p>
+<p>There are four different resources to model</p>
+<ul>
+<li>A single Image resource</li>
+<li>An Image Gallery that contains Image resources</li>
+<li>A Collection that contains Image Gallery resources</li>
+<li>A contact person</li>
+</ul>
 <blockquote>
 <p>Our current use cases already showcase the flexibility of our approach,
 however, more use cases will be supported in following sprints.</p>
 </blockquote>
-<h3 id="flickr"><a href="https://www.flickr.com/about">Flickr</a></h3>
+<h3 id="best-practice-vocabularies">Best-practice vocabularies</h3>
+<h4 id="schemaorg">Schema.org</h4>
+<h5 id="image">Image</h5>
+<p>Images can be mapped to <code>schema:ImageObject</code>-resources, which inherits properties from <code>schema:MediaObject</code> that can be used for describing the height, width, and more.</p>
+<h5 id="image-gallery">Image Gallery</h5>
+<p>An Image Gallery can be represented using <code>schema:ImageGallery</code>. Furthermore, the images it contains can be linked using the <code>schema:hasPart</code> property.</p>
+<h5 id="collection">Collection</h5>
+<p>A Collection can be modelled by means of a <code>schema:Collection</code>, which can be linked to its Image Gallery resources through the <code>schema:hasPart</code> property.</p>
+<h5 id="person">Person</h5>
+<p>A Person can be modelled by means of a <code>schema:Person</code>.</p>
+<h4 id="dcat">DCAT</h4>
+<h5 id="image">Image</h5>
+<p>We can model an Image as a <code>dcat:Distribution</code>.</p>
+<blockquote>
+<p><code>dcat:Distribution</code>
+A specific representation of a dataset. A dataset might be available in multiple serializations that may differ in various ways, including natural language, media-type or format, schematic organization, temporal and spatial resolution, level of detail or profiles (which might specify any or all of the above).</p>
+</blockquote>
+<p>The <code>dcat:Distribution</code> class has the following properties</p>
+<ul>
+<li><code>title</code></li>
+<li><code>description</code></li>
+<li><code>issued</code>: date of issuance (e.g publication)</li>
+<li><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_access_url"><code>dcat:accessURL</code></a> <em>SHOULD</em> be used for the URL of a service or location that can provide access to this distribution, typically through a Web form, query or API call.</li>
+<li><a href="https://www.w3.org/TR/vocab-dcat-2/#Property:distribution_download_url"><code>dcat:downloadURL</code></a> is preferred for direct links to downloadable resources.</li>
+<li><code>dcat:mediaType</code>: The media type of the distribution as defined by IANA</li>
+<li><code>dct:format</code>: The file format of the distribution.</li>
+<li><code>dcat:accessService</code>, pointing to a <code>dcat:DataService</code></li>
+</ul>
+<h5 id="image-gallery">Image gallery</h5>
+<p>We can model an Image Gallery as a <code>dcat:Dataset</code>, which can point to <strong>zero or more</strong> <code>dcat:Distribution</code>s.</p>
+<h5 id="collection">Collection</h5>
+<p><a href="https://www.w3.org/TR/vocab-dcat-2/">DCAT</a> contains a <code>dcat:Catalog</code> class, a curated collection of metadata about resources (e.g., datasets and data services in the context of a data catalog).
+A <code>dcat:Catalog</code> can be linked to <strong>zero or more</strong> <code>dcat:Dataset</code>s.</p>
+<h3 id="flickr">Flickr</h3>
 <p>Flickr is an online photo management and sharing application.
 Its resources are made available through the <a href="https://www.flickr.com/services/developer/api/">Flickr API</a>. Flickr follows the <a href="https://oauth.net/core/1.0a/">OAuth1.0a</a> protocol which requires that requests to protected resources are signed using the Consumer Secret and Token Secret. By specifying the protocol in the <a href="#rml-mapping-documents">RML Mapping</a> the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-JAVA</a> takes care of the necessary steps for creating requests to protected resources. This also contributes to the extensibility of our solution: when a service decides to change to another protocol, only changes to the <a href="#rml-mapping-documents">RML Mapping</a> must be made. Hence, avoiding the need for rebuilding code.</p>
-<p>The data fields mapped from a Flickr Collection resource are</p>
+<h4 id="using-schemaorg">Using Schema.org</h4>
 <ul>
-<li><code>id</code>: a unique identifier for that Collection resource</li>
-<li><code>title</code>: the title of the Collection resource</li>
-<li><code>description</code>: the description of the Collection resource</li>
+<li>A Flickr Photo resource can be mapped to a <code>schema:ImageObject</code>.</li>
+<li>A Flickr Photoset resource can be mapped to instances of <code>schema:ImageGallery</code>. The table below shows how its properties are mapped.</li>
+<li>A Flickr Collection, which can contain Albums/Photosets, can be mapped using the <code>schema:Collection</code> class. The table below shows how its properties are mapped.</li>
 </ul>
-<p>The data fields mapped from a Flickr Photoset resource are</p>
+<table>
+<thead>
+<tr>
+<th>Flickr Photoset resource</th>
+<th><code>schema:ImageGallery</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>schema:identifier</code></td>
+</tr>
+<tr>
+<td><code>title._content</code></td>
+<td><code>schema:name</code></td>
+</tr>
+<tr>
+<td><code>description._content</code></td>
+<td><code>schema:description</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Flickr Collection resource</th>
+<th><code>schema:Collection</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>schema:identifier</code></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>schema:name</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>schema:description</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="using-dcat">Using DCAT</h4>
 <ul>
-<li><code>id</code>: a unique identifier for that Photoset resource</li>
-<li><code>owner</code>: owner of the Photoset resource</li>
+<li>An image resource can be modelled by a <code>dcat:Distribution</code></li>
+<li>A Flickr Album can contain image resources</li>
+<li>A Flickr Collection can contain Flickr Albums, which contain image resources. Therefore, a Flickr Collection can be modelled by a <code>dcat:Catalog</code> which can be linked to <strong>zero or more</strong> <code>dcat:Dataset</code>s (Albums)</li>
 </ul>
-<h3 id="imgur"><a href="https://imgur.com/">Imgur</a></h3>
+<h3 id="imgur">Imgur</h3>
 <p>Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
 Unlike the Flickr API, the <a href="https://apidocs.imgur.com/">Imgur API</a> uses OAuth 2.0.
 When making requests for protected resources it suffices to add a bearer token to the HTTP headers.</p>
@@ -662,9 +855,176 @@ When making requests for protected resources it suffices to add a bearer token t
 <li><code>height</code>: height of the image</li>
 <li><code>width</code>: width of the image</li>
 </ul>
+<h4 id="using-schemaorg">Using Schema.org</h4>
+<p>An Imgur image can be mapped to a <code>schema:ImageObject</code>, along with the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Imgur image resource</th>
+<th><code>schema:ImageObject</code></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>schema:identifier</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>schema:name</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>schema:description</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>link</code></td>
+<td><code>schema:url</code></td>
+<td>*</td>
+</tr>
+<tr>
+<td></td>
+<td><code>schema:image</code></td>
+<td>*</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>schema:encodingFormat</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td><code>schema:height</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td><code>schema:width</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>views</code></td>
+<td><code>schema:interactionStatistic</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p>We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain</p>
+<p>*Multiple properties are suitable for mapping the <code>link</code> property.</p>
 </blockquote>
+<h4 id="using-dcat">Using DCAT</h4>
+<ul>
+<li>An image resource can be modelled by a <code>dcat:Distribution</code>.</li>
+<li>A Imgur Album can contain image resources, and can be modelled by <code>dcat:Dataset</code>.</li>
+<li>An Imgur Gallery can contain Imgur Albums, which contain image resources. Therefore, an Imgur Gallery can be modelled by a <code>dcat:Catalog</code> which can be linked to <strong>zero or more</strong> <code>dcat:Dataset</code>s (Albums).</li>
+</ul>
+<h3 id="google-people-api">Google People API</h3>
+<p>Using the <a href="https://developers.google.com/people?hl=en">Google People API</a> we can transfer our Google contacts.</p>
+<blockquote>
+<p>Please note that this use case can be extended easily to <a href="https://developers.google.com/products?hl=en">other Google Products</a>.</p>
+</blockquote>
+<h4 id="using-schemaorg">Using Schema.org</h4>
+<p>A Google contact can be mapped to a <code>schema:Person</code>, along with the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Google contact resource</th>
+<th><code>schema:Person</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>givenName</code></td>
+<td><code>schema:givenName</code></td>
+</tr>
+<tr>
+<td><code>familyName</code></td>
+<td><code>schema:familyName</code></td>
+</tr>
+<tr>
+<td><code>displayName</code></td>
+<td><code>schema:alternativeName</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="adding-data-providers">Adding data providers</h2>
+<p>This section will walk you through the different steps of adding a data provider to the PROV4ITDaTa Web-App, where the Google People API serves as an example.</p>
+<h4 id="google-people-api">Google People API</h4>
+<p>First, we discuss the configuration steps on the Google Cloud Platform.
+Secondly, we elaborate on how to define the <a href="https://developers.google.com/people?hl=en">Google People API</a> as a logical source in an RML Mapping.</p>
+<h5 id="google-cloud-platform-configuration">Google Cloud Platform configuration</h5>
+<p>Prerequisites:</p>
+<ul>
+<li>Google Developer Account</li>
+</ul>
+<p>Steps:</p>
+<ul>
+<li>Go to the <a href="https://console.developers.google.com/">Google Developer Console</a>
+and the first thing to do, is creating a project. In this example, the project was named <code>PROV4ITDaTa-DAPSI</code></li>
+<li>For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
+<br/><img src="img/readme-adding-google-step001-selected-project.png" alt="Make sure that the correct project is selected"></li>
+<li>Navigate to <em>APIs &amp; Services</em>
+<br/><img src="img/readme-adding-google-navigate-to-APIs-and-Services.png" alt="Go to APIs and Services"></li>
+<li>Search and enable the API you wish to integrate. In this case, the <a href="https://console.cloud.google.com/apis/library/people.googleapis.com">Google People API</a></li>
+<li>In order to make requests to the API, you need to set up authorization.
+<ul>
+<li>Since we need to access private data, OAuth 2.0 credentials must be generated.</li>
+<li>Go to the <a href="https://console.developers.google.com/apis/credentials">Credentials page</a>, click on <em>Create Credentials</em> and select <em>OAuth client ID</em>
+<br/><img src="img/readme-adding-google-authorization-create-credentials-dropdown.png" alt="Create credentials and select OAuth client ID "></li>
+<li>Set the <em>Application Type</em> to <em>Web Application</em>, enter a name, and add authorization redirect URI(s) pointing back to your web-app server.
+<ul>
+<li>For example, assuming the web-app is served locally on port <code>3000</code>, the redirect URI would be: <code>https://localhost:3000/connect/google/callback</code></li>
+<li>Don't forget to save the <em>Client ID</em> and <em>Client secret</em>, as you will need it later on.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Since our Google app's publishing status is &quot;testing&quot;, only test users will be able to use it. Navigate to the <em>OAuth consent screen</em> using the panel on the left, and add the test users.
+<br/><img src="img/readme-adding-google-adding-test-users.png" alt="Navigate to OAuth consent screen"></li>
+<li>Finally, add the <em>Client ID</em>, <em>Client secret</em> to the <code>config.json</code>. This may look like</li>
+</ul>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"defaults"</span>: {
+    <span class="hljs-attr">"origin"</span>: <span class="hljs-string">"https://localhost:3000"</span>,
+    <span class="hljs-attr">"transport"</span>: <span class="hljs-string">"session"</span>
+  },
+  <span class="hljs-attr">"imgur"</span>: {
+  },
+  <span class="hljs-attr">"flickr"</span>: {
+  },
+  <span class="hljs-attr">"google"</span>: {
+    <span class="hljs-attr">"key"</span>: <span class="hljs-string">"&lt;Client ID goes here&gt;"</span>,
+    <span class="hljs-attr">"secret"</span>: <span class="hljs-string">"&lt;Client secret goes here&gt;"</span>,
+    <span class="hljs-attr">"callback"</span> : <span class="hljs-string">"https://localhost:3000/google/callback"</span>,
+    <span class="hljs-attr">"scope"</span> : [ <span class="hljs-string">"https://www.googleapis.com/auth/contacts.readonly"</span>]
+  }
+}
+
+</div></code></pre>
+<p>For more information on setting up a Google app that uses the Google People API, check out</p>
+<ul>
+<li>https://developers.google.com/people/v1/how-tos/authorizing</li>
+<li>https://developers.google.com/identity/protocols/oauth2</li>
+</ul>
+<h4 id="creating-an-rml-mapping-that-consumes-and-transforms-the-google-people-api">Creating an RML Mapping that consumes and transforms the Google People API</h4>
+<p>When creating an RML Mapping, you always have to define exactly one <a href="https://rml.io/specs/rml/#logical-source"><code>rml:logicalSource</code></a>
+for every triples map you define. This way, the RML Processor knows where and how to access the data to be mapped.
+Using the  <code>rml:logicalSource</code>'s <code>rml:source</code> property we can specify the url of the Web API.</p>
+<p>In order to access protected resources, the RML Processor needs to include the required credentials when consuming the API.
+The Google People API uses OAuth 2.0, and an authorization header should be added to the requests. Since these credentials
+are managed by our web-app, the value for the authorization header is a template-variable, hence, the web-app will
+recognize this and fill in the value.</p>
+<p>The following is an excerpt of the <code>rml:source</code> defined in <a href="/rml/google/contact-transfer-using-schema-org.ttl"><code>rml/google/contact-transfer-using-schema-org.ttl</code></a>:</p>
+<pre class="hljs"><code><div>:google_source 
+    ex:AuthorizationHeader &quot;{{authorizationHeader}}&quot; ;
+    schema:name &quot;Google API&quot; ;
+    schema:url &lt;https://people.googleapis.com/v1/people/me/connections?personFields=names&gt; ;
+    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; schema:WebAPI .
+</div></code></pre>
 <h2 id="features">Features</h2>
 <p>Within this project, we envisioned following features.</p>
 <ul>
@@ -693,10 +1053,8 @@ Widespread adoption and understanding of existing standards makes this possible.
 <li><a href="https://github.com/RMLio/rmlmapper-java">RMLMapper-java</a> (MIT licensed): the RML processor the generate the RDF knowledge graphs;</li>
 <li><a href="https://github.com/RMLio/rmlmapper-webapi-js">RMLMapper web API</a> (MIT licensed): a wrapper to publish the RMLMapper-java as a RESTful web service; and</li>
 <li>PROV4ITData Web app (MIT licensed): the web application to interlink the different components.</li>
+<li><a href="https://comunica.dev/">Comunica</a> (MIT licensed), a knowledge graph querying framework.</li>
 </ul>
-<blockquote>
-<p>In later iterations, it is assumed we will include <a href="https://comunica.dev/">Comunica</a>, a knowledge graph querying framework, to further expand the functionalities of PROV4ITDaTa.</p>
-</blockquote>
 <h3 id="mapping-files-to-transfer-data">Mapping files to transfer data</h3>
 <p>In PROV4ITDaTa, the original Data Provider data is transformed into well-defined <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> knowledge graphs.
 As such, the resulting data have a clear context and meaning by using established semantic ontologies,
@@ -716,8 +1074,14 @@ we can ensure data is cleansed during the data transfer process.</p>
 <li><em>Reusable</em> as all mappings are published within the Web app as MIT license</li>
 </ul>
 <p>As such, the data transfer process is fully transparent.</p>
+<p>For each Data Provider, a mapping needs to be created manually (as is the case in DTP where a connector needs to be created for each service).
+The input of a mapping is defined by describing how a Data Provider's Web API will be accessed (endpoint URL, authorization protocol, response format, etc.).
+This way, the <a href="https://github.com/RMLio/rmlmapper-java">RMLMapper</a> knows how to consume the Web API. Hence, the actual input of a mapping is the response returned by the Web API.
+Furthermore, the input will be mapped according to the rules in the mapping, resulting in semantically sound <a href="https://www.w3.org/TR/rdf-concepts/">RDF</a> which is stored on the user's Solid pod.</p>
+<p>Therefore, once the input of mapping is described, it can easily be reused for creating other mappings for that Data Provider.
+Our advantage is that the mapping process is transparent and more easily adaptable when the data model changes.</p>
 <h3 id="automatic-data-provenance-generation">Automatic Data Provenance Generation</h3>
-<p>Provenance and other metadataare essential for determining ownership and trust.
+<p>Provenance and other metadata are essential for determining ownership and trust.
 However, defining such metadata typically stayed independent of the generation process.
 In most cases, metadata is manually defined by the data publishers, rather than produced by the involved applications.
 In PROV4ITDaTa, we rely on the <a href="#rml-mapping-documents">RML Mapping</a>s that specify how the RDF knowledge graphs are generated
@@ -851,6 +1215,24 @@ and flexibility (by providing multiple Data Providers).</p>
 <p>In our roadmap, we envision a general improvement of our demonstrator,
 include a provenance-aware query-based importer using <a href="https://comunica.dev/">Comunica</a>,
 and provide integration alternatives with, e.g., <a href="https://datatransferproject.dev/">DTP</a>.</p>
+<h2 id="changelog">Changelog</h2>
+<h3 id="v020---2021-02-05">v0.2.0 - 2021-02-05</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>Google API connector</li>
+<li>UI refactor</li>
+</ul>
+<h3 id="v011---2020-12-21">v0.1.1 - 2020-12-21</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>Alternative mapping options</li>
+<li>RML mapping process clarification</li>
+</ul>
+<h3 id="v010---2020-11-30">v0.1.0 - 2020-11-30</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>Initial version</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
 <li>B. De Meester, A. Dimou, R. Verborgh, and E. Mannens, “Detailed Provenance Capture of Data Processing,” in <em>Proceedings of the First Workshop on Enabling Open Semantic Science (SemSci)</em>, Oct. 2017, vol. 1931, pp. 31–38. Available: <a href="http://ceur-ws.org/Vol-1931/#paper-05">http://ceur-ws.org/Vol-1931/#paper-05</a>.</li>
