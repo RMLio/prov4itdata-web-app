@@ -1,18 +1,11 @@
 @prefix rr: <http://www.w3.org/ns/r2rml#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#>.
 @prefix fno: <https://w3id.org/function/ontology#>.
 @prefix fnom: <https://w3id.org/function/vocabulary/mapping#>.
-@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#>.
-@prefix void: <http://rdfs.org/ns/void#>.
-@prefix dc: <http://purl.org/dc/terms/>.
-@prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix rml: <http://semweb.mmlab.be/ns/rml#>.
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @prefix : <http://mapping.example.com/>.
 @prefix ex: <http://example.com/>.
-@prefix spod: <https://dapsi-client.solidcommunity.net/>.
 @prefix schema: <http://schema.org/> .
 
 :flickr_request_parameter_mapping a fno:Mapping;
@@ -26,10 +19,14 @@
                                                            fnom:implementationProperty "{{oauth_token}}";
                                                        ];
 
+                                  fno:parameterMapping [
+                                                           fnom:functionParameter [ a fno:Parameter; fno:name "token_secret"; ];
+                                                           fnom:implementationProperty "{{token_secret}}";
+                                                       ];
 
                                   fno:parameterMapping [
                                                            fnom:functionParameter [ a fno:Parameter; fno:name "oauth_consumer_key"; ];
-                                                           fnom:implementationProperty "{{client_key}}";
+                                                           fnom:implementationProperty "{{oauth_consumer_key}}";
                                                        ];
 
 
@@ -51,7 +48,7 @@
 
                                   fno:parameterMapping [
                                                            fnom:functionParameter [ a fno:Parameter; fno:name "method"; ];
-                                                           fnom:implementationProperty "flickr.photosets.getList";
+                                                           fnom:implementationProperty "flickr.collections.getTree";
                                                        ];
 
                                   fno:parameterMapping [
@@ -84,19 +81,18 @@
     a rr:TriplesMap;
 
     rml:logicalSource [
-                          rml:source :flickr_my_images_source;
-                          rml:referenceFormulation ql:JSONPath;
-                          rml:iterator "$.photosets.photoset.[*]";
-                      ];
-
-
+        rml:source :flickr_my_images_source;
+        rml:referenceFormulation ql:JSONPath; 
+        rml:iterator "$.collections.collection.[*]";
+    ];
 
     rr:subjectMap [
-                      rr:template "http://dapsi.com/services/flickr/photosets/{id}";
+                      rr:template "http://dapsi.com/services/flickr/collection/{id}";
+                      rr:class schema:Collection;
                   ];
 
-
-    rr:predicateObjectMap [ rr:predicate ex:id; rr:objectMap [ rml:reference "id"] ];
-    rr:predicateObjectMap [ rr:predicate ex:owner; rr:objectMap [ rml:reference "owner"] ];
+    rr:predicateObjectMap [ rr:predicate schema:name; rr:objectMap [ rml:reference "title"] ];
+    rr:predicateObjectMap [ rr:predicate schema:description; rr:objectMap [ rml:reference "description"] ];
 
 .
+

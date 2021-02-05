@@ -1,15 +1,19 @@
-const axios = require('axios')
 const express = require('express')
 const router = express.Router();
-const rmlRulesController = require('../controllers/rmlRulesController')
-const tokenController = require('../controllers/tokenController')
-const mappingUtils = require('../lib/utils/mappingUtils')
+const rmlRulesController = require('../controllers/rml-rules-controller')
+const tokenController = require('../controllers/token-controller')
+const mappingUtils = require('../lib/utils/mapping-utils')
 const configurationController = require('../controllers/configuration-controller')
-const path = require('path')
+
+const YAML = require('yamljs');
+const swaggerDocs = YAML.load('./swagger.yaml')
+const swaggerUi = require('swagger-ui-express')
+
 
 const statusCodes = {
     401: "Unauthorized",
     404: "Not Found",
+    415: "Unsupported Media Type",
     422: "Unprocessable Entity",
     500: "Internal Server Error"
 }
@@ -24,12 +28,9 @@ function createRouter(grant, environmentConfig, logConfig = null) {
             })
     }
 
-    router.get('/', (req, res) => {
-        var paramsRender = {}
-        paramsRender['GROUPED_MAPPINGS'] =  rmlRulesController.getMappingsWithMetadata()
-        // Render
-        res.render('index', paramsRender)
-    })
+    // SWAGGER
+    router.use('/api-docs', swaggerUi.serve)
+    router.get('/api-docs', swaggerUi.setup(swaggerDocs))
 
     // callback for capturing the img tokens
     router.get('/imgur/callback', (req, res) => {
@@ -40,6 +41,13 @@ function createRouter(grant, environmentConfig, logConfig = null) {
 
     // callback for capturing the flickr tokens
     router.get('/flickr/callback', (req, res) => {
+        console.log(req.route.path)
+        updateTokens(req)
+        res.redirect('/')
+    })
+
+    // callback for capturing the Google tokens
+    router.get('/google/callback', (req, res) => {
         console.log(req.route.path)
         updateTokens(req)
         res.redirect('/')
@@ -92,14 +100,13 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                 mapping = mappingUtils.doReplacement(mapping, replacementMapping)
 
                 // TODO: refactor this to some controller
-                executeRMLMapping(environmentConfig.rmlmapper_webapi, mapping,
+                rmlRulesController.executeRMLMapping(environmentConfig.rmlmapper_webapi, mapping,
                     // Process the reponse
                     (response) => {
                         // If succesful, output the generated RDF as plain text
                         if (response.status == 200) {
-                            var output = response.data.output
-                            var metadata = response.data.metadata
-
+                            const output = response.data.output
+                            const metadata = response.data.metadata
                             const contentType = req.headers['content-type']
 
                             // Create response based on content-type
@@ -110,20 +117,16 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                                     res.send(output)
                                     break
 
+
                                 case 'application/json':
+                                default:
                                     res.setHeader('Content-Type', 'application/json')
                                     res.send({
                                         'rdf': output,
-                                        'provenance': metadata
+                                        'prov': metadata
                                     })
-                                    break
 
-                                default:
-                                    res.setHeader('Content-Type', 'text/html')
-                                    var paramsRender = {
-                                        'generatedRDF': output
-                                    }
-                                    res.render('rmlmapper-output', paramsRender)
+
                             }
 
                         } else {
@@ -149,61 +152,6 @@ function createRouter(grant, environmentConfig, logConfig = null) {
             // 422: unprocessable entity.
             handleStatusCode(req, res, 422, "Missing provider and/or filename")
         }
-    })
-
-    /**
-     * TODO: document what this route does
-     */
-    router.get('/get/imgur', (req, res) => {
-        // url for GET request (should return a collection images for the logged in profile)
-        const url = 'https://api.imgur.com/3/account/me/images'
-        const provider = 'imgur'
-        const providerTokens = tokenController.getProviderCredentials(req, provider)
-        if (providerTokens) {
-            let bearerToken = providerTokens['response']['access_token']
-            if (bearerToken)
-                // execute the GET request
-                getAuthorizedData(url, bearerToken, (response) => {
-                    const imageElements = response.data.data
-
-                    // create some html to render the images
-                    const html = imageElements.map(el =>
-                        `<div id="${el.id}">     
-                            <img src="${el.link}">
-                            <p>${el.description}</p>
-                            <p>views: ${el.views}</p>
-                          </div>
-                        `).join()
-                    res.send(html)
-                })
-            else {
-                // 500: Internal server error
-                handleStatusCode(req, res, 500, `Obtained providerTokens for ${provider}, but the access_token is null!`)
-            }
-        } else
-            handleStatusCode(req, res, 401) // 401: Unauthorized
-    })
-
-    /**
-     * Route to the transfer page
-     */
-    router.get('/transfer/:provider/:filename', (req, res) => {
-
-        const provider = req.params.provider
-        const filename = req.params.filename
-        if (provider && filename) {
-            let paramsRender = {
-                'PROVIDER': provider,
-                'ACCESS_TOKEN': tokenController.getBearerToken(req)
-            }
-            if (req.params.filename !== undefined) {
-                paramsRender['RML_RULES_FILENAME'] = req.params.filename
-                paramsRender['RML_RULES'] = rmlRulesController.readMapping(provider, req.params.filename)
-            }
-            res.render('transfer', paramsRender)
-        } else
-            handleStatusCode(req, res, 422, "Missing provider and/or filename")
-
     })
 
     /**
@@ -242,9 +190,8 @@ function createRouter(grant, environmentConfig, logConfig = null) {
                     res.send(solidConfig)
                     break
                 case 'connect':
-                    let connectionConfig = configurationController.getConnectionUrlForProvider(provider)
-                    console.log("connection config: " , connectionConfig)
-                    res.send(connectionConfig)
+                    let connectionUrl = configurationController.getConnectionUrlForProvider(provider)
+                    res.send({url: connectionUrl})
                     break
                 default:
                     handleStatusCode(req,res, 422, "Invalid configuration key")
@@ -275,41 +222,7 @@ function updateTokens(req) {
     }
 }
 
-const getAuthorizedData = async (url, bearerToken, cb) => {
-    try {
-        const getResonse = await axios.get(url, {
-            headers: {
-                'Authorization': `Bearer ${bearerToken}`
-            }
-        })
 
-        const data = await getResonse
-        cb(data)
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-async function executeRMLMapping(urlRMLMapper, mapping, cb, cbError) {
-    console.log("@executeRMLMapping")
-    try {
-        // Construct the parameters used to execute the RML Mapping
-        const paramsRMLMapperRequest = {
-            'rml': mapping,
-            'generateMetadata': true
-        }
-
-        const data = await axios.post(urlRMLMapper, paramsRMLMapperRequest)
-        // Execute callback cb on result
-        cb(data)
-
-    } catch (error) {
-        console.error("Error while executing RML Mapping")
-        console.error("\turl RMLMapper web api: ", urlRMLMapper)
-        console.error(error.message)
-        cbError(error)
-    }
-}
 
 function handleStatusCode(req, res, code, optionalMessage = "") {
     console.error(`${req.path}\tSTATUS: ${code}\t${statusCodes[code]}\n${optionalMessage}`)

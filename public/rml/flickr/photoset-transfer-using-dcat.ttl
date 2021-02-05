@@ -1,0 +1,112 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix : <http://mapping.example.com/> .
+@prefix ex: <http://example.com/> .
+@prefix schema: <http://schema.org/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+:flickr_my_images_source ex:requestParameterMapping :flickr_request_parameter_mapping ;
+	schema:name "Flickr API" ;
+	schema:url <https://api.flickr.com/services/rest/> ;
+	rdf:type schema:WebAPI .
+
+:flickr_request_parameter_mapping rdf:type fno:Mapping ;
+	fno:parameterMapping _:r0, _:r1, _:r13, _:r15, _:r2, _:r21, _:r23, _:r25, _:r26, _:r7 .
+
+:flickr_triplesmap rml:logicalSource _:r3 ;
+	rdf:type rr:TriplesMap ;
+	rr:predicateObjectMap _:r11, _:r16, _:r27 ;
+	rr:subjectMap _:r10 .
+
+_:r0 fnom:functionParameter _:r24 ;
+	fnom:implementationProperty "{{oauth_timestamp}}" .
+
+_:r1 fnom:functionParameter _:r22 ;
+	fnom:implementationProperty "{{oauth_nonce}}" .
+
+_:r10 rr:class dcat:Dataset ;
+	rr:template "http://dapsi.com/services/flickr/photosets/{id}" .
+
+_:r11 rr:objectMap _:r14 ;
+	rr:predicate dct:identifier .
+
+_:r12 rdf:type fno:Parameter ;
+	fno:name "oauth_consumer_key" .
+
+_:r13 fnom:functionParameter _:r6 ;
+	fnom:implementationProperty "1.0" .
+
+_:r14 rml:reference "id" .
+
+_:r15 fnom:functionParameter _:r4 ;
+	fnom:implementationProperty "HMAC-SHA1" .
+
+_:r16 rr:objectMap _:r18 ;
+	rr:predicate dct:title .
+
+_:r17 rdf:type fno:Parameter ;
+	fno:name "client_secret" .
+
+_:r18 rml:reference "title._content" .
+
+_:r19 rml:reference "description._content" .
+
+_:r2 fnom:functionParameter _:r17 ;
+	fnom:implementationProperty "{{client_secret}}" .
+
+_:r20 rdf:type fno:Parameter ;
+	fno:name "format" .
+
+_:r21 fnom:functionParameter _:r20 ;
+	fnom:implementationProperty "json" .
+
+_:r22 rdf:type fno:Parameter ;
+	fno:name "oauth_nonce" .
+
+_:r23 fnom:functionParameter _:r12 ;
+	fnom:implementationProperty "{{client_key}}" .
+
+_:r24 rdf:type fno:Parameter ;
+	fno:name "oauth_timestamp" .
+
+_:r25 fnom:functionParameter _:r5 ;
+	fnom:implementationProperty "flickr.photosets.getList" .
+
+_:r26 fnom:functionParameter _:r9 ;
+	fnom:implementationProperty "1" .
+
+_:r27 rr:objectMap _:r19 ;
+	rr:predicate dct:description .
+
+_:r3 rml:iterator "$.photosets.photoset.[*]" ;
+	rml:referenceFormulation ql:JSONPath ;
+	rml:source :flickr_my_images_source .
+
+_:r4 rdf:type fno:Parameter ;
+	fno:name "oauth_signature_method" .
+
+_:r5 rdf:type fno:Parameter ;
+	fno:name "method" .
+
+_:r6 rdf:type fno:Parameter ;
+	fno:name "oauth_version" .
+
+_:r7 fnom:functionParameter _:r8 ;
+	fnom:implementationProperty "{{oauth_token}}" .
+
+_:r8 rdf:type fno:Parameter ;
+	fno:name "oauth_token" .
+
+_:r9 rdf:type fno:Parameter ;
+	fno:name "nojsoncallback" .
+
