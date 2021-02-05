@@ -416,6 +416,24 @@ An Imgur image can be mapped to a `schema:ImageObject`, along with the following
 
 > We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain
 
+### [Google People API](https://developers.google.com/people?hl=en)
+
+Using the Google People API we can transfer our Google contacts.
+
+> Please note that this use case can be extended easily to [other Google Products](https://developers.google.com/products?hl=en).
+
+#### Using [Schema.org]
+
+A Google contact can be mapped to a `schema:Person`, along with the following properties:
+
+| Google contact resource | `schema:Person`    |  
+| --------------------- | ----------------------- |
+| `givenName`                  | `schema:givenName`     |     
+| `familyName`               | `schema:familyName`           |
+| `displayName`         | `schema:alternativeName`         |
+
+
+
 ## Features
 
 Within this project, we envisioned following features.
