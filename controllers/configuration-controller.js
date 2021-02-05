@@ -13,6 +13,13 @@ const configuration = {
         },
         'connect' : '/connect/flickr'
     },
+    'google' : {
+        'solid' : {
+            'filename': 'google.ttl'
+        },
+        'connect' : '/connect/google'
+    },
+
     'solid' : {
         'storageDirectory' : 'private'
     }

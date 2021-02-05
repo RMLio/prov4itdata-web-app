@@ -12,8 +12,11 @@
   - [Requirements](#requirements)
   - [Demonstrator](#demonstrator)
   - [Use cases](#use-cases)
-    - [[Flickr]](#flickr)
-    - [[Imgur]](#imgur)
+    - [Best-practice vocabularies](#best-practice-vocabularies)
+    - [Flickr](#flickr)
+    - [Imgur](#imgur)
+    - [Google People API](#google-people-api)
+  - [Adding data providers](#adding-data-providers)
   - [Features](#features)
     - [Use Open Standards and Open Source](#use-open-standards-and-open-source)
     - [Mapping files to transfer data](#mapping-files-to-transfer-data)
@@ -414,7 +417,107 @@ An Imgur image can be mapped to a `schema:ImageObject`, along with the following
 - A Imgur Album can contain image resources, and can be modelled by `dcat:Dataset`.
 - An Imgur Gallery can contain Imgur Albums, which contain image resources. Therefore, an Imgur Gallery can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums).
 
-> We plan to include a more technical section detailing how different Data Providers can be handled uniformly using the RML.io toolchain
+### [Google People API](https://developers.google.com/people?hl=en)
+
+Using the Google People API we can transfer our Google contacts.
+
+> Please note that this use case can be extended easily to [other Google Products](https://developers.google.com/products?hl=en).
+
+#### Using [Schema.org]
+
+A Google contact can be mapped to a `schema:Person`, along with the following properties:
+
+| Google contact resource | `schema:Person`    |  
+| --------------------- | ----------------------- |
+| `givenName`                  | `schema:givenName`     |     
+| `familyName`               | `schema:familyName`           |
+| `displayName`         | `schema:alternativeName`         |
+
+## Adding data providers
+
+This section will walk you through the different steps of adding a data provider to the PROV4ITDaTa Web-App, where the Google People API serves as an example.
+
+#### [Google People API](https://developers.google.com/people?hl=en)
+
+First, we discuss the configuration steps on the Google Cloud Platform.
+Secondly, we elaborate on how to define the Google People API as a logical source in an RML Mapping.
+
+##### Google Cloud Platform configuration
+
+Prerequisites:
+- Google Developer Account
+
+Steps:
+- Go to the [Google Developer Console](https://console.developers.google.com/)
+  and the first thing to do, is creating a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
+- For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
+  </br>![Make sure that the correct project is selected](img/readme-adding-google-step001-selected-project.png)
+
+- Navigate to *APIs & Services*
+
+![Go to APIs and Services](img/readme-adding-google-navigate-to-APIs-and-Services.png)
+
+- Search and enable the API you wish to integrate. In this case, the [Google People API](https://console.cloud.google.com/apis/library/people.googleapis.com)
+
+- In order to make requests to the API, you need to set up authorization.
+  - Since we need to access private data, OAuth 2.0 credentials must be generated.
+  - Go to the [Credentials page](https://console.developers.google.com/apis/credentials), click on *Create Credentials* and select *OAuth client ID*
+    </br>![Create credentials and select OAuth client ID ](img/readme-adding-google-authorization-create-credentials-dropdown.png)
+
+  - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server.
+    - For example, assuming the web-app is served locally on port `3000`, the redirect URI would be: `https://localhost:3000/connect/google/callback`
+    - Don't forget to save the *Client ID* and *Client secret*, as you will need it later on.
+
+
+- Since our Google app's publishing status is "testing", only test users will be able to use it. Navigate to the *OAuth consent screen* using the panel on the left, and add the test users.
+  ![Navigate to OAuth consent screen](img/readme-adding-google-adding-test-users.png)
+
+- Finally, add the *Client ID*, *Client secret* to the `config.json`. This may look like
+
+```json
+{
+  "defaults": {
+    "origin": "https://localhost:3000",
+    "transport": "session"
+  },
+  "imgur": {
+  },
+  "flickr": {
+  },
+  "google": {
+    "key": "<Client ID goes here>",
+    "secret": "<Client secret goes here>",
+    "callback" : "https://localhost:3000/google/callback",
+    "scope" : [ "https://www.googleapis.com/auth/contacts.readonly"]
+  }
+}
+
+```
+
+For more information on setting up a Google app that uses the Google People API, check out
+- https://developers.google.com/people/v1/how-tos/authorizing
+- https://developers.google.com/identity/protocols/oauth2
+
+#### Creating an RML Mapping that consumes and transforms the Google People API
+
+When creating an RML Mapping, you always have to define exactly one [`rml:logicalSource`](https://rml.io/specs/rml/#logical-source)
+for every triples map you define. This way, the RML Processor knows where and how to access the data to be mapped.
+Using the  `rml:logicalSource`'s `rml:source` property we can specify the url of the Web API.
+
+In order to access protected resources, the RML Processor needs to include the required credentials when consuming the API.
+The Google People API uses OAuth 2.0, and an authorization header should be added to the requests. Since these credentials
+are managed by our web-app, the value for the authorization header is a template-variable, hence, the web-app will
+recognize this and fill in the value.
+
+The following is an excerpt of the `rml:source` defined in [`rml/google/contact-transfer-using-schema-org.ttl`](/public/rml/google/contact-transfer-using-schema-org.ttl):
+```turtle
+:google_source 
+    ex:AuthorizationHeader "{{authorizationHeader}}" ;
+    schema:name "Google API" ;
+    schema:url <https://people.googleapis.com/v1/people/me/connections?personFields=names> ;
+    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> schema:WebAPI .
+```
+
 
 ## Features
 
