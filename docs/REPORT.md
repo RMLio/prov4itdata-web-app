@@ -380,6 +380,12 @@ Its resources are made available through the [Flickr API][Flickr-API]. Flickr fo
 - A Flickr Album can contain image resources
 - A Flickr Collection can contain Flickr Albums, which contain image resources. Therefore, a Flickr Collection can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums)
 
+#### Using [DCAT]
+
+- An image resource can be modelled by a `dcat:Distribution`
+- A Flickr Album can contain image resources
+- A Flickr Collection can contain Flickr Albums, which contain image resources. Therefore, a Flickr Collection can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums)
+
 ### Imgur
 
 Imgur, an image hosting and sharing website, enables its users to quickly upload and share images and GIFs on social media platforms (e.g. Reddit, Twitter, etc.).
