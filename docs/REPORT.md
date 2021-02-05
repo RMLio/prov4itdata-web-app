@@ -389,7 +389,7 @@ The walkthrough above illustrates the flow of transferring data from a Data Prov
 
 ## Use cases
 
-Our toolchain is extensible to a wide variety of service.
+Our toolchain is extensible to a wide variety of services.
 We opted to initially support [Flickr](#Flickr) and [Imgur](#Imgur).
 Both services share a common purpose: uploading and sharing image-content.
 However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.
