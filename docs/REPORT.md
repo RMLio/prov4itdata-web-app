@@ -131,6 +131,8 @@ graph LR
     OTHER[...]
     SP[(Pod)]
     WA[Web App]
+    CE[Comunica engine]
+
 
     subgraph  sgServices [Data Providers]
       IMGUR
@@ -149,6 +151,10 @@ graph LR
       WA
     end
 
+    subgraph sgComunica [Comunica]
+        CE
+    end
+
     RM --> RMW
     RMW --> WA
   
@@ -164,6 +170,10 @@ graph LR
     OTHER --> y;
 
     WA -->|3. Store| SP
+
+    %% interactions: Comunica
+    WA -->|4. Query intermediate datasets| CE
+    CE --> SP
 ```
 
 ### Components
@@ -216,6 +226,22 @@ This means that the data stored by Solid is portable and completely interoperabl
 Anyone or anything that accesses data in a Solid pod uses a unique ID,
 authenticated by a decentralized extension of [OpenID Connect][OpenIDConnect].
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
+
+#### Comunica
+
+<!--@gdm-->
+
+Comunica provides a meta-query engine which is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
+Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
+
+Incorporating Comunica allows us to select the data we wish to transfer to new services.
+Moreover, we are working on adding provenance to the Comunica architecture as well.
+The goal is to provide the ability to add different levels of provenance:
+
+- High-level: provenance w.r.t. the query result. This encompasses information about the SPARQL query that was executed, the query optimization plan, the sources that were queried, and configuration of the Comunica engine.
+- Low-level: provenance w.r.t. the elements of a query result. Such as adding information about the different query operations that were executed to yield a particular binding result.
+
+Currently, our prototype complements every binding in a query result with provenance about its source.
 
 #### Web App
 
@@ -698,7 +724,7 @@ Our advantage is that the mapping process is transparent and more easily adaptab
 
 ### Automatic Data Provenance Generation
 
-Provenance and other metadataare essential for determining ownership and trust.
+Provenance and other metadata are essential for determining ownership and trust.
 However, defining such metadata typically stayed independent of the generation process.
 In most cases, metadata is manually defined by the data publishers, rather than produced by the involved applications.
 In PROV4ITDaTa, we rely on the [RML Mapping][RML-mapping]s that specify how the RDF knowledge graphs are generated
