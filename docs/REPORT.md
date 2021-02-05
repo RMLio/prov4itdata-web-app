@@ -87,7 +87,7 @@ on how we automatically generate and showcase data provenance information as an 
 Currently, we directly import the exported data in RDF into a Solid pod, see [Components/Web App](#web-app).
 We further designed the query-based importer: we will extend Comunica to perform federated queries over both Solid pods and other RDF data sources,
 whilst automatically generating the correct provenance information.
-We are currently researching and implementing the automated provenance information, see 
+We are currently researching and implementing the automated provenance information, see [Components/Comunica](#comunica).
 TODO @GDM
 
 #### M4: Implement configuration-based DTP exporter (deadline 04/2020)
