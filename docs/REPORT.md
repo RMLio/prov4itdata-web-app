@@ -234,7 +234,8 @@ Solid's access control system uses these IDs to determine whether a person or ap
 Comunica provides a meta-query engine which is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
 Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
 
-Incorporating Comunica allows us to select the data we wish to transfer to new services.
+Incorporating Comunica, as depicted in the Architectural diagram above, allows us to select data from the intermediary datasets on the Solid Pod and transfer it to new services.
+
 Moreover, we are working on adding provenance to the Comunica architecture as well.
 The goal is to provide the ability to add different levels of provenance:
 
@@ -242,6 +243,70 @@ The goal is to provide the ability to add different levels of provenance:
 - Low-level: provenance w.r.t. the elements of a query result. Such as adding information about the different query operations that were executed to yield a particular binding result.
 
 Currently, our prototype complements every binding in a query result with provenance about its source.
+This is accomplished by adding a new actor to the [Comunica architecture](https://comunica.dev/docs/modify/advanced/architecture_sparql/) that is able to extract all necessary metadata about the sources and add it to the provenance data.
+
+The following architectural diagram illustrates how we added the new Annotate Provenance actor to the Comunica architecture.
+
+```mermaid
+
+graph TD
+
+
+
+  linkStyle default interpolate basis
+
+
+    B_I[Init]
+    A_CS(Comunica SPARQL)
+
+    B_QO[Query Operation]
+    A_QP(Quad Pattern)
+
+    B_RQP[RDF Resolve Quad Pattern]
+
+    A_Hm(Hypermedia)
+    A_F(Federated)
+
+    B_RDr[RDF Dereference]
+
+    B_RM[RDF Metadata]
+
+    B_RME[RDF Metadata Extract]
+
+    A_HC(Hydra Count)
+    A_SS(SPARQL Service)
+    A_AP(Annotate Provenance)
+    
+    
+    B_RHL[RDF Hypermedia Links]
+
+    B_RRH[RDF Resolve Hypermedia]
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%
+       %% connections
+
+    B_I  --> A_CS
+    
+    A_CS --> B_QO
+
+    B_QO --> A_QP
+
+    A_QP --> B_RQP
+
+    B_RQP --> A_Hm
+    B_RQP --> A_F
+    A_F --> B_RQP
+
+    A_Hm --> B_RDr
+    A_Hm --> B_RM
+    A_Hm --> B_RME
+    A_Hm --> B_RHL
+    A_Hm --> B_RRH
+
+    B_RME --> A_HC
+    B_RME --> A_SS
+    B_RME --> A_AP
+```
 
 #### Web App
 
