@@ -54,64 +54,6 @@ Run the web-app in development mode using:
 yarn run start:dev
 ```
 
-<<<<<<< HEAD
-
-
-#### [Google People API](https://developers.google.com/people?hl=en)
-
-##### Google Cloud Platform configuration
-
-Prerequisites:
-- Google Developer Account
-
-Steps:
-- Go to the [Google Developer Console](https://console.developers.google.com/)
-   and the first thing to do, is creating a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
-- For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
-</br>![Make sure that the correct project is selected](docs/img/readme-adding-google-step001-selected-project.png)
-
-- Navigate to *APIs & Services*  
-
-![Go to APIs and Services](docs/img/readme-adding-google-navigate-to-APIs-and-Services.png)
-
-- Search and enable the API you wish to integrate. In this case, the [Google People API](https://console.cloud.google.com/apis/library/people.googleapis.com)
-
-- In order to make requests to the API, you need to set up authorization.
-    - Since we need to access private data, OAuth 2.0 credentials must be generated.
-    - Go to the [Credentials page](https://console.developers.google.com/apis/credentials), click on *Create Credentials* and select *OAuth client ID*
-    </br>![Create credentials and select OAuth client ID ](docs/img/readme-adding-google-authorization-create-credentials-dropdown.png)
-
-    - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server.
-        - For example, assuming the web-app is served locally on port `3000`, the redirect URI would be: `https://localhost:3000/connect/google/callback`
-        - Don't forget to save the *Client ID* and *Client secret*, as you will need it later on.
-    
-
-- Since our Google app's publishing status is "testing", only test users will be able to use it. Navigate to the *OAuth consent screen* using the panel on the left, and add the test users.
-![Navigate to OAuth consent screen](docs/img/readme-adding-google-adding-test-users.png)
-  
-- Finally, add the *Client ID*, *Client secret* to the `config.json`. This may look like
-
-```json
-{
-  "defaults": {
-    "origin": "https://localhost:3000",
-    "transport": "session"
-  },
-  "imgur": {
-  },
-  "flickr": {
-  },
-  "google": {
-    "key": "<Client ID goes here>",
-    "secret": "<Client secret goes here>",
-    "callback" : "https://localhost:3000/google/callback",
-    "scope" : [ "https://www.googleapis.com/auth/contacts.readonly"]
-  }
-}
-=======
->>>>>>> 75e1674 (removed section about adding data providers (see docs/report))
-
-
 ## Use cases
 
 ### Use case: Transfer data
