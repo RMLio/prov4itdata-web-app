@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - UI integration (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/45))
 
+### Fixed
+
+- Building ui fails (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/50))
+
 ## [0.1.1] - 2020-12-21
 
 ### Added
