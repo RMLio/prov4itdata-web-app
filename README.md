@@ -58,6 +58,8 @@ yarn run start:dev
 
 #### [Google People API](https://developers.google.com/people?hl=en)
 
+##### Google Cloud Platform configuration
+
 Prerequisites:
 - Google Developer Account
 
@@ -111,6 +113,26 @@ Steps:
 For more information on setting up a Google app that uses the Google People API, check out
 - https://developers.google.com/people/v1/how-tos/authorizing
 - https://developers.google.com/identity/protocols/oauth2
+
+#### Creating an RML Mapping that consumes and transforms the Google People API
+
+When creating an RML Mapping, you always have to define exactly one [`rml:logicalSource`](https://rml.io/specs/rml/#logical-source)
+for every triples map you define. This way, the RML Processor knows where and how to access the data to be mapped.
+Using the  `rml:logicalSource`'s `rml:source` property we can specify the url of the Web API.
+
+In order to access protected resources, the RML Processor needs to include the required credentials when consuming the API.
+The Google People API uses OAuth 2.0, and an authorization header should be added to the requests. Since these credentials
+are managed by our web-app, the value for the authorization header is a template-variable, hence, the web-app will 
+recognize this and fill in the value.
+
+The following is an excerpt of the `rml:source` defined in [`rml/google/contact-transfer-using-schema-org.ttl`](/public/rml/google/contact-transfer-using-schema-org.ttl):
+```turtle
+:google_source 
+    ex:AuthorizationHeader "{{authorizationHeader}}" ;
+    schema:name "Google API" ;
+    schema:url <https://people.googleapis.com/v1/people/me/connections?personFields=names> ;
+    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> schema:WebAPI .
+```
 
 ## Use cases
 
