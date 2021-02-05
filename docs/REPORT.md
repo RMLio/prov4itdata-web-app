@@ -541,6 +541,24 @@ The following is an excerpt of the `rml:source` defined in [`rml/google/contact-
 ```
 
 
+### [Google People API](https://developers.google.com/people?hl=en)
+
+Using the Google People API we can transfer our Google contacts.
+
+> Please note that this use case can be extended easily to [other Google Products](https://developers.google.com/products?hl=en).
+
+#### Using [Schema.org]
+
+A Google contact can be mapped to a `schema:Person`, along with the following properties:
+
+| Google contact resource | `schema:Person`    |  
+| --------------------- | ----------------------- |
+| `givenName`                  | `schema:givenName`     |     
+| `familyName`               | `schema:familyName`           |
+| `displayName`         | `schema:alternativeName`         |
+
+
+
 ## Features
 
 Within this project, we envisioned following features.
