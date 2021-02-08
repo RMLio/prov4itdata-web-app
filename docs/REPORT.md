@@ -317,7 +317,13 @@ graph TD
     B_RME --> A_HC
     B_RME --> A_SS
     B_RME --> A_AP
+
+    style A_F fill:#f9f,stroke:#333,stroke-width:4px
+    style B_RME fill:#f9f,stroke:#333,stroke-width:4px
+    style A_AP fill:#9f9,stroke:#333,stroke-width:4px
 ```
+
+We need to include a new `Annotate Provenance` Actor that allows us to automatically generate provenance information for each queried datasource,  and adapt the `Federated` Actor to detect and properly process the provenance information coming from different data sources.
 
 #### Web App
 
