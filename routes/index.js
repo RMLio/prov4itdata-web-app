@@ -202,6 +202,27 @@ function createRouter(grant, environmentConfig, logConfig = null) {
         }
     })
 
+    /**
+     * Log out
+     */
+    router.post('/logout', (req, res) => {
+        let statusCode = 200
+        let body = { success : true }
+        try {
+            // Destroy the session
+            req.session.destroy()
+        } catch (e) {
+            console.error('Error while trying to destroy the session')
+            statusCode = 500
+            body =  {...body, success: false}
+        }
+        finally {
+            res.format({
+                'application/json': () => res.status(statusCode).json(body)
+            })
+        }
+    })
+
     return router
 }
 

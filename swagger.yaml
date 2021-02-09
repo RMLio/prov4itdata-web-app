@@ -100,3 +100,13 @@ paths:
           description: Returns true or false, depending on whether the given provider is connected.
           # TODO: content (boolean)
 
+  /logout:
+    post:
+      summary: Log out. This will destroy the session.
+
+      responses:
+        200:
+          description: Succesfully logged out from all connected providers.
+        500:
+          description: Internal Server Error. Something went wrong when logging out.
+
