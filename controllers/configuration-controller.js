@@ -21,7 +21,8 @@ const configuration = {
     },
 
     'solid' : {
-        'storageDirectory' : 'private'
+        'storageDirectory' : 'private/intermediate',
+        'finalStorageDirectory': 'private/final',
     }
 
 }
@@ -52,3 +53,6 @@ exports.getConnectionUrlForProvider = function (provider) {
     return null
 }
 
+exports.getSolidConfiguration = function () {
+    return configuration.solid;
+}

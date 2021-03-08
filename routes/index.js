@@ -203,6 +203,12 @@ function createRouter(grant, environmentConfig, logConfig = null) {
     })
 
     /**
+     * Returns general Solid configuration such as: storageDirectory and finalStorageDirectory
+     */
+    router.get('/configuration/solid', (req,res)=>
+        res.send(configurationController.getSolidConfiguration()))
+
+    /**
      * Log out
      */
     router.post('/logout', (req, res) => {
