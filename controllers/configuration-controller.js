@@ -1,31 +1,9 @@
-const configuration = {
-    'imgur' : {
-        'solid' : {
-            'filename': 'imgur.ttl'
-        },
-        'connect' : '/connect/imgur'
+const fs = require('fs');
+const path = require('path');
 
-
-    },
-    'flickr' : {
-        'solid' : {
-            'filename': 'flickr.ttl'
-        },
-        'connect' : '/connect/flickr'
-    },
-    'google' : {
-        'solid' : {
-            'filename': 'google.ttl'
-        },
-        'connect' : '/connect/google'
-    },
-
-    'solid' : {
-        'storageDirectory' : 'private/intermediate',
-        'finalStorageDirectory': 'private/final',
-    }
-
-}
+const dirConfiguration = path.join(path.dirname(require.main.filename),'public', 'configuration')
+// Transfer configuration read from public/configuration/configuration.json
+const configuration = JSON.parse(fs.readFileSync(path.join(dirConfiguration, 'transfer-configuration.json'), {'encoding' : 'utf8'}))
 
 exports.getAvailableProviders = function (){
     return Object.keys(configuration)

@@ -1,0 +1,23 @@
+{
+  "imgur": {
+    "solid": {
+      "filename": "imgur.ttl"
+    },
+    "connect": "/connect/imgur"
+  },
+  "flickr": {
+    "solid": {
+      "filename": "flickr.ttl"
+    },
+    "connect": "/connect/flickr"
+  },
+  "google": {
+    "solid": {
+      "filename": "google.ttl"
+    },
+    "connect": "/connect/google"
+  },
+  "solid": {
+    "storageDirectory": "private"
+  }
+}
