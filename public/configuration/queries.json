@@ -1,4 +1,9 @@
 {
+
+  "construct_all_triples": {
+    "description": "Construct all triples",
+    "query": "CONSTRUCT { ?s ?p ?o . } WHERE { ?s ?p ?o }"
+  },
   "construct_image_triples": {
     "description": "Construct image triples",
     "query": "\n           PREFIX schema: <http://schema.org/> \n          PREFIX dcat: <http://www.w3.org/ns/dcat#> \n          \n          CONSTRUCT { ?s ?p ?o .   } WHERE { \n              {\n                  ?s ?p ?o .\n                  FILTER EXISTS { ?s a schema:ImageObject}\n              }\n              UNION\n              {\n                  ?s ?p ?o .\n                  FILTER EXISTS { ?s a dcat:Distribution}\n              }\n          \n          }\n          "
