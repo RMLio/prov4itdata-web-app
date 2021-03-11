@@ -201,12 +201,7 @@ function createRouter(grant, environmentConfig, logConfig = null) {
             handleStatusCode(req,res, 422, "Provider should not be null")
         }
     })
-
-    /**
-     * Returns general Solid configuration such as: storageDirectory and finalStorageDirectory
-     */
-    router.get('/configuration/solid', (req,res)=>
-        res.send(configurationController.getSolidConfiguration()))
+    
 
     /**
      * Log out

@@ -18,6 +18,7 @@
     "connect": "/connect/google"
   },
   "solid": {
-    "storageDirectory": "private"
+    "storageDirectory": "private",
+    "transferFilename": "transfer.ttl"
   }
 }
