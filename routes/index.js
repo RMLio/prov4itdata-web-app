@@ -54,105 +54,92 @@ function createRouter(grant, environmentConfig, logConfig = null) {
     })
 
     /**
-     * Return RML Rules
-     * If a filename is specified, read and send that file.
-     * Otherwise, return a list of available mappings.
-     */
-    router.get('/rml/rules/:provider/:filename?', (req, res) => {
-        const provider = req.params.provider
-        const filename = req.params.filename
-        // When the filename parameter is not provided, return the available mapping files
-        if (provider === undefined || filename === undefined) {
-            res.send(rmlRulesController.getMappingList())
-        }
-        // If the filename parameter is defined, return the file it points to, if it exists.
-        else {
-            const mapping = rmlRulesController.readMapping(provider, filename)
-            if (mapping != null)
-                res.send(mapping)
-            else
-                handleStatusCode(req, res, 404)
-        }
-    })
-
-    /**
-     * Execute the RMLMapper with a specific mapping for a specific provider
-     * provider: e.g. flickr, imgur
-     * filename: filename of the mapping
+     * Execute mapping on RML Mapper.
+     * Required body parameters
+     *  - provider: e.g. flickr, imgur
+     *  - file: filepath to the mapping
      *
-     * The return-value depends on the content-type
+     *
      */
-    router.get('/rmlmapper/:provider/:filename', (req, res) => {
-        const provider = req.params.provider
-        const filename = req.params.filename
-        if (provider && filename) {
-            console.log("We got both a provider & filename, we're good to go")
-            console.log("provider: " + provider, ", filename: ", filename)
-            // Check whether provider tokens are available
-            const providerCredentials = tokenController.getProviderCredentials(req, provider)
-            // Grant config
-            const providerConfig = grant.config[provider]
+    router.post('/rmlmapper', (req, res)=>{
 
-            if (providerCredentials) {
-                const templateKeyValues = mappingUtils.createTemplateKeyValues(providerCredentials, providerConfig)
-                let mapping = rmlRulesController.readMapping(provider, filename)
-                const replacementMapping = mappingUtils.initializeReplacementMapping(mapping, templateKeyValues)
-                mapping = mappingUtils.doReplacement(mapping, replacementMapping)
-
-                // TODO: refactor this to some controller
-                rmlRulesController.executeRMLMapping(environmentConfig.rmlmapper_webapi, mapping,
-                    // Process the reponse
-                    (response) => {
-                        // If succesful, output the generated RDF as plain text
-                        if (response.status == 200) {
-                            const output = response.data.output
-                            const metadata = response.data.metadata
-                            const contentType = req.headers['content-type']
-
-                            // Create response based on content-type
-                            switch (contentType) {
-
-                                case 'text/plain':
-                                    res.setHeader('Content-Type', 'text/plain')
-                                    res.send(output)
-                                    break
+        const {provider, file } = req.body;
 
 
-                                case 'application/json':
-                                default:
-                                    res.setHeader('Content-Type', 'application/json')
-                                    res.send({
-                                        'rdf': output,
-                                        'prov': metadata
-                                    })
-
-
-                            }
-
-                        } else {
-                            // Complain
-                            console.error("Unsuccessful...")
-                            console.error(response)
-                            res.send(`<p style="color:red">FAILURE</p>`)
-                        }
-                    },
-                    (error) => {
-                        handleStatusCode(req,res,500, error.toString())
-                    }
-                )
-
-            } else {
-                // No tokens for the current provider available. Complain!
-                let errMessage = `No tokens available for ${provider} available. Make sure to connect & authorize first!`
-                handleStatusCode(req, res, 401, errMessage)
+        const readMapping = (file) => {
+            let mapping = undefined;
+            try {
+                // TODO: support relative paths + file uris (file://)
+                // Create filepath
+                const filePath = path.join(path.dirname(require.main.filename),'public', file)
+                // Read mapping file
+                mapping = fs.readFileSync(filePath, {encoding:'utf-8'})
+            } catch (err) {
+                console.error(`Error while reading file: ${file}! Error: `, err)
+            } finally {
+                return mapping
             }
+        }
+        // If we tokens for the current provider are available, proceed
+        const providerTokens = tokenController.getProviderCredentials(req, provider)
+        if(providerTokens) {
+            console.log('we have provider tokens')
+            // Get grant config for the current provider
+            const providerConfig = grant.config[provider]
+            // Create the replacements for the template variables in the RML Mapping
+            const templateKeyValues = mappingUtils.createTemplateKeyValues(providerTokens, providerConfig)
+            let mapping = readMapping(file)
+            const replacementMapping = mappingUtils.initializeReplacementMapping(mapping, templateKeyValues)
+            // Replace all templated variables with their corresponding values
+            mapping = mappingUtils.doReplacement(mapping, replacementMapping)
+            console.log('mapping replacement : ', mapping)
+            // Execute mapping on the RML Mapper
+            rmlRulesController.executeRMLMapping(environmentConfig.rmlmapper_webapi, mapping,
+                // Process the reponse
+                (response) => {
+                    // If succesful, output the generated RDF as plain text
+                    if (response.status === 200) {
+                        const output = response.data.output
+                        const metadata = response.data.metadata
+                        const contentType = req.headers['content-type']
 
-        } else {
-            console.error()
-            // 422: unprocessable entity.
-            handleStatusCode(req, res, 422, "Missing provider and/or filename")
+                        // Create response based on content-type
+                        switch (contentType) {
+
+                            case 'text/plain':
+                                res.setHeader('Content-Type', 'text/plain')
+                                res.send(output)
+                                break
+
+
+                            case 'application/json':
+                            default:
+                                res.setHeader('Content-Type', 'application/json')
+                                res.send({
+                                    'rdf': output,
+                                    'prov': metadata
+                                })
+
+
+                        }
+
+                    } else {
+                        // Complain
+                        console.error("Unsuccessful...")
+                        console.error(response)
+                        res.send(`<p style="color:red">FAILURE</p>`)
+                    }
+                },
+                (error) => {
+                    handleStatusCode(req,res,500, error.toString())
+                }
+            )
+        }else {
+            console.error('No provider credentials for ', provider);
+            res.sendStatus(401) // Unauthorized
         }
     })
+
 
     /**
      * Route for downloading a mapping, given the provider & filename of the mapping
