@@ -1,0 +1,127 @@
+{
+	"configurationRecords": [
+		{
+			"id": "solid-config",
+			"type": "solidConfiguration",
+			"storageDirectory": "private"
+		},
+		{
+			"id": "flickr-photoset-transfer-using-schema-org.ttl",
+			"type": "mapping",
+			"file": "rml/flickr/photoset-transfer-using-schema-org.ttl",
+			"description": "Transfers photosets from Flickr using Schema.org vocabulary",
+			"provider": "flickr"
+		},
+		{
+			"id": "flickr-collection-transfer-using-schema-org.ttl",
+			"type": "mapping",
+			"file": "rml/flickr/collection-transfer-using-schema-org.ttl",
+			"description": "Transfers collections from Flickr using Schema.org vocabulary",
+			"provider": "flickr"
+		},
+		{
+			"id": "flickr-photoset-transfer-using-dcat.ttl",
+			"type": "mapping",
+			"file": "rml/flickr/photoset-transfer-using-dcat.ttl",
+			"description": "Transfer Flickr photosets using DCAT vocabulary",
+			"provider": "flickr"
+		},
+		{
+			"id": "flickr-collection-information-using-DCAT.ttl",
+			"type": "mapping",
+			"file": "rml/flickr/collection-information-using-DCAT.ttl",
+			"description": "Transfer Flickr Collections using DCAT vocabulary",
+			"provider": "flickr"
+		},
+		{
+			"id": "imgur-image-transfer-using-schema-org.ttl",
+			"type": "mapping",
+			"file": "rml/imgur/image-transfer-using-schema-org.ttl",
+			"description": "Transfers image links and properties from Imgur using the Schema.org vocabulary.",
+			"provider": "imgur"
+		},
+		{
+			"id": "imgur-image-transfer-using-dcat.ttl",
+			"type": "mapping",
+			"file": "rml/imgur/image-transfer-using-dcat.ttl",
+			"description": "Transfer images from Imgur using DCAT vocabulary",
+			"provider": "imgur"
+		},
+		{
+			"id": "google-contact-transfer-using-schema-org.ttl",
+			"type": "mapping",
+			"file": "rml/google/contact-transfer-using-schema-org.ttl",
+			"description": "",
+			"provider": "google"
+		},
+
+		{
+			"id": "cq_spo.rq",
+			"type": "query",
+			"file": "sparql/cq_spo.rq",
+			"description": "Construct all triples"
+
+		},
+		{
+			"id": "cq_image_triples.rq",
+			"type": "query",
+			"file": "sparql/cq_image_triples.rq",
+			"description": "Construct image triples"
+		},
+		{
+			"id": "cq_image_collections.rq",
+			"type": "query",
+			"file": "sparql/cq_image_collections.rq",
+			"description": "Construct image collections"
+		},
+
+		{
+			"id": "p001",
+			"type": "pipeline",
+			"description": "Transfer images from imgur using DCAT",
+			"steps" : [
+				{
+					"type" : "mappingConfiguration",
+					"forId": "imgur-image-transfer-using-dcat.ttl",
+					"output": "out-p001.ttl"
+				}
+			],
+			"output": [
+				"out-p001.ttl"
+			]
+		},
+		{
+			"id": "p002",
+			"type": "pipeline",
+			"description": "Transfer photosets from flickr using schema.org",
+			"steps" : [
+				{
+					"type" : "mappingConfiguration",
+					"forId": "flickr-photoset-transfer-using-schema-org.ttl",
+					"output": "out-p002.ttl"
+				}
+			],
+			"output": [
+				"out-p002.ttl"
+			]
+		},
+		{
+			"id": "p003",
+			"type": "pipeline",
+			"description": "Transfer Google contacts",
+			"steps" : [
+				{
+					"type" : "mappingConfiguration",
+					"forId": "google-contact-transfer-using-schema-org.ttl",
+					"output": {
+						"result": "out-p003.ttl",
+						"provenanceResult": "out-p003-prov.ttl"
+					}
+				}
+			],
+			"output": [
+				"out-p003.ttl"
+			]
+		}
+	]
+}

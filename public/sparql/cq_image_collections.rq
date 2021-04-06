@@ -1,0 +1,14 @@
+PREFIX schema: <http://schema.org/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+
+CONSTRUCT { ?s ?p ?o .   } WHERE {
+    {
+        ?s ?p ?o .
+        FILTER EXISTS { ?s a schema:ImageGallery}
+    }
+    UNION
+    {
+        ?s ?p ?o .
+        FILTER EXISTS { ?s a dcat:Catalog}
+    }
+}
