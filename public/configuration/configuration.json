@@ -83,7 +83,10 @@
 				{
 					"type" : "mappingConfiguration",
 					"forId": "imgur-image-transfer-using-dcat.ttl",
-					"output": "out-p001.ttl"
+					"output": {
+						"result":"out-p001.ttl",
+						"provenanceResult": "out-p0012-prov.ttl"
+					}
 				}
 			],
 			"output": [
@@ -98,7 +101,10 @@
 				{
 					"type" : "mappingConfiguration",
 					"forId": "flickr-photoset-transfer-using-schema-org.ttl",
-					"output": "out-p002.ttl"
+					"output": {
+						"result":"out-p002.ttl",
+						"provenanceResult": "out-p002-prov.ttl"
+					}
 				}
 			],
 			"output": [
