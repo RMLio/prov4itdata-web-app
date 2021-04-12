@@ -6,6 +6,11 @@
 			"storageDirectory": "private"
 		},
 		{
+			"id": "auth-flow-config",
+			"type": "authorizationFlowConfiguration",
+			"maximumAuthorizationAttempts": 3
+		},
+		{
 			"id": "flickr-photoset-transfer-using-schema-org.ttl",
 			"type": "mapping",
 			"file": "rml/flickr/photoset-transfer-using-schema-org.ttl",
@@ -127,6 +132,28 @@
 			],
 			"output": [
 				"out-p003.ttl"
+			]
+		}
+		,
+		{
+			"id": "p004",
+			"type": "pipeline",
+			"description": "Query Google contacts",
+			"steps" : [
+				{
+					"type" : "queryConfiguration",
+					"forId": "cq_spo.rq",
+					"input": [
+						"out-p003.ttl"
+					],
+					"output": {
+						"result": "out-p004.ttl",
+						"provenanceResult": "out-p004-prov.json"
+					}
+				}
+			],
+			"output": [
+				"out-p004.ttl"
 			]
 		}
 	]
