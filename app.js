@@ -36,6 +36,7 @@ const logConfig = {
 
 // Web App
 const app = express()
+app.use(express.json())
 app.set('view engine', 'pug')
     .use(session({secret: 'grant', saveUninitialized: true, resave: false}))
     .use(grant)
