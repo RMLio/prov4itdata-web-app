@@ -170,14 +170,9 @@ function createRouter(grant, environmentConfig, logConfig = null) {
         const configKey = req.params.configKey
         if(provider){
             switch (configKey) {
-                case 'solid':
-                    // TODO: send solid configuration
-                    let solidConfig = configurationController.getSolidConfigurationForProvider(provider)
-                    console.log("solidConfig: " , solidConfig)
-                    res.send(solidConfig)
-                    break
                 case 'connect':
-                    let connectionUrl = configurationController.getConnectionUrlForProvider(provider)
+                    console.log('grant config defaults prefix: ' , grant.config.defaults.prefix)
+                    let connectionUrl = [grant.config.defaults.prefix, provider].join('/')
                     res.send({url: connectionUrl})
                     break
                 default:
