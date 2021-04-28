@@ -1,9 +1,10 @@
 const express = require('express')
+const path = require('path')
+const fs = require('fs')
 const router = express.Router();
 const rmlRulesController = require('../controllers/rml-rules-controller')
 const tokenController = require('../controllers/token-controller')
 const mappingUtils = require('../lib/utils/mapping-utils')
-const configurationController = require('../controllers/configuration-controller')
 
 const YAML = require('yamljs');
 const swaggerDocs = YAML.load('./swagger.yaml')
@@ -23,7 +24,8 @@ function createRouter(grant, environmentConfig, logConfig = null) {
         if (logConfig.logConfig.logRoute)
             // Writes the current route to the console
             router.use((req, res, next) => {
-                console.log(`route: ${req.path}`)
+                if(req.hasOwnProperty('path'))
+                    console.log(`route: ${req.path}`)
                 next()
             })
     }
@@ -140,12 +142,6 @@ function createRouter(grant, environmentConfig, logConfig = null) {
         }
     })
 
-
-    /**
-     * Route for downloading a mapping, given the provider & filename of the mapping
-     */
-    router.get('/download/rml/:provider/:filename', rmlRulesController.downloadMappingToClient)
-
     /**
      * TODO: document
      */
@@ -183,7 +179,7 @@ function createRouter(grant, environmentConfig, logConfig = null) {
             handleStatusCode(req,res, 422, "Provider should not be null")
         }
     })
-    
+
 
     /**
      * Log out
