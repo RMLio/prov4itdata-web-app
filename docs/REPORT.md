@@ -52,11 +52,11 @@ so that individuals could move their data whenever they want.
 However, such efforts — being hard-coded — miss transparency and interoperability.
 On the one hand, when data is transferred between services,
 there is no trust in whether this transfer was of high quality.
-Assessment would require reviewing the source code, as data provenance is unavailable.
-On the other hand, complying to this hard-coded platform requires development effort to create custom data models.
+To assess the transfer's quality, assessment would require reviewing the source code, as data provenance is unavailable.
+On the other hand, complying with this hard-coded platform requires development effort to create custom data models.
 Existing interoperability standards are neglected.
 
-In PROV4ITDaTa, we create a solution that is fully transparent and has fine-grained configuration to improve interoperability with other data models. Furthermore, the intermediate dataset generated from the source data and its provenance are [FAIR] resources.
+In PROV4ITDaTa, we create a solution that is fully transparent and has a fine-grained configuration to improve interoperability with other data models. Furthermore, the intermediate dataset generated from the source data and its provenance are [FAIR] resources.
 To achieve this, we will exploit and advance the existing open-source tools [RML.io] and [Comunica]
 and show its extensibility by directly applying it to the [Solid] ecosystem.
 
@@ -124,7 +124,7 @@ for exporting the data, see our progress in M4.
 
 > This work is ongoing
 
-Our first sprint contained an end-to-end solution without query-based importer.
+Our first sprint contained an end-to-end solution without a query-based importer.
 Our second sprint refactored the user interface to ease future extensibility and included an additional connector, see [Demonstrator](#demonstrator).
 Our ongoing sprint is to include the query-based configuration and Comunica engine.
 
@@ -191,10 +191,10 @@ graph LR
 
 The architecture comprises five main components
 
-- PROVIT4DaTa Web App: a user interface to allow users transparently transport their data
+- PROVIT4DaTa Web App: a user interface to allow users to transparently transport their data
 - Data Providers: an extensible set of existing (social) Data Providers from which the user can transfer its data
 - RML.io toolset: a set of open-source tools to generate standardized knowledge graphs from heterogeneous data sources
-- Solid pods: a personal data storage, putting the user in control of their own data
+- Solid pods: a personal data storage, putting the user in control of their data
 - Comunica: a federated querying engine to integrate data from different sources and possibly rewrite the data schema
 
 The main component is the PROV4ITDaTa Web App, which performs the different steps required for transferring data from services (e.g. Flickr, Imgur, etc.) to a Solid pod.
@@ -210,7 +210,7 @@ The main component is the PROV4ITDaTa Web App, which performs the different step
 
 An RML Mapping provides the means to create semantically enriched RDF data from heterogenous and (semi-) structured sources, using a declarative set of rules ([RML][RML-spec]).
 
-Describing the Web API as a source in an RML Mapping allows the [RMLMapper][RMLMapper-JAVA] to determine how requests should be made in order to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.
+Describing the Web API as a source in an RML Mapping allows the [RMLMapper][RMLMapper-JAVA] to determine how requests should be made to consume the Web API. Furthermore, it requires a one-time effort and avoids hard-coded implementations for each service to be added. The mapping can easily be reused for — and extended to — similar Web APIs.
 
 #### RMLMapper
 
@@ -229,7 +229,7 @@ All data in a pod is accessible via the Solid Protocol.
 When data is stored in someone's pod, they control who and what can access it.
 and share them when and with whom they choose using Solid pods.
 Providers of online services and advertisers need to interact with the Solid pod if they plan to process the individual's data.
-This enables a human centric approach to personal information and new business models.
+This enables a human-centric approach to personal information and new business models.
 
 Any kind of data can be stored in a Solid pod, however, the ability to store Linked Data is what makes Solid special.
 Linked Data gives Solid a common way to describe things and how they relate to each other,
@@ -242,7 +242,7 @@ Solid's access control system uses these IDs to determine whether a person or ap
 
 #### Comunica
 
-Comunica provides a meta-query engine which is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
+Comunica provides a meta-query engine that is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
 Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
 
 Incorporating Comunica, as depicted in the Architectural diagram above, allows us to select data from the intermediary datasets on the Solid Pod and transfer it to new services.
@@ -250,7 +250,7 @@ Incorporating Comunica, as depicted in the Architectural diagram above, allows u
 Moreover, we are working on adding provenance to the Comunica architecture as well, based on the design we made in <https://github.com/comunica/comunica/issues/732/>.
 The goal is to provide the ability to add different levels of provenance:
 
-- High-level: provenance w.r.t. the query result. This encompasses information about the SPARQL query that was executed, the query optimization plan, the sources that were queried, and configuration of the Comunica engine.
+- High-level: provenance w.r.t. the query result. This encompasses information about the SPARQL query that was executed, the query optimization plan, the sources that were queried, and the configuration of the Comunica engine.
 - Low-level: provenance w.r.t. the elements of a query result. Such as adding information about the different query operations that were executed to yield a particular binding result.
 
 Currently, our prototype complements every binding in a query result with provenance about its source.
@@ -323,11 +323,11 @@ graph TD
     style A_AP fill:#9f9,stroke:#333,stroke-width:4px
 ```
 
-We need to include a new `Annotate Provenance` Actor that allows us to automatically generate provenance information for each queried datasource,  and adapt the `Federated` Actor to detect and properly process the provenance information coming from different data sources.
+We need to include a new `Annotate Provenance` Actor that allows us to automatically generate provenance information for each queried data source,  and adapt the `Federated` Actor to detect and properly process the provenance information coming from different data sources.
 
 #### Web App
 
-The Web App is the main entrypoint, allowing the user to select and execute an [RML Mapping][RML-mapping] describing which Data Provider to consume data from, and how that data will be transformed to [RDF].
+The Web App is the main entry point, allowing the user to select and execute an [RML Mapping][RML-mapping] describing which Data Provider to consume data from, and how that data will be transformed to [RDF].
 
 Upon selecting an RML Mapping, the user can view and download its contents through the corresponding "RML Rules"-card (see [Demonstrator](#Demonstrator)).
 Using this RML Mapping, the user can inspect *how* its data will be processed **prior to execution**, and **without requiring to inspect the source code**.
@@ -341,7 +341,7 @@ Given the vulnerable information being exchanged, communication with the Web App
 
 After successful execution, the generated [RDF] and [provenance] become available for inspection and download.
 The provenance information, structured using the W3C recommended standard [PROV-O],
-allows further automatic processing to validate that all data is processed correctly acccording to the users expectations.
+allows further automatic processing to validate that all data is processed correctly according to the user's expectations.
 
 By providing the user not only with the generated [RDF] but also with the [data provenance][provenance],
 we address the transparency requirement other solutions lack.
@@ -353,7 +353,7 @@ The automatically generated provenance allows for inspection and validation of t
 
 ### Relation to DTP
 
-After reviewing the DTP repository, we concluded that although utilitary functions could be reused in a later stage,
+After reviewing the DTP repository, we concluded that although utility functions could be reused at a later stage,
 we currently focus on an end-to-end system using solely RML.io and Comunica.
 On the one hand, because these technologies allow more advanced data transfer processes than DTP (such as joining data from _different services_ on the fly),
 on the other hand, because integration efforts would put a too high burden on the current development sprints.
@@ -362,13 +362,13 @@ Once we have successfully created and validated our end-to-end demonstrator,
 we will re-evaluate DTP and how we can properly integrate our technologies.
 
 Below, a sketch is found into how we can integrate our technologies:
-the DTP Input-Service utilitary functions are reused to authenticate and fetch data, the RML processing component and Comunica engine are wrapped in a DTP Data model interface as a new generic DTP component.
+the DTP Input-Service utility functions are reused to authenticate and fetch data, the RML processing component and Comunica engine are wrapped in a DTP Data model interface as a new generic DTP component.
 
 ![DTP Architecture Draft](img/dtp-architecture.png)
 
 ## Requirements
 
-We set out following requirements,
+We set out the following requirements,
 and linked them to the specific sections of the features we currently support,
 
 - Configurable data portability and Personalization (available using personalized RML Mapping documents to configure the data transfer, see [this section](#mapping-files-to-transfer-data))
@@ -383,7 +383,7 @@ In general, our system is comparable to DTP, as it supports (and is extensible t
 
 ## Demonstrator
 
-The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping][RML-mapping], the transfer can be initiated by clicking the `[Execute]`-button. Initially, the user will be prompted to authorize with the [Solid] pod and the service defined as source in the [RML Mapping][RML-mapping].
+The upper part of the landing page provides the means for quickly initiating the transfer from a service to a [Solid] pod. Once the user selects the desired [RML Mapping][RML-mapping], the transfer can be initiated by clicking the `[Execute]`-button. Initially, the user will be prompted to authorize with the [Solid] pod and the service defined as the source in the [RML Mapping][RML-mapping].
 
 The lower part allows the user to review
 
@@ -398,8 +398,8 @@ Furthermore, the user can inspect and verify that the generated [RDF] was succes
 The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.
 
 1. First, the user selects an [RML Mapping][RML-mapping] which comes available for inspection and download within the "RML Rules"-card.
-2. Once the user hsa decided on which [RML Mapping][RML-mapping] to use, the transfer process is triggered by pressing `[Execute]`.
-3. When transferring for the first time, the user will have to login to the Solid pod.
+2. Once the user has decided on which [RML Mapping][RML-mapping] to use, the transfer process is triggered by pressing `[Execute]`.
+3. When transferring for the first time, the user will have to log in to the Solid pod.
 4. Once the user has authenticated with Solid, the user will have to authenticate with multiple Data Providers (in this case, Flickr, Imgur, and Google Contacts).
 5. At this point, the actual transfer takes place. Upon success, the user will be notified and the generated [RDF], accompanied by its [provenance], will be available for inspection and download in the "Generated RDF"-card and "Provenance"-card, respectively.
 6. Finally, the user can inspect the data being stored on the Solid pod through the "Solid"-card.
@@ -410,7 +410,7 @@ Our toolchain is extensible to a wide variety of services.
 We opted to initially support [Flickr](#Flickr) and [Imgur](#Imgur).
 Both services share a common purpose: uploading and sharing image-content.
 However, despite this commonality, they differ in various aspects such as the underlying data model and how the resources should be accessed.
-Additionally, we additionally support the [Google People API](#google-people-api).
+Additionally, we support the [Google People API](#google-people-api).
 This latter connector has a similar access method to Imgur (JSON Web API via OAuth 2.0), but contains data in a very different data model.
 
 There are four different resources to model
@@ -421,7 +421,7 @@ There are four different resources to model
 - A contact person
 
 > Our current use cases already showcase the flexibility of our approach,
-> however, more use cases will be supported in following sprints.
+> however, more use cases will be supported in the following sprints.
 
 ### Best-practice vocabularies
 
@@ -434,14 +434,14 @@ Images can be mapped to `schema:ImageObject`-resources, which inherits propertie
 ##### Image Gallery
 
 An Image Gallery can be represented using `schema:ImageGallery`. Furthermore, the images it contains can be linked using the `schema:hasPart` property.
- 
+
 ##### Collection
 
-A Collection can be modelled by means of a `schema:Collection`, which can be linked to its Image Gallery resources through the `schema:hasPart` property.
+A Collection can be modeled through a `schema:Collection`, which can be linked to its Image Gallery resources through the `schema:hasPart` property.
 
 ##### Person
 
-A Person can be modelled by means of a `schema:Person`.
+A Person can be modeled using a `schema:Person`.
 
 #### DCAT
 
@@ -497,9 +497,9 @@ Its resources are made available through the [Flickr API][Flickr-API]. Flickr fo
 
 #### Using DCAT
 
-- An image resource can be modelled by a `dcat:Distribution`
+- An image resource can be modeled by a `dcat:Distribution`
 - A Flickr Album can contain image resources
-- A Flickr Collection can contain Flickr Albums, which contain image resources. Therefore, a Flickr Collection can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums)
+- A Flickr Collection can contain Flickr Albums, which contain image resources. Therefore, a Flickr Collection can be modeled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums)
 
 ### Imgur
 
@@ -536,9 +536,9 @@ An Imgur image can be mapped to a `schema:ImageObject`, along with the following
 
 #### Using DCAT
 
-- An image resource can be modelled by a `dcat:Distribution`.
-- A Imgur Album can contain image resources, and can be modelled by `dcat:Dataset`.
-- An Imgur Gallery can contain Imgur Albums, which contain image resources. Therefore, an Imgur Gallery can be modelled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums).
+- An image resource can be modeled by a `dcat:Distribution`.
+- A Imgur Album can contain image resources, and can be modeled by `dcat:Dataset`.
+- An Imgur Gallery can contain Imgur Albums, which contain image resources. Therefore, an Imgur Gallery can be modeled by a `dcat:Catalog` which can be linked to **zero or more** `dcat:Dataset`s (Albums).
 
 ### Google People API
 
@@ -568,11 +568,13 @@ Secondly, we elaborate on how to define the [Google People API] as a logical sou
 ##### Google Cloud Platform configuration
 
 Prerequisites:
+
 - Google Developer Account
 
 Steps:
+
 - Go to the [Google Developer Console](https://console.developers.google.com/)
-  and the first thing to do, is creating a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
+  create a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
 - For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
   <br/>![Make sure that the correct project is selected](img/readme-adding-google-step001-selected-project.png)
 - Navigate to *APIs & Services*
@@ -610,16 +612,17 @@ Steps:
 ```
 
 For more information on setting up a Google app that uses the Google People API, check out
-- https://developers.google.com/people/v1/how-tos/authorizing
-- https://developers.google.com/identity/protocols/oauth2
+
+- <https://developers.google.com/people/v1/how-tos/authorizing>
+- <https://developers.google.com/identity/protocols/oauth2>
 
 #### Creating an RML Mapping that consumes and transforms the Google People API
 
 When creating an RML Mapping, you always have to define exactly one [`rml:logicalSource`](https://rml.io/specs/rml/#logical-source)
 for every triples map you define. This way, the RML Processor knows where and how to access the data to be mapped.
-Using the  `rml:logicalSource`'s `rml:source` property we can specify the url of the Web API.
+Using the  `rml:logicalSource`'s `rml:source` property we can specify the URL of the Web API.
 
-In order to access protected resources, the RML Processor needs to include the required credentials when consuming the API.
+To access protected resources, the RML Processor needs to include the required credentials when consuming the API.
 The Google People API uses OAuth 2.0, and an authorization header should be added to the requests. Since these credentials
 are managed by our web-app, the value for the authorization header is a template-variable, hence, the web-app will
 recognize this and fill in the value.
@@ -636,7 +639,7 @@ The following is an excerpt of the `rml:source` defined in [`rml/google/contact-
 
 ## Features
 
-Within this project, we envisioned following features.
+Within this project, we envisioned the following features.
 
 - Allowing users to choose from [RML Mapping][RML-mapping]s crafted by experts. This allows for personalization of the data processing pipeline whilst reassuring qualitative transformation. See [Mapping files to transfer data](#mapping-files-to-transfer-data).
 - Allowing the users to inspect how data was transformed by the selected [RML Mapping][RML-mapping]. See [provenance].
@@ -648,9 +651,9 @@ Within this project, we envisioned following features.
 
 By supporting existing standards where possible,
 we aim to minimize the required foundational work.
-Widespread adoption and understanding of existing standards makes this possible.
+Widespread adoption and understanding of existing standards make this possible.
 
-PROV4ITDaTa is an Open Source initiative to transparently transfer data from Data Providers to your own personal data vault.
+PROV4ITDaTa is an Open Source initiative to transparently transfer data from Data Providers to your personal data vault.
 
 It makes use of Open Standards such as:
 
@@ -661,9 +664,9 @@ It makes use of Open Standards such as:
 - the [R2RML] extension [RML][RML-spec] to declaratively describe how to generate RDF knowledge graphs from heterogeneous data sources, and
 - the [Linked Data Platform][LDP] specification to interact with the Solid pods.
 
-It contributes to following Open Source projects:
+It contributes to the following Open Source projects:
 
-- [RMLMapper-java][RMLMapper-JAVA] (MIT licensed): the RML processor the generate the RDF knowledge graphs;
+- [RMLMapper-java][RMLMapper-JAVA] (MIT licensed): the RML processor generate the RDF knowledge graphs;
 - [RMLMapper web API][RMLMapper-api] (MIT licensed): a wrapper to publish the RMLMapper-java as a RESTful web service; and
 - PROV4ITData Web app (MIT licensed): the web application to interlink the different components.
 - [Comunica] (MIT licensed), a knowledge graph querying framework.
@@ -707,15 +710,15 @@ However, defining such metadata typically stayed independent of the generation p
 In most cases, metadata is manually defined by the data publishers, rather than produced by the involved applications.
 In PROV4ITDaTa, we rely on the [RML Mapping][RML-mapping]s that specify how the RDF knowledge graphs are generated
 to automatically and incrementally generate complete provenance and metadata information of the data transfer process.
-This way, it is assured that the metadata information is accurate, consistent and complete.
+This way, it is assured that the metadata information is accurate, consistent, and complete.
 The resulting provenance information can be inspected by the user once the transfer process is completed.
 
 The provenance information is described using the W3C recommended [PROV-O] standard.
 It covers the RDF knowledge graph generation, including metadata for the mapping rules definition and the data descriptions.
-By automating the provenance and metadata generation relying on the machine interpretable descriptions in the [RML Mapping][RML-mapping]s,
-metadata is generated in a systematic way and the generated provenance and metadata information becomes more accurate, consistent and complete.
+By automating the provenance and metadata generation relying on the machine-interpretable descriptions in the [RML Mapping][RML-mapping]s,
+metadata is generated in a systematic way and the generated provenance and metadata information becomes more accurate, consistent, and complete.
 
-Because of this provenance information the data transfer process is not only fully transparent before, but also after processing the data.
+Because of this provenance information, the data transfer process is not only fully transparent before, but also after processing the data.
 
 ### Output RDF
 
@@ -732,14 +735,14 @@ Our solution provides multiple levels of Syntactic Interoperability by leveragin
 #### Semantic Interoperability
 
 Semantic Interoperability is achieved when multiple systems are able to develop the same understanding of the data.
-To this end, the following choices where made
+To this end, the following choices were made
 
 - The generated [RDF] data is accompanied by the corresponding provenance data.
 - The source data originating from the Data Providers is mapped in a generic manner using established ontologies.
 
 #### Structural Interoperability
 
-Our solution solely produces [RDF] data, which by itself, offers the means to accomodate for Structural Interoperability.
+Our solution solely produces [RDF] data, which by itself, offers the means to accommodate for Structural Interoperability.
 
 #### Data Compatibility
 
@@ -755,7 +758,7 @@ As there are multiple parties involved in the data transfer (the user, Data Prov
 not one person or entity can fully ensure the security and privacy of the entire system.
 Instead, responsibility is shared among all the participants.
 Here are some of the responsibilities and leading practices that contribute to the security and privacy of the system.
-We will describe how these responsabilities are tackled, specifically in PROV4ITDaTa.
+We will describe how these responsibilities are tackled, specifically in PROV4ITDaTa.
 
 #### Data Minimization
 
@@ -764,7 +767,7 @@ Practically this means that all parties should only process and retain the minim
 In the PROV4ITDaTa components, no data is stored, only processed.
 The user can inspect exactly which data fields are processed by inspecting the [RML Mapping][RML-mapping],
 and how these data fields are processed by inspecting the [provenance data](#automatic-data-provenance-generation).
-All generated data is sent to the Solid pod, which is under full control of the user.
+All generated data is sent to the Solid pod, which is under the full control of the user.
 
 #### User Control
 
@@ -780,7 +783,7 @@ and by providing multiple alternative [RML Mapping][RML-mapping]s,
 it can personalize how the data is processed.
 
 > Currently, a single Solid pod provider is supported (<https://solidcommunity.net>).
-> Our roadmap includes the possibility to choose your own Solid pod provider.
+> Our roadmap includes the possibility to choose your Solid pod provider.
 
 #### Minimal Scopes for Auth Tokens
 
@@ -807,7 +810,7 @@ and are thus ephemeral: these tokens are automatically removed when the user's b
 #### Abuse
 
 The Data Providers should have strong abuse protections built into their APIs.
-Due to the fact that PROV4ITDaTa retains no user data beyond the life of a single transfer,
+Since PROV4ITDaTa retains no user data beyond the life of a single transfer,
 the Data Providers have the best tools to be able to detect and respond to abusive behavior,
 e.g., using standard protocols such as [OAuth] to obtain API keys.
 
@@ -846,8 +849,8 @@ At <https://rml.io/implementation-report/>, you can compare our RMLMapper-JAVA p
 ### GDPR
 
 As defined by Article 4 of the GDPR, PROV4ITData acts as a data processor for the end-user
-(which become their own data controllers, conform the EU digital sovereignty vision),
-as it allows individuals to easily transfer their files and data directly from Data Providers to their personal Solid pods.
+(which become their own data controllers, conform to the EU digital sovereignty vision),
+as it allows individuals to easily transfer their files and data directly from Data Providers to their Solid pods.
 
 This does not influence the GDPR roles of its complementary modules.
 Each Data Provider will maintain full control over determining who has access to the data stored on their systems.
@@ -868,7 +871,7 @@ The security requirements are in line with Article 32 of the GDRP:
 ## Conclusion
 
 Currently, PROV4ITData showcases how users can transparently transfer their data from different Data Providers
-to their own Solid pod, using the RML.io toolchain.
+to their Solid pod, using the RML.io toolchain.
 We showcase transparency (by providing the [RML Mapping][RML-mapping]s the and [provenance] data),
 and flexibility (by providing multiple Data Providers).
 
