@@ -66,3 +66,8 @@ When selecting a mapping, it will be shown in the RML Rules card. Click the card
 The generated output will be stored on the Solid pod.
 5. You can download the RML rules, generated output, and provenance using the corresponding "Download"-button in each card.
 6. Verify what is stored on the Solid pod using the controls in the Solid-card. It is also possible to delete the file afterwards.
+
+## License
+
+This code is copyrighted by [Ghent University – imec](http://idlab.ugent.be/)
+and released under the [MIT license](http://opensource.org/licenses/MIT).
