@@ -7,9 +7,9 @@
     "start": "node app.js",
     "start:dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ui:install": "yarn --cwd node_modules/ui install --only=prod",
-    "ui:build": "yarn --cwd node_modules/ui run build",
-    "ui:moveBuild": "mkdirp build/ui && ncp  node_modules/ui/build/ build/ui/",
+    "ui:install": "yarn --cwd node_modules/@prov4itdata/ui install --only=prod",
+    "ui:build": "yarn --cwd node_modules/@prov4itdata/ui run build",
+    "ui:moveBuild": "mkdirp build/ui && ncp  node_modules/@prov4itdata/ui/build/ build/ui/",
     "ui:all": "yarn run ui:install && yarn run ui:build && yarn run ui:moveBuild"
   },
   "author": "",
@@ -27,7 +27,7 @@
     "pem": "^1.14.4",
     "pug": "^3.0.0",
     "swagger-ui-express": "^4.1.6",
-    "ui": "git+ssh://git@gitlab.ilabt.imec.be:prov4itdata-dapsi/ui.git#11563eaf8e3ca435f9bb72f29f16e122b48f3189",
+    "@prov4itdata/ui": "^0.2.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
