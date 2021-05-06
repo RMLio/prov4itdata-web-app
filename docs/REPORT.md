@@ -438,6 +438,27 @@ configuration record:
 
 ### NPM Modules
 <!-- @gdm: wip -->
+All components of the PROV4IDaTa platform are published to
+[npmjs.com](https://www.npmjs.com/) under the
+[`@prov4itdata`](https://www.npmjs.com/settings/prov4itdata/packages)
+organization.
+The packages are briefly described in the following list:
+
+<!--
+helper script for listing the prov4itdata packages
+# package-name, version
+npm search @prov4itdata -p | cut -f 1,5
+-->
+
+- [`@prov4itdata/web-app`]("#"): backend. (TODO)
+- [`@prov4itdata/ui`]("#"): user-interface
+ - [`@prov4itdata/actor-init-sparql`]("#")
+ - [`@prov4itdata/actor-optimize-query-operation-provenance-wrapper`]("#")
+ - [`@prov4itdata/actor-query-operation-collect-provenance`]("#")
+ - [`@prov4itdata/actor-rdf-metadata-extract-annotate-provenance`]("#")
+ - [`@prov4itdata/actor-rdf-resolve-quad-pattern-federated`]("#")
+ - [`@prov4itdata/context-entries`]("#"): TODO: ignore? This is merely a copy of
+   an unpublished comunica package <!-- @BDM: ignore this package?-->
 
 ### Relation to DTP
 
