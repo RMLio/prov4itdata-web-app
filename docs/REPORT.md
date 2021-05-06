@@ -19,6 +19,7 @@
   - [Alignment to the milestones](#alignment-to-the-milestones)
   - [Architecture](#architecture)
     - [Components](#components)
+    - [Configuration](#configuration)
     - [Relation to DTP](#relation-to-dtp)
   - [Requirements](#requirements)
   - [Demonstrator](#demonstrator)
@@ -241,7 +242,6 @@ authenticated by a decentralized extension of [OpenID Connect][OpenIDConnect].
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
 
 #### Comunica
-<!-- @bdm: can you review? -->
 Comunica provides a meta-query engine that is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
 Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
 
@@ -256,7 +256,7 @@ The goal is to provide the ability to add different levels of provenance:
 Currently, our prototype complements every binding in a query result with provenance about its source.
 This is accomplished by adding a new actor to the [Comunica architecture](https://comunica.dev/docs/modify/advanced/architecture_sparql/) that is able to extract all necessary metadata about the sources and add it to the provenance data.
 
-The following new actors to the Comunica architecture as depicted by the diagram
+The following new actors to the Comunica architecture are depicted by the diagram
 below:
 
 - Query Operation Provenance Wrapper (`ActorOptimizeQueryOperationProvenanceWrapper`)
@@ -389,14 +389,13 @@ As a result, this web app allows to unambiguously define the user's data using a
 The automatically generated provenance allows for inspection and validation of the processing.
 
 ### Configuration
-<!-- @bdm: can you review? -->
 
 We configure our application using a single configuration file:
-`configuration.json`. This file has a top-level `configurationRecords` key in 
+`configuration.json`. This file has a top-level `configurationRecords` key in
 which the so-called *configuration records* reside.
 
 Such a configuration record contains at least an `"id"` and a `"type"`:
- 
+
 ```json
 {
   "id": "...",
@@ -406,7 +405,7 @@ Such a configuration record contains at least an `"id"` and a `"type"`:
 
 Depending on its type, the configuration record may contain additional
 properties. The following list provides the details for each type of
-configuration record: 
+configuration record:
 
 - `mapping`:   A mapping record contains the following:
   - `id`: identifies the mapping record
