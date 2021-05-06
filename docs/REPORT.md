@@ -450,15 +450,19 @@ helper script for listing the prov4itdata packages
 npm search @prov4itdata -p | cut -f 1,5
 -->
 
-- [`@prov4itdata/web-app`]("#"): backend. (TODO)
-- [`@prov4itdata/ui`]("#"): user-interface
- - [`@prov4itdata/actor-init-sparql`]("#")
- - [`@prov4itdata/actor-optimize-query-operation-provenance-wrapper`]("#")
- - [`@prov4itdata/actor-query-operation-collect-provenance`]("#")
- - [`@prov4itdata/actor-rdf-metadata-extract-annotate-provenance`]("#")
- - [`@prov4itdata/actor-rdf-resolve-quad-pattern-federated`]("#")
- - [`@prov4itdata/context-entries`]("#"): TODO: ignore? This is merely a copy of
-   an unpublished comunica package <!-- @BDM: ignore this package?-->
+- [`@prov4itdata/web-app`]("#"): backend. (TODO: publish & describe)
+- [`@prov4itdata/ui`](https://www.npmjs.com/package/@prov4itdata/ui): User interface for `@prov4itdata/web-app`
+- [`@prov4itdata/actor-init-sparql`](https://www.npmjs.com/package/@prov4itdata/actor-init-sparql):
+  Comunica engine, customized for PROV4ITDaTa. 
+- [`@prov4itdata/actor-optimize-query-operation-provenance-wrapper`](https://www.npmjs.com/package/actor-optimize-query-operation-provenance-wrapper):
+  new actor that wraps the original query operation.
+- [`@prov4itdata/actor-query-operation-collect-provenance`](https://www.npmjs.com/package/actor-query-operation-collect-provenance):
+  new actor that integrates the observed records from the Query Operation Observer. 
+- [`@prov4itdata/actor-rdf-metadata-extract-annotate-provenance`](https://www.npmjs.com/package/actor-rdf-metadata-extract-annotate-provenance):
+  new actor that extract source-level metadata.
+- [`@prov4itdata/actor-rdf-resolve-quad-pattern-federated`](https://www.npmjs.com/package/actor-rdf-resolve-quad-pattern-federated):
+  updated actor that now includes the extracted source-level metadata coming
+  from the previous actor.
 
 ### Relation to DTP
 
