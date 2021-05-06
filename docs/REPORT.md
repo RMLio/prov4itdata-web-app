@@ -351,6 +351,72 @@ The resulting [RDF] is stored onto the user's [Solid] pod, which can be verified
 As a result, this web app allows to unambiguously define the user's data using an RML Mapping and transparently transfer it between services.
 The automatically generated provenance allows for inspection and validation of the processing.
 
+### Configuration
+<!-- wip: @gdm -->
+
+We configure our application using a single configuration file:
+`configuration.json`. This file has a top-level `configurationRecords` key in 
+which the so-called *configuration records* reside.
+
+Such a configuration record contains at least an `"id"` and a `"type"`:
+ 
+```json
+{
+  "id": "...",
+  "type": "..."
+}
+```
+
+
+- `mapping`:   A mapping record contains the following:
+  - `id`: identifies the mapping record
+  - `file`: URI to the mapping file (Turtle-format)
+  - `description`: description of the mapping
+  - `provider`: name of the service provider the mapping consumes data from
+
+  
+
+- `queries`: array of query records.
+  A query record contains the following:
+
+  - `id`: identifies the query record
+  - `file`: URI to the query file (extension: `.rq`)
+  - `description`: description of the query
+
+  
+
+- `pipelines`: array of pipeline records.
+  A pipeline record contains the following:
+
+  - `id`: identifies the pipeline record
+  - `description`: description of the pipeline
+  - `mappingConfigurations`: array of mapping configurations.
+    A mapping configuration contains the following:
+    - `mappingId`: identifier of the mapping to be executed by the RML processor.
+    - `outputFilename`: the filename of the result.
+  - `queryConfigurations`: array of the query configurations.
+    A query configuration contains the following:
+    - `queryId`: identifier of the query to be executed by the Comunica query engine.
+    - `inputFilenames`:  an array of sources over which the query will be executed.
+    - `outputFilename`: filename of the query result.
+  - `outputFilename`: the file that is considered to be the output of the pipeline.
+    This can refer to an `outputFilename` of either a mapping record, or query record.
+
+- Regarding the `pipeline` records
+  - Combined `mappingConfigurations` and `queryConfigurations` into `steps`
+  - A step always has a  `forId`, `output` and `type`.
+    - The `forId` refers to a record to which the current configuration applies
+    - The `output` is a filename in which the result will be stored
+    - The `type` can be a `mappingConfiguration` or `queryConfiguration`
+      - If the type is `mappingConfiguration`
+        - the `forId` will refer to the id of a mapping record
+      - If the type is `queryConfiguration`
+        - the `forId` will refer to the id of a query record
+        - the `input` is an array of filenames over which the query will be executed
+  - The `output` of a pipeline record is an array of filenames that represent the "final" output of a pipeline. The idea for using an array is that it allows us to select multiple outputs from the steps.
+     
+
+
 ### Relation to DTP
 
 After reviewing the DTP repository, we concluded that although utility functions could be reused at a later stage,
