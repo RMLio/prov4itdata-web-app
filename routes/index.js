@@ -5,9 +5,13 @@ const router = express.Router();
 const rmlRulesController = require('../controllers/rml-rules-controller')
 const tokenController = require('../controllers/token-controller')
 const mappingUtils = require('../lib/utils/mapping-utils')
+const package = require('../package.json')
 
 const YAML = require('yamljs');
 const swaggerDocs = YAML.load('./swagger.yaml')
+swaggerDocs.info.title = package.description;
+swaggerDocs.info.version = package.version;
+swaggerDocs.servers = [];
 const swaggerUi = require('swagger-ui-express')
 
 

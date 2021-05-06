@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Logout endpoint (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/53))
 - Change to single configuration (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/59))
 
+### Changed
+
+- Updated Reporting
+
 ## [0.2.1] - 2021-02-05
 
 ### Changed

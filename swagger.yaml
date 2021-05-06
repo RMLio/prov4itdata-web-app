@@ -1,90 +1,72 @@
 openapi: 3.0.0
 info:
-  title: PROV4ITDaTa-DAPSI API
+  title: _TODO
   description: Transfer your personal data from multiple data providers to your Solid Pod.
-  version: 0.1.1
+  version: _TODO
 servers:
   - url: http://localhost:4000/
     description: Optional server description, e.g. Main (production) server
 
 paths:
-  /imgur/callback:
+  /api-docs:
     get:
-      summary: Updates imgur tokens and redirects back to root
-      responses: # TODO: update
-        '200':
+      summary: Gets these docs
+      responses:
+        "200":
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+  /{provider}/callback:
+    get:
+      summary: Updates the provider tokens and redirects back to root
+      responses:
+        "302":
+          description: OK
+    parameters:
+      - name: provider
+        in: path
+        description: The provider
+        required: true
+        schema:
+          $ref: "#/components/schemas/ProviderModel"
+  /rmlmapper:
+    post:
+      summary: Execute the RMLMapper
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider: 
+                  $ref: "#/components/schemas/ProviderModel"
+                file:
+                  type: string
+      responses:
+        200:
           description: OK
           content:
             text/plain:
               schema:
                 type: string
-
-  /flickr/callback:
-    get:
-      summary: Updates flickr tokens and redirects back to root
-      responses: # TODO: update
-        '200':
-          description: OK
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rdf:
+                    type: string
+                  prov:
+                    type: object
+        401:
+          description: No credentials
+        500:
+          description: Not OK
           content:
             text/plain:
               schema:
                 type: string
-
-  /rml/rules/{provider}/{filename}: # note: will be removed
-    get:
-      summary: Returns the contents of the mapping for the given provider and filename
-      parameters:
-        - name: provider
-          in: path
-          description: Data provider (e.g. flickr)
-          required: true
-          schema:
-            type: string
-        - name: filename
-          in: path
-          description: Filename of the RML Mapping file
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: '
-                @prefix ex: <http://example.com/> .
-                @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-
-                ex:me foaf:knows ex:you .
-                '
-
-
-
-  /rmlmapper/{provider}/{filename}:
-    get: # TODO: will change to POST
-      summary: Returns the result returned by the RMLMapper.
-      description: For this, the token-controller is used to access the provider credentials, based on the provided request and provider. Subsecuently, the rml-rules-controller will make call to the RMLMapper WEB API to execute the mapping.
-      parameters:
-        - name: provider
-          in: path
-          description: Data provider (e.g. flickr)
-          required: true
-          schema:
-            type: string
-        - name: filename
-          in: path
-          description: Filename of the RML Mapping file
-          required: true
-          schema:
-            type: string
-
-      responses:
-        '200':
-          description: The specific RML mapping has been executed succesfully and the resulting generated RDF and provenance are being returned.
-          # TODO: content: application/json, etc..
-
   /status/{provider}/connected:
     get:
       summary: Returns whether the given provider is connected (i.e. whether the backend contains tokens for that provider.
@@ -94,19 +76,69 @@ paths:
           description: Data provider (e.g. flickr)
           required: true
           schema:
-            type: string
+            $ref: "#/components/schemas/ProviderModel"
       responses:
         200:
           description: Returns true or false, depending on whether the given provider is connected.
-          # TODO: content (boolean)
-
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  provider:
+                    $ref: "#/components/schemas/ProviderModel"
+                  connected:
+                    type: boolean
+  /configuration/{provider}/{configKey}:
+    get:
+      summary: Returns the configuration of a provider
+      parameters:
+        - name: provider
+          in: path
+          description: Data provider (e.g. flickr)
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProviderModel"
+        - name: configKey
+          in: path
+          description: configuration key
+          required: true
+          schema:
+            $ref: "#/components/schemas/ConfigurationKey"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
   /logout:
     post:
       summary: Log out. This will destroy the session.
-
       responses:
         200:
           description: Succesfully logged out from all connected providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
         500:
           description: Internal Server Error. Something went wrong when logging out.
-
+components:
+  schemas:
+    ProviderModel:
+      type: string
+      enum:
+        - imgur
+        - flickr
+        - google
+    ConfigurationKey:
+      type: string
+      enum:
+        - connect
