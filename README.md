@@ -1,5 +1,12 @@
 # README
 
+PROV4ITDaTa:web-app serves as the backend for the PROV4ITDaTa platform, its main tasks are:
+- Managing authorization of a user with a Service Provider (e.g. Flickr, Imgur, etc.)
+- Injecting authorization credentials into RML Mappings
+- Executing RML Mappings on the RML Mapper, and providing the results to the client-side
+
+Technical details can be found in [`docs/REPORT.md`](/docs/REPORT.md).
+
 ## Setup: RMLMapper Web API
 
 For some of the use cases defined below, the **RMLMapper Web API** needs to be running.
@@ -34,9 +41,8 @@ Install the web-app as follows:
 yarn install
 ```
 
-Note: the ui dependency is pulled from our private GitLab server. So you'll need the appropriate access rights.
-Once the installation is completed, it's still required to run the script that builds the ui and moves it 
-to the `build/ui` directory. This can be done as follows:
+Once the installation is completed, we have to install and build the user-interface ([`@prov4itdata/ui`](https://www.npmjs.com/package/@prov4itdata/ui)).
+This can be done by running the `ui:all` script: 
 
 ```bash
 yarn run ui:all
