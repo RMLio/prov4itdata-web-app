@@ -437,6 +437,9 @@ configuration record:
             value should be an array of filenames over which the query will be executed.
   - `output`: an array of filenames that represent the "final" output of a pipeline. The idea for using an array is that it allows us to select multiple outputs from the steps.
 
+### NPM Modules
+<!-- @gdm: wip -->
+
 ### Relation to DTP
 
 After reviewing the DTP repository, we concluded that although utility functions could be reused at a later stage,
