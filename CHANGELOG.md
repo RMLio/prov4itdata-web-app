@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.3.0] - 2021-05-06
+
+### Changed
+
+- Use published PROV4ITDaTA ui-package (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/61))
+
 ### Added
 
 - Logout endpoint (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/53))
