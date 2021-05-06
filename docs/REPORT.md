@@ -241,7 +241,7 @@ authenticated by a decentralized extension of [OpenID Connect][OpenIDConnect].
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
 
 #### Comunica
-<!-- @gdm: wip -->
+<!-- @bdm: can you review? -->
 Comunica provides a meta-query engine that is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
 Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
 
@@ -389,7 +389,7 @@ As a result, this web app allows to unambiguously define the user's data using a
 The automatically generated provenance allows for inspection and validation of the processing.
 
 ### Configuration
-<!-- wip: @gdm -->
+<!-- @bdm: can you review? -->
 
 We configure our application using a single configuration file:
 `configuration.json`. This file has a top-level `configurationRecords` key in 
