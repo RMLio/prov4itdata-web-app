@@ -241,7 +241,7 @@ authenticated by a decentralized extension of [OpenID Connect][OpenIDConnect].
 Solid's access control system uses these IDs to determine whether a person or application has access to a resource in a pod.
 
 #### Comunica
-
+<!-- @gdm: wip -->
 Comunica provides a meta-query engine that is designed in a highly modular and configurable manner to deal with the heterogeneous nature of Linked Data on the Web, allowing to fine-tune the Comunica engine to completely suit the needs of the system.
 Furthermore, Comunica also supports executing SPARQL queries over one or more interfaces.
 
@@ -270,7 +270,14 @@ graph TD
     B_I[Init]
     A_CS(Comunica SPARQL)
 
+    B_OQO[Optimize Query Operation]
     B_QO[Query Operation]
+
+    O_QO((Query<br> Operation<br> Observer))
+    A_CP(Collect Provenance)
+    A_PW(Query Operation Provenance Wrapper)
+
+
     A_QP(Quad Pattern)
 
     B_RQP[RDF Resolve Quad Pattern]
@@ -298,9 +305,14 @@ graph TD
 
     B_I  --> A_CS
     
+    A_CS --> B_OQO
     A_CS --> B_QO
 
+    B_OQO --> A_PW
+
     B_QO --> A_QP
+    B_QO --> A_CP
+    B_QO --- O_QO
 
     A_QP --> B_RQP
 
@@ -321,6 +333,10 @@ graph TD
     style A_F fill:#f9f,stroke:#333,stroke-width:4px
     style B_RME fill:#f9f,stroke:#333,stroke-width:4px
     style A_AP fill:#9f9,stroke:#333,stroke-width:4px
+
+    style A_PW fill:#9f9,stroke:#333,stroke-width:4px
+    style A_CP fill:#9f9,stroke:#333,stroke-width:4px
+    style O_QO fill:#9f9,stroke:#333,stroke-width:4px
 ```
 
 We need to include a new `Annotate Provenance` Actor that allows us to automatically generate provenance information for each queried data source,  and adapt the `Federated` Actor to detect and properly process the provenance information coming from different data sources.
