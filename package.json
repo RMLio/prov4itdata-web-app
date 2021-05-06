@@ -1,6 +1,6 @@
 {
   "name": "@prov4itdata/web-app",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "PROV4ITDaTa Web app",
   "main": "app.js",
   "scripts": {
@@ -15,6 +15,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@prov4itdata/ui": "^0.2.0",
     "axios": "^0.20.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
@@ -27,7 +28,6 @@
     "pem": "^1.14.4",
     "pug": "^3.0.0",
     "swagger-ui-express": "^4.1.6",
-    "@prov4itdata/ui": "^0.2.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
