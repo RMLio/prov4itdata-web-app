@@ -256,7 +256,28 @@ The goal is to provide the ability to add different levels of provenance:
 Currently, our prototype complements every binding in a query result with provenance about its source.
 This is accomplished by adding a new actor to the [Comunica architecture](https://comunica.dev/docs/modify/advanced/architecture_sparql/) that is able to extract all necessary metadata about the sources and add it to the provenance data.
 
-The following architectural diagram illustrates how we added the new Annotate Provenance actor to the Comunica architecture.
+The following new actors to the Comunica architecture as depicted by the diagram
+below:
+
+- Query Operation Provenance Wrapper (`ActorOptimizeQueryOperationProvenanceWrapper`)
+  - Connected bus: Optimize Query Operation
+  - Task: Encapsulates the actual query inside a "Collect Provenance" query operation
+- Query Operation Observer (`QueryOperationObserver`)
+  - Connected bus: Query Operation
+  - Task: listens for actions (i.e. query operations) on the Query Operation
+    bus. The output of each query operation can contain metadata, which can be
+    altered by subsquential operations. For this reason, the
+    `QueryOperationObserver` creates a so-called *observation record* which
+    reflects the snapshot of the observed operation.
+- Collect Provenance (`ActorQueryOperationCollectProvenance`)
+  - Connected bus: Query Operation
+  - Task: works in conjunction with the `QueryOperationObserver`. The
+    `ActorQueryOperationCollectProvenance` includes a promise to the observation
+    records that were captured during the execution of the query.
+
+- Annotate Provenance (`ActorRdfMetadataExtractAnnotateProvenance`)
+  - Connected bus: RDF Metadata Extract
+  - Task: adds the URI of the source to the metadata.
 
 ```mermaid
 
