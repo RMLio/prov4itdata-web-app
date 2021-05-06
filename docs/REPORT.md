@@ -264,20 +264,20 @@ below:
   - Task: Encapsulates the actual query inside a "Collect Provenance" query operation
 - Query Operation Observer (`QueryOperationObserver`)
   - Connected bus: Query Operation
-  - Task: listens for actions (i.e. query operations) on the Query Operation
+  - Task: Listens for actions (i.e. query operations) on the Query Operation
     bus. The output of each query operation can contain metadata, which can be
     altered by subsquential operations. For this reason, the
     `QueryOperationObserver` creates a so-called *observation record* which
     reflects the snapshot of the observed operation.
 - Collect Provenance (`ActorQueryOperationCollectProvenance`)
   - Connected bus: Query Operation
-  - Task: works in conjunction with the `QueryOperationObserver`. The
+  - Task: Works in conjunction with the `QueryOperationObserver`. The
     `ActorQueryOperationCollectProvenance` includes a promise to the observation
     records that were captured during the execution of the query.
-
 - Annotate Provenance (`ActorRdfMetadataExtractAnnotateProvenance`)
   - Connected bus: RDF Metadata Extract
-  - Task: adds the URI of the source to the metadata.
+  - Task: Adds the URI of the source to the metadata and allows us to automatically generate provenance information for each queried data source.
+  - Remark:  We had to adapt the Comunica `Federated` Actor to detect and properly process the provenance information coming from different data sources.
 
 ```mermaid
 
@@ -360,7 +360,7 @@ graph TD
     style O_QO fill:#9f9,stroke:#333,stroke-width:4px
 ```
 
-We need to include a new `Annotate Provenance` Actor that allows us to automatically generate provenance information for each queried data source,  and adapt the `Federated` Actor to detect and properly process the provenance information coming from different data sources.
+
 
 #### Web App
 
