@@ -39,9 +39,6 @@
   - [GDPR](#gdpr)
 - [Conclusion](#conclusion)
 - [Changelog](#changelog)
-  - [v0.2.0 - 2021-02-05](#v020---2021-02-05)
-  - [v0.1.1 - 2020-12-21](#v011---2020-12-21)
-  - [v0.1.0 - 2020-11-30](#v010---2020-11-30)
 - [References](#references)
 
 Data portability is one of the pillars to enable users to control their data on the Web.
@@ -1007,25 +1004,7 @@ and provide integration alternatives with, e.g., [DTP].
 
 ## Changelog
 
-### v0.2.0 - 2021-02-05
-
-#### Added
-
-- Google API connector
-- UI refactor
-
-### v0.1.1 - 2020-12-21
-
-#### Added
-
-- Alternative mapping options
-- RML mapping process clarification
-
-### v0.1.0 - 2020-11-30
-
-#### Added
-
-- Initial version
+See https://github.com/RMLio/prov4itdata-web-app/blob/main/CHANGELOG.md
 
 ## References
 
