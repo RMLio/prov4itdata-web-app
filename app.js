@@ -54,7 +54,6 @@ app.set('view engine', 'pug')
     .use(grant)
     .use(express.static('public'))
     .use(express.static('build/ui'))
-    .use('/docs', express.static('docs'))
     .use('/', router(grant, environmentConfig, logConfig))
 
 if (USE_HTTPS) {

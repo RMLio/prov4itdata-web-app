@@ -38,6 +38,11 @@ function createRouter(grant, environmentConfig, logConfig = null) {
     router.use('/api-docs', swaggerUi.serve)
     router.get('/api-docs', swaggerUi.setup(swaggerDocs))
 
+    // Documentation
+    router.get('/docs', function (req, res) {
+        res.render('docs')
+      })
+
     // callback for capturing the img tokens
     router.get('/imgur/callback', (req, res) => {
         console.log(req.route.path)

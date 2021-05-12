@@ -1,5 +1,3 @@
-# PROV4ITDaTa - Technical Report
-
 <style>
 :not(pre):not(.hljs) > code {
 	color: #695E25 !important; /* Override color */
@@ -15,37 +13,36 @@
 
 > An online version of this report is available at <https://prov4itdata.ilabt.imec.be/docs/>
 
-- [PROV4ITDaTa - Technical Report](#prov4itdata---technical-report)
-  - [Alignment to the milestones](#alignment-to-the-milestones)
-  - [Architecture](#architecture)
-    - [Components](#components)
-    - [Configuration](#configuration)
-    - [NPM Modules](#npm-modules)
-    - [Relation to DTP](#relation-to-dtp)
-  - [Requirements](#requirements)
-  - [Demonstrator](#demonstrator)
-  - [Use cases](#use-cases)
-    - [Best-practice vocabularies](#best-practice-vocabularies)
-    - [Flickr](#flickr)
-    - [Imgur](#imgur)
-    - [Google People API](#google-people-api)
-  - [Adding data providers](#adding-data-providers)
-  - [Features](#features)
-    - [Use Open Standards and Open Source](#use-open-standards-and-open-source)
-    - [Mapping files to transfer data](#mapping-files-to-transfer-data)
-    - [Automatic Data Provenance Generation](#automatic-data-provenance-generation)
-    - [Output RDF](#output-rdf)
-    - [Data Portability](#data-portability)
-    - [Security and Privacy](#security-and-privacy)
-    - [Personalization](#personalization)
-    - [Quality](#quality)
-    - [GDPR](#gdpr)
-  - [Conclusion](#conclusion)
-  - [Changelog](#changelog)
-    - [v0.2.0 - 2021-02-05](#v020---2021-02-05)
-    - [v0.1.1 - 2020-12-21](#v011---2020-12-21)
-    - [v0.1.0 - 2020-11-30](#v010---2020-11-30)
-  - [References](#references)
+- [Alignment to the milestones](#alignment-to-the-milestones)
+- [Architecture](#architecture)
+  - [Components](#components)
+  - [Configuration](#configuration)
+  - [NPM Modules](#npm-modules)
+  - [Relation to DTP](#relation-to-dtp)
+- [Requirements](#requirements)
+- [Demonstrator](#demonstrator)
+- [Use cases](#use-cases)
+  - [Best-practice vocabularies](#best-practice-vocabularies)
+  - [Flickr](#flickr)
+  - [Imgur](#imgur)
+  - [Google People API](#google-people-api)
+- [Adding data providers](#adding-data-providers)
+- [Features](#features)
+  - [Use Open Standards and Open Source](#use-open-standards-and-open-source)
+  - [Mapping files to transfer data](#mapping-files-to-transfer-data)
+  - [Automatic Data Provenance Generation](#automatic-data-provenance-generation)
+  - [Output RDF](#output-rdf)
+  - [Data Portability](#data-portability)
+  - [Security and Privacy](#security-and-privacy)
+  - [Personalization](#personalization)
+  - [Quality](#quality)
+  - [GDPR](#gdpr)
+- [Conclusion](#conclusion)
+- [Changelog](#changelog)
+  - [v0.2.0 - 2021-02-05](#v020---2021-02-05)
+  - [v0.1.1 - 2020-12-21](#v011---2020-12-21)
+  - [v0.1.0 - 2020-11-30](#v010---2020-11-30)
+- [References](#references)
 
 Data portability is one of the pillars to enable users to control their data on the Web.
 Initiatives such as the [Data Transfer Project][DTP] (DTP) take a step in this direction,
@@ -493,7 +490,7 @@ we will re-evaluate DTP and how we can properly integrate our technologies.
 Below, a sketch is found into how we can integrate our technologies:
 the DTP Input-Service utility functions are reused to authenticate and fetch data, the RML processing component and Comunica engine are wrapped in a DTP Data model interface as a new generic DTP component.
 
-![DTP Architecture Draft](img/dtp-architecture.png)
+![DTP Architecture Draft](/img/dtp-architecture.png)
 
 ## Requirements
 
@@ -522,7 +519,7 @@ The lower part allows the user to review
 
 Furthermore, the user can inspect and verify that the generated [RDF] was successfully stored on to the [Solid] pod.
 
-![Walkthrough](img/walkthrough_20210205.gif)
+![Walkthrough](/img/walkthrough_20210205.gif)
 
 The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.
 
@@ -705,19 +702,19 @@ Steps:
 - Go to the [Google Developer Console](https://console.developers.google.com/)
   create a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
 - For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
-  <br/>![Make sure that the correct project is selected](img/readme-adding-google-step001-selected-project.png)
+  <br/>![Make sure that the correct project is selected](/img/readme-adding-google-step001-selected-project.png)
 - Navigate to *APIs & Services*
-  <br/>![Go to APIs and Services](img/readme-adding-google-navigate-to-APIs-and-Services.png)
+  <br/>![Go to APIs and Services](/img/readme-adding-google-navigate-to-APIs-and-Services.png)
 - Search and enable the API you wish to integrate. In this case, the [Google People API](https://console.cloud.google.com/apis/library/people.googleapis.com)
 - In order to make requests to the API, you need to set up authorization.
   - Since we need to access private data, OAuth 2.0 credentials must be generated.
   - Go to the [Credentials page](https://console.developers.google.com/apis/credentials), click on *Create Credentials* and select *OAuth client ID*
-    <br/>![Create credentials and select OAuth client ID ](img/readme-adding-google-authorization-create-credentials-dropdown.png)
+    <br/>![Create credentials and select OAuth client ID ](/img/readme-adding-google-authorization-create-credentials-dropdown.png)
   - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server.
     - For example, assuming the web-app is served locally on port `3000`, the redirect URI would be: `https://localhost:3000/connect/google/callback`
     - Don't forget to save the *Client ID* and *Client secret*, as you will need it later on.
 - Since our Google app's publishing status is "testing", only test users will be able to use it. Navigate to the *OAuth consent screen* using the panel on the left, and add the test users.
-  <br/>![Navigate to OAuth consent screen](img/readme-adding-google-adding-test-users.png)
+  <br/>![Navigate to OAuth consent screen](/img/readme-adding-google-adding-test-users.png)
 - Finally, add the *Client ID*, *Client secret* to the `config.json`. This may look like
 
 ```json
