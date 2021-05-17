@@ -989,7 +989,7 @@ The security requirements are in line with Article 32 of the GDRP:
 - no original personal data is accessed or transmitted without authorization
 
 > At the time of writing, consent of the user is given via the authorization flows in the different Data Providers and Solid pods.
-> We plan to include a clear privacy statement in the demonstrator.
+> Our privacy policy is available at <https://prov4itdata.ilabt.imec.be/privacy-policy>.
 
 ## Conclusion
 
