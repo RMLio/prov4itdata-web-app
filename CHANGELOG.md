@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Freshed up the main screen
+- Updated Reporting (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/65))
 
 ## [0.3.0] - 2021-05-06
 
