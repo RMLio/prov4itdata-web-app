@@ -39,6 +39,7 @@
   - [GDPR](#gdpr)
 - [Conclusion](#conclusion)
 - [Changelog](#changelog)
+- [Cite](#cite)
 - [References](#references)
 
 Data portability is one of the pillars to enable users to control their data on the Web.
@@ -1006,6 +1007,20 @@ and provide integration alternatives with, e.g., [DTP].
 
 See https://github.com/RMLio/prov4itdata-web-app/blob/main/CHANGELOG.md
 
+## Cite
+
+If you are using or extending PROV4ITDaTa as part of a scientific publication, we would appreciate a citation of our [article][PROV4IDaTa-demo-pdf].
+
+```tex
+@inproceedings{demulder_www_demo_2021,
+  author = {De Mulder, Gertjan and De Meester, Ben and Heyvaert, Pieter and Taelman, Ruben and Verborgh, Ruben and Dimou, Anastasia},
+  title = {{PROV4ITDaTa:} Transparent and direct transfer of personal data to personal stores},
+  booktitle = {Companion Proceedings of the The Web Conference},
+  year = 2021,
+  month = apr,
+  url = {https://biblio.ugent.be/publication/8704820/file/8704821.pdf},
+}
+```
 ## References
 
 - B. De Meester, A. Dimou, R. Verborgh, and E. Mannens, “Detailed Provenance Capture of Data Processing,” in _Proceedings of the First Workshop on Enabling Open Semantic Science (SemSci)_, Oct. 2017, vol. 1931, pp. 31–38. Available: <http://ceur-ws.org/Vol-1931/#paper-05>.
@@ -1014,6 +1029,9 @@ See https://github.com/RMLio/prov4itdata-web-app/blob/main/CHANGELOG.md
 - A. Dimou, M. Vander Sande, P. Colpaert, R. Verborgh, E. Mannens, and R. Van de Walle, “RML: A Generic Language for Integrated RDF Mappings of Heterogeneous Data,” in _Proceedings of the 7th Workshop on Linked Data on the Web_, 2014, vol. 1184. <http://ceur-ws.org/Vol-1184/ldow2014_paper_01.pdf>.
 - R. T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures,” phdthesis, University of California, Irvine, 2000.
 - M. D. Wilkinson et al., “The FAIR Guiding Principles for scientific data management and stewardship,” _Scientific Data_, vol. 3, p. 160018, Mar. 2016, doi: [10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18).
+
+[PROV4ITDaTa-demo-HTML]: https://camps.aptaracorp.com/ACM_PMS/PMS/ACM/WWW21COMPANION/136/7b7ad165-8c01-11eb-8d84-166a08e17233/OUT/www21companion-136.html
+[PROV4IDaTa-demo-pdf]: https://biblio.ugent.be/publication/8704820/file/8704821.pdf
 
 [RML-mapping]: #rml-mapping-documents
 [provenance]: #automatic-data-provenance-generation
