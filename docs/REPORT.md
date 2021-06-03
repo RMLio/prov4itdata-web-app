@@ -13,6 +13,9 @@
 
 > An online version of this report is available at <https://prov4itdata.ilabt.imec.be/docs/>
 
+> PROV4ITDaTa has been presented at the [Knowledge Graph Conference][KGC] 2021.
+The presentation is available in PDF [here](assets/presentation-kgc2021.pdf), and the video recording can be found [here](https://knowledgegraphconference.vhx.tv/packages/kgc-21-attendees/videos/ben-de-meester-prov4itdata-flexible-knowledge-graph-generation-within-reach).
+
 - [Alignment to the milestones](#alignment-to-the-milestones)
 - [Architecture](#architecture)
   - [Components](#components)
@@ -1046,6 +1049,7 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
 [Google People API]: https://developers.google.com/people?hl=en
 [Imgur]: https://imgur.com/
 [Imgur-API]: https://apidocs.imgur.com/
+[KGC]: https://www.knowledgegraph.tech/
 [LDP]: https://www.w3.org/TR/ldp/
 [OAuth]: https://oauth.net/
 [OAuth1.0a]: https://oauth.net/core/1.0a/
