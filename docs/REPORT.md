@@ -1012,7 +1012,7 @@ See https://github.com/RMLio/prov4itdata-web-app/blob/main/CHANGELOG.md
 
 ## Cite
 
-If you are using or extending PROV4ITDaTa as part of a scientific publication, we would appreciate a citation of our [article][PROV4IDaTa-demo-pdf].
+If you are using or extending PROV4ITDaTa as part of a scientific publication, we would appreciate a citation of our article ([PDF][PROV4IDaTa-demo-pdf]|[HTML][PROV4ITDaTa-demo-HTML]).
 
 ```tex
 @inproceedings{demulder_www_demo_2021,
