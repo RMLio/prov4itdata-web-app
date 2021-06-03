@@ -13,8 +13,11 @@
 
 > An online version of this report is available at <https://prov4itdata.ilabt.imec.be/docs/>
 
-> PROV4ITDaTa has been presented at the [Knowledge Graph Conference][KGC] 2021.
-The presentation is available in PDF [here](assets/presentation-kgc2021.pdf), and the video recording can be found [here](https://knowledgegraphconference.vhx.tv/packages/kgc-21-attendees/videos/ben-de-meester-prov4itdata-flexible-knowledge-graph-generation-within-reach).
+> PROV4ITDaTa has been presented at
+> - The [Knowledge Graph Conference 2021][KGC].</br>
+The presentation is available in PDF [here][KGC-PDF], and the video recording can be found [here][KGC-VIDEO]).
+> - The [Web Conference 2021][WWW2021].</br>
+The presentation is available in PDF [here][WWW2021-PDF], and the video recording can be found [here][WWW2021-VIDEO].
 
 - [Alignment to the milestones](#alignment-to-the-milestones)
 - [Architecture](#architecture)
@@ -1050,6 +1053,8 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
 [Imgur]: https://imgur.com/
 [Imgur-API]: https://apidocs.imgur.com/
 [KGC]: https://www.knowledgegraph.tech/
+[KGC-PDF]: assets/presentation-kgc2021.pdf
+[KGC-VIDEO]: https://knowledgegraphconference.vhx.tv/packages/kgc-21-attendees/videos/ben-de-meester-prov4itdata-flexible-knowledge-graph-generation-within-reach
 [LDP]: https://www.w3.org/TR/ldp/
 [OAuth]: https://oauth.net/
 [OAuth1.0a]: https://oauth.net/core/1.0a/
@@ -1066,3 +1071,6 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
 [Schema.org]: https://schema.org/docs/full.html
 [Solid]: https://inrupt.com/solid/
 [Turtle]: https://www.w3.org/TR/turtle/
+[WWW2021]: https://www2021.thewebconf.org/
+[WWW2021-PDF]: assets/presentation-www2021.pdf
+[WWW2021-VIDEO]: https://youtu.be/vwobfnAuxf0
