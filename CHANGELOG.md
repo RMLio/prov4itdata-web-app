@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- Federated query example (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/66))
+
 ### Changed
 
 - Freshed up the main screen
