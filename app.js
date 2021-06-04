@@ -8,6 +8,16 @@ const https = require('https')
 const pem = require('pem')
 const router = require('./routes/index')
 const fs = require('fs')
+const md = require('markdown-it')({
+    html: true,
+    linkify: true,
+    langPrefix: 'highlight-',
+    typographer: true
+}).use(require('markdown-it-anchor'), {
+    permalink: true
+})
+
+// (html linkify langPrefix='highlight-' plugins=['markdown-it-anchor'])
 
 // Configuration
 const fpathAppConfig = path.join(__dirname, 'app-config.json')
@@ -55,6 +65,12 @@ app.set('view engine', 'pug')
     .use(express.static('public'))
     .use(express.static('build/ui'))
     .use('/', router(grant, environmentConfig, logConfig))
+
+app.locals.filters = {
+    'my-md': function(text, options) {
+        return md.render(text)
+    }
+};
 
 if (USE_HTTPS) {
     console.log("USING HTTPS")

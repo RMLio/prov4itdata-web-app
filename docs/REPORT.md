@@ -19,7 +19,6 @@ The presentation is available in PDF [here][KGC-PDF], and the video recording ca
 > - The [Web Conference 2021][WWW2021].</br>
 The presentation is available in PDF [here][WWW2021-PDF], and the video recording can be found [here][WWW2021-VIDEO].
 
-- [Alignment to the milestones](#alignment-to-the-milestones)
 - [Architecture](#architecture)
   - [Components](#components)
   - [Configuration](#configuration)
@@ -78,58 +77,6 @@ and legal audits can be performed automatically based on the structured and sema
 To show its applicability and extensibility for decentralized environments,
 we will connect it to the Solid ecosystem,
 giving users full control over their data.
-
-> This is an intermediate report. As such, some sections are currently intentionally left blank or incomplete.
-
-## Alignment to the milestones
-
-#### M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)
-
-See [Architecture](#architecture) on how we used RML.io to export data from DTP-like services
-
-#### M2: Improve data provenance of the DTP exporter (deadline 12/2020)
-
-See [Components/RMLMapper](#rmlmapper) and [Components/Web App](#web-app)
-on how we automatically generate and showcase data provenance information as an interoperable resource in RDF.
-
-#### M3: Design query-based DTP importer for Solid, applying it to a use case (deadline 01/2020)
-
-Currently, we directly import the exported data in RDF into a Solid pod, see [Components/Web App](#web-app).
-We further designed the query-based importer: we will extend Comunica to perform federated queries over both Solid pods and other RDF data sources,
-whilst automatically generating the correct provenance information.
-We are currently researching and implementing the automated provenance information, see [Components/Comunica](#comunica).
-
-#### M4: Implement configuration-based DTP exporter (deadline 04/2020)
-
-> This work is ongoing
-
-See [Components/RML Mapping Documents](#rml-mapping-documents) and [Components/RMLMapper](#rmlmapper)
-on how we allow personalizable and configurable export of multiple DTP services in RDF, using RML.io.
-We further extend this work allowing federated querying and schema translation
--- resulting in more flexible export options --
-with Comunica, see [Components/Comunica](#comunica).
-
-See [Architecture/Configuration](#configuration) for details about the
-configuration of RML Mappings, queries, and pipelines.
-
-#### M5: Implement provenance-based DTP exporter (deadline 05/2020)
-
-We aligned with the design executed in M3, and extended Comunica by including
-different levels of provenance data to the query results, see [Components/Comunica](#comunica).
-
-#### M6: Implement query-based DTP importer for Solid (deadline 04/2020)
-
-The generated RDF data resulting from the [Components/RMLMapper](#rmlmapper)
-can be refined by selecting
-specific parts through the use of SPARQL queries. See [Components/Comunica](#comunica).
-
-#### M7: Integrate and finalize the exporter and importer, showcasing the use case (deadline 05/2020)
-
-> This work is ongoing
-
-Our first sprint contained an end-to-end solution without a query-based importer.
-Our second sprint refactored the user interface to ease future extensibility and included an additional connector, see [Demonstrator](#demonstrator).
-Our ongoing sprint is to include the query-based configuration and Comunica engine.
 
 ## Architecture
 
@@ -220,6 +167,8 @@ implementations for each service to be added. The mapping can easily be reused
 for — and extended to — similar Web APIs.
 
 The RML Mappings are served statically and can be found in the `/public/rml`-directory.
+
+- [ ] TODO add links to tutorials, specification, documentation
 
 #### RMLMapper
 
@@ -404,6 +353,8 @@ The resulting [RDF] is stored onto the user's [Solid] pod, which can be verified
 
 As a result, this web app allows to unambiguously define the user's data using an RML Mapping and transparently transfer it between services.
 The automatically generated provenance allows for inspection and validation of the processing.
+
+- [ ] 
 
 ### Configuration
 
@@ -975,6 +926,9 @@ and consist of unit and integration tests for
 - Comunica: <https://coveralls.io/github/comunica/comunica?branch=master>
 
 At <https://rml.io/implementation-report/>, you can compare our RMLMapper-JAVA processor with other RML processors.
+
+All PROV4ITDaTa components are published on NPM (<https://www.npmjs.com/search?q=prov4itdata>) and on Github,
+and have gone through integration tests.
 
 ### GDPR
 
