@@ -114,7 +114,7 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
   - We make use of RDF to ensure structural interoperability, see [Features/Output RDF/Structural Interoperability].
 - Does the architecture include functions that support Data Compatibility?
   - Given the above, we claim to support data compatibility,  see [Features/Output RDF/Data Compatibility].
-- Is the data stored follow a specific standard?
+- Is the data stored following a specific standard?
   - We use the Semantic Web Standards such as RDF, Turtle, and R2RML, see [Features/Use Open Standards and Open Source].
 - Is the communication secured by the system?
   - We make use of Transport Layer Security, see [Features/Security and Privacy/Data Retention].
@@ -145,35 +145,35 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
 
 - Does the prototype answer the requirements set by the customer?
   - An overview of the prototype is given at [Demonstrator].
-- Has been comunica engine adapted correctly?
+- Has the comunica engine been adapted correctly?
   - Adaptation of the Comunica was joint work together with the Comunica developers. An overview of the adaptation is available at [Components/Comunica]
-- Are you satisficed with the federated queries
+- Are you satisfied with the federated queries
   - [ ] TODO
 - How many data sources have been queried
   - [ ] TODO
 - How the results are integrated into SOLID pod
   - All the interoperable data is stored into Solid pods, for a detailed discussion, see [Components/Solid pods]
-- What kind of format the results have been returned
+- In what kind of format are the results being returned
   - We adhere to Semantic Web standards, see [Features/Output RDF].
-- Are you satisficed how personalizable and configurable export of multiple  DTP services in RDF, using RML?
+- Are you satisfied about how personalizable and configurable the export of multiple DTP services in RDF is using RML?
   - A detailed discussion on configuration is available at [Architecture/Configuration].
 - schema translation, how and what is the quality?
   - Best-effort query templates created by experts are currently provided. However the detailed customization allows for data portability in varying levels of quality, depending on the requirements of the specific use cases.
 - Are multiple configurations supported? how many?
   - We currently support Flickr, Imgur, and Google data showcasing the adaptivity to different use cases (see [Use Cases]), but the detailed configuration allows to support other use cases too.
-- Are you satisficed with the new demo shooing the whole prototype
+- Are you satisfied with the new demo showing the whole prototype?
   - The demo is available at <https://prov4itdata.ilabt.imec.be>, the description is available at [Demonstrator].
 - Mapping process?
 - Are you satisfied with the functionalities implemented?
-  - - We currently demonstrate an end-to-end transparent transfer process, where the user can extract data from different services and import it into its personal Solid pod. An overview is given at [Demonstrator].
+  - We currently demonstrate an end-to-end transparent transfer process, where the user can extract data from different services and import it into its personal Solid pod. An overview is given at [Demonstrator].
 - Does the design respect all GDPR compliance requirements?
   - We provide a GDPR discussion at [Features/GDPR].
 - Attractiveness: Overall impression of the product. Do users like or dislike it?
-  - We did not focus on attractiveness, since PROV4ITDaTa is meant to be a platform integrated for different use cases. Still, we adhered to standard web application development practices such as responsive design.
+  - We did not focus on attractiveness, since PROV4ITDaTa is meant to be a platform integrated for different use cases. Still, we adhered to standard web application development practices such as responsive design and reusable ui components.
 - Perspicuity: Is it easy to get familiar with the product and to learn how to use it?
   - For the end-user, a one-click procedure is sufficient to port their data. For developers, tutorials are available on creating RML Mapping documents, see [Components/RML Mapping Documents].
 - Efficiency: Can users solve their tasks without unnecessary effort? Does it react fast?
-  - For the end-user, a one-click procedure is sufficient to port their data. An overview is given at [Demonstrator].
+  - For the end-user, a one-click procedure is sufficient to port their data. An overview is given at [Demonstrator] 
 - Dependability: Does the user feel in control of the interaction? Is it secure and predictable?
   - All interactions follow standard security practices such as TLS network securty and OAuth authentication, see [Features/Security and Privacy].
 - Stimulation: Is it exciting and motivating to use the product? Is it fun to use?
@@ -195,7 +195,7 @@ such as Digita and DataVillage.
 
 We believe that PROV4ITDaTa can fill the gap between the current status and the Solid vision,
 by providing the services needed to port personal data from existing web services
-into solid pods.
+into Solid pods.
 
 As such, we act as an enabler for the companies that provide Solid support,
 and companies that create Solid applications.
@@ -208,7 +208,7 @@ These could be companies providing Solid support,
 creating Solid applications,
 or Solid enablers such as the data utility company being founded in Flanders.
 Given the increasing importance of our core technologies (knowledge graphs),
-We believe this will not only bootstrap the Solid ecosystem
+we believe this will not only bootstrap the Solid ecosystem
 but also grows wider into more use cases,
 which could equally benefit from PROV4ITDaTa services.
 
