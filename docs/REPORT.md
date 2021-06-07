@@ -7,6 +7,37 @@
   max-width: 600px;
   max-height: 600px
 }
+
+th {
+  padding-right: 15px;
+  padding-bottom: 4px;
+  padding-top: 16px;
+}
+
+.blockquote {
+  font-size: 1rem;
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  padding: 0.5em 10px;
+}
+
+.blockquote p {
+  display: inline;
+}
+
+/*Floating Back-To-Top Button*/
+#myBtn {
+    position: fixed;
+    bottom: 10px;
+    float: right;
+    right: 10px;
+    max-width: 35px;
+    width: 100%;
+    font-size: 0.8rem;
+    background-color: rgb(74, 74, 74);
+    padding: .5px;
+}
+
 </style>
 
 > PROV4ITDaTa is available at <https://prov4itdata.ilabt.imec.be>
@@ -439,13 +470,13 @@ we currently focus on an end-to-end system using solely RML.io and Comunica.
 On the one hand, because these technologies allow more advanced data transfer processes than DTP (such as joining data from _different services_ on the fly),
 on the other hand, because integration efforts would put a too high burden on the current development sprints.
 
-Once we have successfully created and validated our end-to-end demonstrator,
+<!-- Once we have successfully created and validated our end-to-end demonstrator,
 we will re-evaluate DTP and how we can properly integrate our technologies.
 
 Below, a sketch is found into how we can integrate our technologies:
 the DTP Input-Service utility functions are reused to authenticate and fetch data, the RML processing component and Comunica engine are wrapped in a DTP Data model interface as a new generic DTP component.
 
-![DTP Architecture Draft](/img/dtp-architecture.png)
+![DTP Architecture Draft](/img/dtp-architecture.png) -->
 
 ## Requirements
 
@@ -981,6 +1012,7 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
   url = {https://biblio.ugent.be/publication/8704820/file/8704821.pdf},
 }
 ```
+
 ## References
 
 - B. De Meester, A. Dimou, R. Verborgh, and E. Mannens, “Detailed Provenance Capture of Data Processing,” in _Proceedings of the First Workshop on Enabling Open Semantic Science (SemSci)_, Oct. 2017, vol. 1931, pp. 31–38. Available: <http://ceur-ws.org/Vol-1931/#paper-05>.
@@ -989,6 +1021,8 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
 - A. Dimou, M. Vander Sande, P. Colpaert, R. Verborgh, E. Mannens, and R. Van de Walle, “RML: A Generic Language for Integrated RDF Mappings of Heterogeneous Data,” in _Proceedings of the 7th Workshop on Linked Data on the Web_, 2014, vol. 1184. <http://ceur-ws.org/Vol-1184/ldow2014_paper_01.pdf>.
 - R. T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures,” phdthesis, University of California, Irvine, 2000.
 - M. D. Wilkinson et al., “The FAIR Guiding Principles for scientific data management and stewardship,” _Scientific Data_, vol. 3, p. 160018, Mar. 2016, doi: [10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18).
+
+<button id="myBtn" class="btn"><a href="#top" style="color: white">Top</a></button>
 
 [PROV4ITDaTa-demo-HTML]: https://camps.aptaracorp.com/ACM_PMS/PMS/ACM/WWW21COMPANION/136/7b7ad165-8c01-11eb-8d84-166a08e17233/OUT/www21companion-136.html
 [PROV4IDaTa-demo-pdf]: https://biblio.ugent.be/publication/8704820/file/8704821.pdf
