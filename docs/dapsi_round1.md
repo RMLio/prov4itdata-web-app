@@ -132,11 +132,11 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
 - Are you satisfied with query-based
   - We apply Comunica to integrate data from different sources and possibly rewrite the data schema, more info at [Components/Comunica].
 - Check if it covers data portability?
-  - Our demonstrator allows to create interoperable data from existing services, imported into a Solid Pod, see [Features/Data Portability].
+  - Our demonstrator allows us to create interoperable data from existing services, imported into a Solid Pod, see [Features/Data Portability].
 - Are you satisfied with the results of a query based for the use case considered
   - Best-effort query templates created by experts are currently provided. However the detailed customization allows for data portability in varying levels of quality, depending on the requirements of the specific use cases.
-- Check use case if adaptable for other use cases?
-  - We currently support Flickr, Imgur, and Google data showcasing the adaptivity to different use cases (see [Use Cases]), but the detailed configuration allows to support other use cases too.
+- Check if the use case is adaptable to other use cases?
+  - We currently support Flickr, Imgur, and Google data showcasing the adaptability to different use cases (see [Use Cases]), but the detailed configuration allows us to support other use cases too.
 
 #### KPIs of Annex 2 - Phase 2
 
@@ -147,7 +147,7 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
 - Has the comunica engine been adapted correctly?
   - Adaptation of the Comunica was joint work together with the Comunica developers. An overview of the adaptation is available at [Components/Comunica]
 - Are you satisfied with the federated queries
-  - The demonstrator has a preset configured that allows to query your ported Flickr and Imgur data to create a federated dataset that links to all your pictures from your different providers (named ``Query all image resources''). This showcases how PROV4ITDaTa allows to federate your data from different providers after porting your data.
+  - The demonstrator has a preset configuration that allows you to query your ported Flickr and Imgur data to create a federated dataset that links to all your pictures from your different providers (named ``Query all image resources''). This showcases how PROV4ITDaTa allows to federate your data from different providers after porting your data.
 - How many data sources have been queried
   - At the moment, 2 data sources are queried, but the platform can be configured without limitation on the number of data sources.
 - How the results are integrated into SOLID pod
@@ -158,8 +158,8 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
   - A detailed discussion on configuration is available at [Architecture/Configuration].
 - schema translation, how and what is the quality?
   - Best-effort query templates created by experts are currently provided. However the detailed customization allows for data portability in varying levels of quality, depending on the requirements of the specific use cases.
-- Are multiple configurations supported? how many?
-  - We currently support Flickr, Imgur, and Google data showcasing the adaptivity to different use cases (see [Use Cases]), but the detailed configuration allows to support other use cases too.
+- Are multiple configurations supported? How many?
+  - We currently support Flickr, Imgur, and Google data showcasing the adaptability to different use cases (see [Use Cases]), but the detailed configuration allows us to support other use cases too.
 - Are you satisfied with the new demo showing the whole prototype?
   - The demo is available at <https://prov4itdata.ilabt.imec.be>, the description is available at [Demonstrator].
 - Mapping process?
@@ -174,7 +174,7 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
 - Efficiency: Can users solve their tasks without unnecessary effort? Does it react fast?
   - For the end-user, a one-click procedure is sufficient to port their data. An overview is given at [Demonstrator].
 - Dependability: Does the user feel in control of the interaction? Is it secure and predictable?
-  - All interactions follow standard security practices such as TLS network securty and OAuth authentication, see [Features/Security and Privacy].
+  - All interactions follow standard security practices such as TLS network security and OAuth authentication, see [Features/Security and Privacy].
 - Stimulation: Is it exciting and motivating to use the product? Is it fun to use?
   - We did not focus on stimulation, since PROV4ITDaTa is meant to be a platform integrated for different use cases.
 - Novelty: Is the design of the product creative? Does it catch the interest of users?
