@@ -11,9 +11,8 @@
 
 # Final report - DAPSI Round 1
 
-This report covers all requested data for the final evaluation of the DAPSI program, round 1.
-It will describe technical validation, business validation, commitment validation, and participation in the final event.
-Where relevant, it will link to public documentation.
+**Moved to https://docs.google.com/document/d/1d1xVJ3Tn4E_Ri9pqcDmAMpWZZv97_Mq_Cwtldzowias/edit**
+The technical part is kept here because the links are easier to manager in markdown 😇.
 
 ## Technical validation
 
@@ -148,9 +147,9 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
 - Has the comunica engine been adapted correctly?
   - Adaptation of the Comunica was joint work together with the Comunica developers. An overview of the adaptation is available at [Components/Comunica]
 - Are you satisfied with the federated queries
-  - [ ] TODO
+  - The demonstrator has a preset configured that allows to query your ported Flickr and Imgur data to create a federated dataset that links to all your pictures from your different providers (named ``Query all image resources''). This showcases how PROV4ITDaTa allows to federate your data from different providers after porting your data.
 - How many data sources have been queried
-  - [ ] TODO
+  - At the moment, 2 data sources are queried, but the platform can be configured without limitation on the number of data sources.
 - How the results are integrated into SOLID pod
   - All the interoperable data is stored into Solid pods, for a detailed discussion, see [Components/Solid pods]
 - In what kind of format are the results being returned
@@ -173,108 +172,13 @@ Below, we link to the public documentation for answers of the KPIs of Annex 2, p
 - Perspicuity: Is it easy to get familiar with the product and to learn how to use it?
   - For the end-user, a one-click procedure is sufficient to port their data. For developers, tutorials are available on creating RML Mapping documents, see [Components/RML Mapping Documents].
 - Efficiency: Can users solve their tasks without unnecessary effort? Does it react fast?
-  - For the end-user, a one-click procedure is sufficient to port their data. An overview is given at [Demonstrator] 
+  - For the end-user, a one-click procedure is sufficient to port their data. An overview is given at [Demonstrator].
 - Dependability: Does the user feel in control of the interaction? Is it secure and predictable?
   - All interactions follow standard security practices such as TLS network securty and OAuth authentication, see [Features/Security and Privacy].
 - Stimulation: Is it exciting and motivating to use the product? Is it fun to use?
   - We did not focus on stimulation, since PROV4ITDaTa is meant to be a platform integrated for different use cases.
 - Novelty: Is the design of the product creative? Does it catch the interest of users?
   - We did not focus on novelty/design, since PROV4ITDaTa is meant to be a platform integrated for different use cases.
-
-## Business validation
-
-Personal data control is a clear driver for PROV4ITDaTa.
-The Solid initiative has seen considerable attention in (popular) media,
-academia,
-and industry.
-Not only in the US, but also in Europe and specifically Belgium
-there is a growing interest in Solid,
-exemplified by interest from use case holders such as the Flemish government,
-but also the growing amount of companies providing Solid support
-such as Digita and DataVillage.
-
-We believe that PROV4ITDaTa can fill the gap between the current status and the Solid vision,
-by providing the services needed to port personal data from existing web services
-into Solid pods.
-
-As such, we act as an enabler for the companies that provide Solid support,
-and companies that create Solid applications.
-We believe to have a clear value proposition for those companies:
-PROV4ITDaTa makes it easier for you to onboard new customers onto Solid,
-by providing a platform-as-a-service that makes it easier to port your customer's existing data into Solid pods.
-
-We initially target Solid companies.
-These could be companies providing Solid support,
-creating Solid applications,
-or Solid enablers such as the data utility company being founded in Flanders.
-Given the increasing importance of our core technologies (knowledge graphs),
-we believe this will not only bootstrap the Solid ecosystem
-but also grows wider into more use cases,
-which could equally benefit from PROV4ITDaTa services.
-
-PROV4ITDaTa positions itself as an integration Platform as a Service (iPaaS)
-initially targeted at Personal Information Management Systems (PIMS),
-but extensible to Enterprise Data Management (EDM).
-We focus on the specific market segment handling knowledge graphs.
-
-Our competitors such as Ontopic, Stardog, and DataLens also provide flexible knowledge graph generation on top of standardized configuration,
-but don't provide integration services that directly connect with the Solid ecosystem.
-
-### Business Model
-
-We are currently providing professional services and implement pilot projects
-on top of our existing open-source components RMLMapper-JAVA and Communica.
-Our business model for PROV4ITDaTa follows the same trajectory.
-
-### Sales
-
-- [ ] TODO
-
-#### Sales plan
-
-- [ ] TODO
-
-We are building a community.
-Already doing projects with Flanders and have contacts with EC
-W3C Community Group for standards track
-
-#### Presentation and explanation of the price
-
-- [ ] TODO
-
-#### Details on the commercial release - customer acquisition?
-
-- [ ] TODO
-
-#### Number of Letter of Intent/Pilots signed after Phase 1
-
-- [ ] TODO
-
-### Financial planning
-
-> Financial planning and 18-month forecast
-
-### Team Motivation
-
-- [ ] TODO
-
-## Commitment validation
-
-> The attendance to the following sessions is expected:
-- There will be a session organised with mentors.
-- There will be two technical trainings.
-
-> The attendance to these sessions and the provision of the requested information (if any) will be assessed with a 10%.
-
-> Other activities will be optional such as the webinar about public funding opportunities.
-
-- [ ] TODO
-
-## Participation in the final event
-
-> A final event will be organised. Each project will participate with a short presentation to explain the project developed. It will be held in a date to be confirmed, close to the end of phase 2.
-
-- [ ] TODO
 
 [Architecture]: https://prov4itdata.ilabt.imec.be/docs/#architecture
 [Architecture/Configuration]: https://prov4itdata.ilabt.imec.be/docs/#configuration
