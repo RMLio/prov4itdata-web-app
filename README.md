@@ -37,6 +37,7 @@ You can configure the environment using the `app-config.json` file:
 Each `app-config` refers to a json file (template at `config.template.json`) that contains all credentials. Check the respective Data Provider APIs as to how to specify all credentials.
 
 Install the web-app as follows:
+
 ```bash
 yarn install
 ```

@@ -38,6 +38,14 @@ function createRouter(grant, environmentConfig, logConfig = null) {
     router.use('/api-docs', swaggerUi.serve)
     router.get('/api-docs', swaggerUi.setup(swaggerDocs))
 
+    // Documentation
+    router.get('/docs', function (req, res) {
+        res.render('docs')
+    })
+    router.get('/privacy-policy', function (req, res) {
+        res.render('privacy-policy')
+    })
+
     // callback for capturing the img tokens
     router.get('/imgur/callback', (req, res) => {
         console.log(req.route.path)
@@ -171,12 +179,12 @@ function createRouter(grant, environmentConfig, logConfig = null) {
         if(provider){
             switch (configKey) {
                 case 'connect':
-                    console.log('grant config defaults prefix: ' , grant.config.defaults.prefix)
+                    console.log('grant config defaults prefix: ', grant.config.defaults.prefix)
                     let connectionUrl = [grant.config.defaults.prefix, provider].join('/')
-                    res.send({url: connectionUrl})
+                    res.send({ url: connectionUrl })
                     break
                 default:
-                    handleStatusCode(req,res, 422, "Invalid configuration key")
+                    handleStatusCode(req, res, 422, "Invalid configuration key")
 
             }
         }else {

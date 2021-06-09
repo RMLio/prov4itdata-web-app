@@ -11,6 +11,12 @@
 			"maximumAuthorizationAttempts": 3
 		},
 		{
+			"id": "provider-config-google",
+			"type": "providerConfiguration",
+			"provider": "google",
+			"note": "The authorization screen of the Google Services API will momentarily show a message indicating that our application has not been verified by Google yet. We are working on a fix, thanks for your understanding."
+		},
+		{
 			"id": "flickr-photoset-transfer-using-schema-org.ttl",
 			"type": "mapping",
 			"file": "rml/flickr/photoset-transfer-using-schema-org.ttl",
@@ -78,6 +84,12 @@
 			"type": "query",
 			"file": "sparql/cq_image_collections.rq",
 			"description": "Construct image collections"
+		},
+		{
+			"id": "cq_all_image_resources.rq",
+			"type": "query",
+			"file": "sparql/cq_all_image_resources.rq",
+			"description": "Construct triples from image resources"
 		},
 
 		{
@@ -154,6 +166,28 @@
 			],
 			"output": [
 				"out-p004.ttl"
+			]
+		},
+		{
+			"id": "p005",
+			"type": "pipeline",
+			"description": "Query all image resources",
+			"steps" : [
+				{
+					"type" : "queryConfiguration",
+					"forId": "cq_all_image_resources.rq",
+					"input": [
+						"out-p001.ttl",
+						"out-p002.ttl"
+					],
+					"output": {
+						"result": "out-p005.ttl",
+						"provenanceResult": "out-p005-prov.json"
+					}
+				}
+			],
+			"output": [
+				"out-p005.ttl"
 			]
 		}
 	]

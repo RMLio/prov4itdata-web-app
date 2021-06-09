@@ -1,6 +1,6 @@
 {
   "name": "@prov4itdata/web-app",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "PROV4ITDaTa Web app",
   "main": "app.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@prov4itdata/ui": "^0.2.0",
+    "@prov4itdata/ui": "^0.2.1",
     "axios": "^0.20.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
@@ -24,6 +24,9 @@
     "glob": "^7.1.6",
     "grant": "^5.4.5",
     "install": "^0.13.0",
+    "jstransformer-markdown-it": "^2.1.0",
+    "markdown-it": "^12.0.6",
+    "markdown-it-anchor": "^7.1.0",
     "morgan": "^1.10.0",
     "pem": "^1.14.4",
     "pug": "^3.0.0",

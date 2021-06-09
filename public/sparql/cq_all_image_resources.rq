@@ -1,0 +1,9 @@
+PREFIX schema: <http://schema.org/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+
+CONSTRUCT {?s ?p2 ?o2 . }
+WHERE {
+    ?s ?p ?o .
+    FILTER (?o IN (dcat:Distribution, schema:Collection, schema:ImageGallery , schema:ImageObject ))
+    ?s ?p2 ?o2
+}

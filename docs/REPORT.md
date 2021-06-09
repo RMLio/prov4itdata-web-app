@@ -1,5 +1,3 @@
-# PROV4ITDaTa - Technical Report
-
 <style>
 :not(pre):not(.hljs) > code {
 	color: #695E25 !important; /* Override color */
@@ -9,43 +7,76 @@
   max-width: 600px;
   max-height: 600px
 }
+
+th {
+  padding-right: 15px;
+  padding-bottom: 4px;
+  padding-top: 16px;
+}
+
+.blockquote {
+  font-size: 1rem;
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  padding: 0.5em 10px;
+}
+
+.blockquote p {
+  display: inline;
+}
+
+/*Floating Back-To-Top Button*/
+#myBtn {
+    position: fixed;
+    bottom: 10px;
+    float: right;
+    right: 10px;
+    max-width: 35px;
+    width: 100%;
+    font-size: 0.8rem;
+    background-color: rgb(74, 74, 74);
+    padding: .5px;
+}
+
 </style>
 
 > PROV4ITDaTa is available at <https://prov4itdata.ilabt.imec.be>
 
 > An online version of this report is available at <https://prov4itdata.ilabt.imec.be/docs/>
 
-- [PROV4ITDaTa - Technical Report](#prov4itdata---technical-report)
-  - [Alignment to the milestones](#alignment-to-the-milestones)
-  - [Architecture](#architecture)
-    - [Components](#components)
-    - [Configuration](#configuration)
-    - [NPM Modules](#npm-modules)
-    - [Relation to DTP](#relation-to-dtp)
-  - [Requirements](#requirements)
-  - [Demonstrator](#demonstrator)
-  - [Use cases](#use-cases)
-    - [Best-practice vocabularies](#best-practice-vocabularies)
-    - [Flickr](#flickr)
-    - [Imgur](#imgur)
-    - [Google People API](#google-people-api)
-  - [Adding data providers](#adding-data-providers)
-  - [Features](#features)
-    - [Use Open Standards and Open Source](#use-open-standards-and-open-source)
-    - [Mapping files to transfer data](#mapping-files-to-transfer-data)
-    - [Automatic Data Provenance Generation](#automatic-data-provenance-generation)
-    - [Output RDF](#output-rdf)
-    - [Data Portability](#data-portability)
-    - [Security and Privacy](#security-and-privacy)
-    - [Personalization](#personalization)
-    - [Quality](#quality)
-    - [GDPR](#gdpr)
-  - [Conclusion](#conclusion)
-  - [Changelog](#changelog)
-    - [v0.2.0 - 2021-02-05](#v020---2021-02-05)
-    - [v0.1.1 - 2020-12-21](#v011---2020-12-21)
-    - [v0.1.0 - 2020-11-30](#v010---2020-11-30)
-  - [References](#references)
+> PROV4ITDaTa has been presented at
+> - The [Knowledge Graph Conference 2021][KGC].</br>
+The presentation is available in PDF [here][KGC-PDF], and the video recording can be found [here][KGC-VIDEO]).
+> - The [Web Conference 2021][WWW2021].</br>
+The presentation is available in PDF [here][WWW2021-PDF], and the video recording can be found [here][WWW2021-VIDEO].
+
+- [Architecture](#architecture)
+  - [Components](#components)
+  - [Configuration](#configuration)
+  - [NPM Modules](#npm-modules)
+  - [Relation to DTP](#relation-to-dtp)
+- [Requirements](#requirements)
+- [Demonstrator](#demonstrator)
+- [Use cases](#use-cases)
+  - [Best-practice vocabularies](#best-practice-vocabularies)
+  - [Flickr](#flickr)
+  - [Imgur](#imgur)
+  - [Google People API](#google-people-api)
+- [Adding data providers](#adding-data-providers)
+- [Features](#features)
+  - [Use Open Standards and Open Source](#use-open-standards-and-open-source)
+  - [Mapping files to transfer data](#mapping-files-to-transfer-data)
+  - [Automatic Data Provenance Generation](#automatic-data-provenance-generation)
+  - [Output RDF](#output-rdf)
+  - [Data Portability](#data-portability)
+  - [Security and Privacy](#security-and-privacy)
+  - [Personalization](#personalization)
+  - [Quality](#quality)
+  - [GDPR](#gdpr)
+- [Conclusion](#conclusion)
+- [Changelog](#changelog)
+- [Cite](#cite)
+- [References](#references)
 
 Data portability is one of the pillars to enable users to control their data on the Web.
 Initiatives such as the [Data Transfer Project][DTP] (DTP) take a step in this direction,
@@ -77,58 +108,6 @@ and legal audits can be performed automatically based on the structured and sema
 To show its applicability and extensibility for decentralized environments,
 we will connect it to the Solid ecosystem,
 giving users full control over their data.
-
-> This is an intermediate report. As such, some sections are currently intentionally left blank or incomplete.
-
-## Alignment to the milestones
-
-#### M1: Design configuration-based DTP exporter, applying it to a use case (deadline 10/2020)
-
-See [Architecture](#architecture) on how we used RML.io to export data from DTP-like services
-
-#### M2: Improve data provenance of the DTP exporter (deadline 12/2020)
-
-See [Components/RMLMapper](#rmlmapper) and [Components/Web App](#web-app)
-on how we automatically generate and showcase data provenance information as an interoperable resource in RDF.
-
-#### M3: Design query-based DTP importer for Solid, applying it to a use case (deadline 01/2020)
-
-Currently, we directly import the exported data in RDF into a Solid pod, see [Components/Web App](#web-app).
-We further designed the query-based importer: we will extend Comunica to perform federated queries over both Solid pods and other RDF data sources,
-whilst automatically generating the correct provenance information.
-We are currently researching and implementing the automated provenance information, see [Components/Comunica](#comunica).
-
-#### M4: Implement configuration-based DTP exporter (deadline 04/2020)
-
-> This work is ongoing
-
-See [Components/RML Mapping Documents](#rml-mapping-documents) and [Components/RMLMapper](#rmlmapper)
-on how we allow personalizable and configurable export of multiple DTP services in RDF, using RML.io.
-We further extend this work allowing federated querying and schema translation
--- resulting in more flexible export options --
-with Comunica, see [Components/Comunica](#comunica).
-
-See [Architecture/Configuration](#configuration) for details about the
-configuration of RML Mappings, queries, and pipelines.
-
-#### M5: Implement provenance-based DTP exporter (deadline 05/2020)
-
-We aligned with the design executed in M3, and extended Comunica by including
-different levels of provenance data to the query results, see [Components/Comunica](#comunica).
-
-#### M6: Implement query-based DTP importer for Solid (deadline 04/2020)
-
-The generated RDF data resulting from the [Components/RMLMapper](#rmlmapper)
-can be refined by selecting
-specific parts through the use of SPARQL queries. See [Components/Comunica](#comunica).
-
-#### M7: Integrate and finalize the exporter and importer, showcasing the use case (deadline 05/2020)
-
-> This work is ongoing
-
-Our first sprint contained an end-to-end solution without a query-based importer.
-Our second sprint refactored the user interface to ease future extensibility and included an additional connector, see [Demonstrator](#demonstrator).
-Our ongoing sprint is to include the query-based configuration and Comunica engine.
 
 ## Architecture
 
@@ -219,6 +198,8 @@ implementations for each service to be added. The mapping can easily be reused
 for — and extended to — similar Web APIs.
 
 The RML Mappings are served statically and can be found in the `/public/rml`-directory.
+
+- [ ] TODO add links to tutorials, specification, documentation
 
 #### RMLMapper
 
@@ -404,6 +385,8 @@ The resulting [RDF] is stored onto the user's [Solid] pod, which can be verified
 As a result, this web app allows to unambiguously define the user's data using an RML Mapping and transparently transfer it between services.
 The automatically generated provenance allows for inspection and validation of the processing.
 
+- [ ] 
+
 ### Configuration
 
 We configure our application using a single configuration file:
@@ -487,13 +470,13 @@ we currently focus on an end-to-end system using solely RML.io and Comunica.
 On the one hand, because these technologies allow more advanced data transfer processes than DTP (such as joining data from _different services_ on the fly),
 on the other hand, because integration efforts would put a too high burden on the current development sprints.
 
-Once we have successfully created and validated our end-to-end demonstrator,
+<!-- Once we have successfully created and validated our end-to-end demonstrator,
 we will re-evaluate DTP and how we can properly integrate our technologies.
 
 Below, a sketch is found into how we can integrate our technologies:
 the DTP Input-Service utility functions are reused to authenticate and fetch data, the RML processing component and Comunica engine are wrapped in a DTP Data model interface as a new generic DTP component.
 
-![DTP Architecture Draft](img/dtp-architecture.png)
+![DTP Architecture Draft](/img/dtp-architecture.png) -->
 
 ## Requirements
 
@@ -522,7 +505,7 @@ The lower part allows the user to review
 
 Furthermore, the user can inspect and verify that the generated [RDF] was successfully stored on to the [Solid] pod.
 
-![Walkthrough](img/walkthrough_20210205.gif)
+![Walkthrough](/img/walkthrough_20210609.gif)
 
 The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.
 
@@ -705,19 +688,19 @@ Steps:
 - Go to the [Google Developer Console](https://console.developers.google.com/)
   create a project. In this example, the project was named `PROV4ITDaTa-DAPSI`
 - For any further steps, make sure the project you created in the previous step is active. This is shown at the top of the console, as depicted by the following figure.
-  <br/>![Make sure that the correct project is selected](img/readme-adding-google-step001-selected-project.png)
+  <br/>![Make sure that the correct project is selected](/img/readme-adding-google-step001-selected-project.png)
 - Navigate to *APIs & Services*
-  <br/>![Go to APIs and Services](img/readme-adding-google-navigate-to-APIs-and-Services.png)
+  <br/>![Go to APIs and Services](/img/readme-adding-google-navigate-to-APIs-and-Services.png)
 - Search and enable the API you wish to integrate. In this case, the [Google People API](https://console.cloud.google.com/apis/library/people.googleapis.com)
 - In order to make requests to the API, you need to set up authorization.
   - Since we need to access private data, OAuth 2.0 credentials must be generated.
   - Go to the [Credentials page](https://console.developers.google.com/apis/credentials), click on *Create Credentials* and select *OAuth client ID*
-    <br/>![Create credentials and select OAuth client ID ](img/readme-adding-google-authorization-create-credentials-dropdown.png)
+    <br/>![Create credentials and select OAuth client ID ](/img/readme-adding-google-authorization-create-credentials-dropdown.png)
   - Set the *Application Type* to *Web Application*, enter a name, and add authorization redirect URI(s) pointing back to your web-app server.
     - For example, assuming the web-app is served locally on port `3000`, the redirect URI would be: `https://localhost:3000/connect/google/callback`
     - Don't forget to save the *Client ID* and *Client secret*, as you will need it later on.
 - Since our Google app's publishing status is "testing", only test users will be able to use it. Navigate to the *OAuth consent screen* using the panel on the left, and add the test users.
-  <br/>![Navigate to OAuth consent screen](img/readme-adding-google-adding-test-users.png)
+  <br/>![Navigate to OAuth consent screen](/img/readme-adding-google-adding-test-users.png)
 - Finally, add the *Client ID*, *Client secret* to the `config.json`. This may look like
 
 ```json
@@ -975,6 +958,9 @@ and consist of unit and integration tests for
 
 At <https://rml.io/implementation-report/>, you can compare our RMLMapper-JAVA processor with other RML processors.
 
+All PROV4ITDaTa components are published on NPM (<https://www.npmjs.com/search?q=prov4itdata>) and on Github,
+and have gone through integration tests.
+
 ### GDPR
 
 As defined by Article 4 of the GDPR, PROV4ITData acts as a data processor for the end-user
@@ -995,7 +981,7 @@ The security requirements are in line with Article 32 of the GDRP:
 - no original personal data is accessed or transmitted without authorization
 
 > At the time of writing, consent of the user is given via the authorization flows in the different Data Providers and Solid pods.
-> We plan to include a clear privacy statement in the demonstrator.
+> Our privacy policy is available at <https://prov4itdata.ilabt.imec.be/privacy-policy>.
 
 ## Conclusion
 
@@ -1010,25 +996,22 @@ and provide integration alternatives with, e.g., [DTP].
 
 ## Changelog
 
-### v0.2.0 - 2021-02-05
+See https://github.com/RMLio/prov4itdata-web-app/blob/main/CHANGELOG.md
 
-#### Added
+## Cite
 
-- Google API connector
-- UI refactor
+If you are using or extending PROV4ITDaTa as part of a scientific publication, we would appreciate a citation of our article ([PDF][PROV4IDaTa-demo-pdf]|[HTML][PROV4ITDaTa-demo-HTML]).
 
-### v0.1.1 - 2020-12-21
-
-#### Added
-
-- Alternative mapping options
-- RML mapping process clarification
-
-### v0.1.0 - 2020-11-30
-
-#### Added
-
-- Initial version
+```tex
+@inproceedings{demulder_www_demo_2021,
+  author = {De Mulder, Gertjan and De Meester, Ben and Heyvaert, Pieter and Taelman, Ruben and Verborgh, Ruben and Dimou, Anastasia},
+  title = {{PROV4ITDaTa:} Transparent and direct transfer of personal data to personal stores},
+  booktitle = {Companion Proceedings of the The Web Conference},
+  year = 2021,
+  month = apr,
+  url = {https://biblio.ugent.be/publication/8704820/file/8704821.pdf},
+}
+```
 
 ## References
 
@@ -1038,6 +1021,11 @@ and provide integration alternatives with, e.g., [DTP].
 - A. Dimou, M. Vander Sande, P. Colpaert, R. Verborgh, E. Mannens, and R. Van de Walle, “RML: A Generic Language for Integrated RDF Mappings of Heterogeneous Data,” in _Proceedings of the 7th Workshop on Linked Data on the Web_, 2014, vol. 1184. <http://ceur-ws.org/Vol-1184/ldow2014_paper_01.pdf>.
 - R. T. Fielding, “Architectural Styles and the Design of Network-based Software Architectures,” phdthesis, University of California, Irvine, 2000.
 - M. D. Wilkinson et al., “The FAIR Guiding Principles for scientific data management and stewardship,” _Scientific Data_, vol. 3, p. 160018, Mar. 2016, doi: [10.1038/sdata.2016.18](https://doi.org/10.1038/sdata.2016.18).
+
+<button id="myBtn" class="btn"><a href="#top" style="color: white">Top</a></button>
+
+[PROV4ITDaTa-demo-HTML]: https://camps.aptaracorp.com/ACM_PMS/PMS/ACM/WWW21COMPANION/136/7b7ad165-8c01-11eb-8d84-166a08e17233/OUT/www21companion-136.html
+[PROV4IDaTa-demo-pdf]: https://biblio.ugent.be/publication/8704820/file/8704821.pdf
 
 [RML-mapping]: #rml-mapping-documents
 [provenance]: #automatic-data-provenance-generation
@@ -1052,6 +1040,9 @@ and provide integration alternatives with, e.g., [DTP].
 [Google People API]: https://developers.google.com/people?hl=en
 [Imgur]: https://imgur.com/
 [Imgur-API]: https://apidocs.imgur.com/
+[KGC]: https://www.knowledgegraph.tech/
+[KGC-PDF]: assets/presentation-kgc2021.pdf
+[KGC-VIDEO]: https://knowledgegraphconference.vhx.tv/packages/kgc-21-attendees/videos/ben-de-meester-prov4itdata-flexible-knowledge-graph-generation-within-reach
 [LDP]: https://www.w3.org/TR/ldp/
 [OAuth]: https://oauth.net/
 [OAuth1.0a]: https://oauth.net/core/1.0a/
@@ -1068,3 +1059,6 @@ and provide integration alternatives with, e.g., [DTP].
 [Schema.org]: https://schema.org/docs/full.html
 [Solid]: https://inrupt.com/solid/
 [Turtle]: https://www.w3.org/TR/turtle/
+[WWW2021]: https://www2021.thewebconf.org/
+[WWW2021-PDF]: assets/presentation-www2021.pdf
+[WWW2021-VIDEO]: https://youtu.be/vwobfnAuxf0

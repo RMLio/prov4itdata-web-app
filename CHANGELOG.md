@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.3.1] - 2021-06-09
+
+### Added
+
+- Federated query example (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/66))
+- Added provider-specific configurations (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/68))
+
+### Changed
+
+- Freshed up the main screen
+- Updated Reporting (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/65))
+- Update to ui to v0.2.1 (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/70))
+- Updated walkthrough (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/71))
+
 ## [0.3.0] - 2021-05-06
 
 ### Added
@@ -66,6 +80,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Authorized transfer functionality for Data Provider: Imgur
 - Authorized transfer functionality to Solid Pod
 
+[0.3.1]: https://github.com/RMLio/prov4itdata-web-app/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/RMLio/prov4itdata-web-app/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/RMLio/prov4itdata-web-app/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/RMLio/prov4itdata-web-app/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/RMLio/prov4itdata-web-app/compare/v0.1.0...v0.1.1
