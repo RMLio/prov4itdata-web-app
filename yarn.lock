@@ -2858,10 +2858,10 @@
   resolved "https://registry.yarnpkg.com/@prov4itdata/context-entries/-/context-entries-1.0.0.tgz#1e8dce894bbd0f4a2ad0e4d51d6a8dab42a1b447"
   integrity sha512-8epjQGUixXRugYdfWKzAkVQd0VzAEI7VyHE88/SSwWIUa1lDqkqou0FVi7q4BYKqKkIJSFTXSgzM23LHYEbPbg==
 
-"@prov4itdata/ui@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@prov4itdata/ui/-/ui-0.2.0.tgz#23c8e9fcc5504ca0ac673cd4679b957ad2ac39a4"
-  integrity sha512-uvNxCx+bYF2tSwd1Vtf3JA933DcuXPOjDNONbEg2MWOQmcH/tKLV0kg3HfNSi8kj2idna4/P7G23j7qoGbcLvg==
+"@prov4itdata/ui@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@prov4itdata/ui/-/ui-0.2.1.tgz#360329b1dbeafbbfaa3bf87f4533a4d35f51975d"
+  integrity sha512-dgnKDEiQgExiD3QfsVZTtn/EVSZSXUAxpFoMN3ysXb8HBgMCD6F5h0DRbddQ/mgR36sy46bIUAe33gYBAETYjg==
   dependencies:
     "@comunica/actor-rdf-dereference-fallback" "^1.21.1"
     "@comunica/actor-rdf-resolve-hypermedia-links-queue-fifo" "^1.21.1"
@@ -2875,6 +2875,7 @@
     "@testing-library/react" "^11.1.0"
     "@testing-library/user-event" "^12.1.10"
     bootstrap "^4.5.3"
+    fork-me-on-github "^1.0.6"
     jquery "^3.5.1"
     proper-url-join "^2.1.1"
     react "^17.0.1"
@@ -7212,6 +7213,11 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
+
+fork-me-on-github@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/fork-me-on-github/-/fork-me-on-github-1.0.6.tgz#bce1a1346a86f4bd9410e1b8611dd3c7d747fec6"
+  integrity sha512-5R9pXa2JvyBsewGPn8woZGNz5oOb9vi8j1mjMzleHSwBojj/D8O33OEeItIe9/wtRtD4bSU0Egs6Qzp5FU/adA==
 
 fork-ts-checker-webpack-plugin@4.1.6:
   version "4.1.6"

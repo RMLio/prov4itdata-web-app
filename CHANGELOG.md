@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Freshed up the main screen
 - Updated Reporting (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/65))
+- Update to ui to v0.2.1 (see [issue](https://gitlab.ilabt.imec.be/prov4itdata-dapsi/web-app/-/issues/70))
 
 ## [0.3.0] - 2021-05-06
 
