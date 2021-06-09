@@ -505,7 +505,7 @@ The lower part allows the user to review
 
 Furthermore, the user can inspect and verify that the generated [RDF] was successfully stored on to the [Solid] pod.
 
-![Walkthrough](/img/walkthrough_20210205.gif)
+![Walkthrough](/img/walkthrough_20210609.gif)
 
 The walkthrough above illustrates the flow of transferring data from a Data Provider (in this case, Flickr) to a Solid pod.
 
