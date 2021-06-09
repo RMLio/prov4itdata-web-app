@@ -12,7 +12,7 @@
 # Final report - DAPSI Round 1
 
 **Moved to https://docs.google.com/document/d/1d1xVJ3Tn4E_Ri9pqcDmAMpWZZv97_Mq_Cwtldzowias/edit**
-The technical part is kept here because the links are easier to manager in markdown 😇.
+The technical part is kept here because the links are easier to manage in markdown 😇.
 
 ## Technical validation
 
