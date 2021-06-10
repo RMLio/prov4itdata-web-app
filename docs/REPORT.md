@@ -451,7 +451,7 @@ helper script for listing the prov4itdata packages
 npm search @prov4itdata -p | cut -f 1,5
 -->
 
-- [`@prov4itdata/web-app`]("#"): backend. (TODO: publish & describe)
+- [`@prov4itdata/web-app`](https://www.npmjs.com/package/@prov4itdata/web-app): PROV4ITDaTa:web-app serves as the backend for the PROV4ITDaTa platform
 - [`@prov4itdata/ui`](https://www.npmjs.com/package/@prov4itdata/ui): User interface for `@prov4itdata/web-app`
 - [`@prov4itdata/actor-init-sparql`](https://www.npmjs.com/package/@prov4itdata/actor-init-sparql):
   Comunica engine, customized for PROV4ITDaTa.
