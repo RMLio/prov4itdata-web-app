@@ -1043,7 +1043,7 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
 [Imgur]: https://imgur.com/
 [Imgur-API]: https://apidocs.imgur.com/
 [KGC]: https://www.knowledgegraph.tech/
-[KGC-PDF]: assets/presentation-kgc2021.pdf
+[KGC-PDF]: /assets/presentation-kgc2021.pdf
 [KGC-VIDEO]: https://knowledgegraphconference.vhx.tv/packages/kgc-21-attendees/videos/ben-de-meester-prov4itdata-flexible-knowledge-graph-generation-within-reach
 [LDP]: https://www.w3.org/TR/ldp/
 [OAuth]: https://oauth.net/
@@ -1062,5 +1062,5 @@ If you are using or extending PROV4ITDaTa as part of a scientific publication, w
 [Solid]: https://inrupt.com/solid/
 [Turtle]: https://www.w3.org/TR/turtle/
 [WWW2021]: https://www2021.thewebconf.org/
-[WWW2021-PDF]: assets/presentation-www2021.pdf
+[WWW2021-PDF]: /assets/presentation-www2021.pdf
 [WWW2021-VIDEO]: https://youtu.be/vwobfnAuxf0
